@@ -36,18 +36,23 @@ CREATE TABLE trip (
 	-- this trip is coming under this slab
 	slab_id INTEGER NOT NULL,
 
-	extra_hours NUMBER NOT NULL,
+    -- slab amount
+    slab_amount NUMBER NOT NULL,
 
-	extra_time NUMBER NOT NULL,
+    -- exceeded hours after slab time range
+	extra_hours NUMBER NULL,
 
-	extra_amt NUMBER NOT NULL,
+    -- exceeded distance after slab range
+	extra_distance NUMBER NULL,
 
-	total_amt NUMBER NOT NULL,
+	extra_amount NUMBER NOT NULL,
 
-	-- amt given by the customer to the driver in the trip
+	total_amount NUMBER NOT NULL,
+
+	-- amount given by the customer to the driver in the trip
 	driver_advance NUMBER NULL,
 
-	-- amt given by the office to the driver while starting a trip
+	-- amount given by the office to the driver while starting a trip
 	office_advance NUMBER NULL,
 
 	check_post_fee NUMBER NULL,
@@ -77,7 +82,9 @@ CREATE TABLE vehicle (
 
 	make VARCHAR(255),
 
-	create_epoch INTEGER
+	created_epoch INTEGER NOT NULL,
+
+    created_user_id INTEGER NOT NULL
 
 ); 
 
@@ -100,3 +107,5 @@ CREATE TABLE trip_slab (
 );
 
 
+
+-- TODO References need to be add

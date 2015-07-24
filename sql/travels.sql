@@ -13,6 +13,7 @@ CREATE TABLE system_user (
 	role VARCHAR(255)	
 ); 
 
+DROP TYPE IF EXISTS circle CASCADE;
 CREATE TYPE circle AS ENUM ('Outstation','Local');
 DROP TABLE IF EXISTS trip CASCADE;
 CREATE TABLE trip (
@@ -28,36 +29,36 @@ CREATE TABLE trip (
 	trip_circle circle NOT NULL,
 
 	-- distance traveled by the customer
-	distance NUMBER NOT NULL,
+	distance NUMERIC NOT NULL,
 
 	-- number of hours customer had the vehicle
-	number_of_hours NUMBER NOT NULL,
+	number_of_hours NUMERIC NOT NULL,
 
 	-- this trip is coming under this slab
 	slab_id INTEGER NOT NULL,
 
     -- slab amount
-    slab_amount NUMBER NOT NULL,
+    slab_amount NUMERIC NOT NULL,
 
     -- exceeded hours after slab time range
-	extra_hours NUMBER NULL,
+	extra_hours NUMERIC NULL,
 
     -- exceeded distance after slab range
-	extra_distance NUMBER NULL,
+	extra_distance NUMERIC NULL,
 
-	extra_amount NUMBER NOT NULL,
+	extra_amount NUMERIC NOT NULL,
 
-	total_amount NUMBER NOT NULL,
+	total_amount NUMERIC NOT NULL,
 
 	-- amount given by the customer to the driver in the trip
-	driver_advance NUMBER NULL,
+	driver_advance NUMERIC NULL,
 
 	-- amount given by the office to the driver while starting a trip
-	office_advance NUMBER NULL,
+	office_advance NUMERIC NULL,
 
-	check_post_fee NUMBER NULL,
+	check_post_fee NUMERIC NULL,
 
-	parking_tool_fee NUMBER NULL,
+	parking_tool_fee NUMERIC NULL,
 
 	comments text,
 
@@ -97,9 +98,9 @@ DROP TABLE IF EXISTS trip_slab CASCADE;
 CREATE TABLE trip_slab (
 	id SERIAL PRIMARY KEY NOT NULL,
 
-	time NUMBER NOT NULL,
+	time NUMERIC NOT NULL,
 
-	distance NUMBER NOT NULL,
+	distance NUMERIC NOT NULL,
 
 	created_epoch INTEGER NOT NULL,
 

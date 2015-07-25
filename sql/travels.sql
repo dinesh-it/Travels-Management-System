@@ -48,8 +48,6 @@ CREATE TABLE trip (
 
 	extra_amount NUMERIC NOT NULL,
 
-	total_amount NUMERIC NOT NULL,
-
 	-- amount given by the customer to the driver in the trip
 	driver_advance NUMERIC NULL,
 
@@ -58,7 +56,9 @@ CREATE TABLE trip (
 
 	check_post_fee NUMERIC NULL,
 
-	parking_tool_fee NUMERIC NULL,
+	parking_toll_fee NUMERIC NULL,
+
+	total_amount NUMERIC NOT NULL,
 
 	comments text,
 

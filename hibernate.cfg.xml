@@ -1,0 +1,31 @@
+<hibernate-configuration>  
+
+    <session-factory>  
+
+        <!-- Database connection settings -->  
+        <property name="connection.driver_class">org.postgresql.Driver</property>  
+        <property name="connection.url">jdbc:postgresql://localhost:5432/travels</property>  
+
+        <property name="connection.username">baskar</property>  
+        <property name="connection.password"></property>  
+
+        <!-- JDBC connection pool (use the built-in) -->  
+        <property name="connection.pool_size">1</property>  
+
+        <!-- SQL dialect -->  
+        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property> 
+
+        <!-- Echo all executed SQL to stdout -->  
+        <property name="show_sql">true</property>  
+
+        <!-- Drop and re-create the database schema on startup -->  
+        <property name="hbm2ddl.auto">create</property>  
+
+        <mapping class="DatabaseInterface.SystemUser"></mapping>  
+        <mapping class="DatabaseInterface.Trip"></mapping>  
+        <mapping class="DatabaseInterface.TripSlab"></mapping>  
+        <mapping class="DatabaseInterface.Vehicle"></mapping>  
+
+    </session-factory>  
+</hibernate-configuration>  
+

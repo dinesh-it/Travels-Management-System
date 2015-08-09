@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name = "DataBaseInterface.SystemUser" table = "system_user">
+        <meta attribute = "class-description" >
+            This class contains the System user detail.
+        </meta>
+        <id name = "id" type = "int" column = "id" >
+            <generator class = "native" />
+        </id>
+        <property name = "name" column = "name" type = "string" not-null="true" />
+        <property name = "user_name" column = "user_name" type = "string" />
+        <property name = "email" column = "email" type = "string" />
+        <property name = "password" column = "password" type = "string" not-null="true" />
+        <property name = "role" column = "role" type = "string" />
+    </class>
+</hibernate-mapping>

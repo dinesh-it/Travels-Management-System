@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>  
+
+    <session-factory>  
+        
+        <!-- SQL dialect -->  
+        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property> 
+
+        <!-- Database connection settings -->  
+        <property name="connection.driver_class">org.postgresql.Driver</property>  
+        <property name="connection.url">jdbc:postgresql://localhost:5432/travels</property>  
+
+        <property name="connection.username">baskar</property>  
+        <property name="connection.password">baskar</property>  
+
+        <!-- JDBC connection pool (use the built-in) -->  
+        <property name="connection.pool_size">1</property>  
+        
+        <!-- Echo all executed SQL to stdout -->  
+        <property name="show_sql">true</property>  
+
+        <!-- Update the database schema on startup--> 
+        <property name="hbm2ddl.auto">update</property>
+          
+        <mapping resource="HibernateInterface/SystemUser.hbm.xml"/>
+        <!--        <mapping resource="HibernateInterface/Circle.hbm.xml"/> -->
+        <mapping resource="HibernateInterface/Trip.hbm.xml"/>
+        <mapping resource="HibernateInterface/TripSlab.hbm.xml"/>
+        <mapping resource="HibernateInterface/Vechicle.hbm.xml"/>
+        
+    </session-factory>  
+</hibernate-configuration>  
+

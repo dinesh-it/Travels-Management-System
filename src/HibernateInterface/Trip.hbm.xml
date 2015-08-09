@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name = "DataBaseInterface.Trip" table = "trip"
+        >
+        <meta attribute = "class-description" >
+            This class contains the Trip Data.
+        </meta>
+        <id name = "id" type = "int" column = "id" >
+            <generator class = "native" />
+        </id>
+        
+        <property name = "trip_date" column = "trip_date" type = "int"  not-null="true"/>
+        <property name = "vehicle_id" column = "vehicle_id" type = "int"  not-null="true"/>
+        <property name="distance" column="distance" type="double" not-null="true"/>
+        <property name="number_of_hours" column="number_of_hours" type="double"  not-null="true"/>
+
+        <property name="trip_circle" column="trip_circle"  not-null="true">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">DataBaseInterface.Circle</param>
+                <param name="type">12</param>
+            </type>
+        </property>
+
+        <property name="slab_amount" column="slab_amount" type="double" not-null="true"/>
+        <property name="extra_hours" column="extra_hours" type="double"/>
+        <property name="extra_distance" column="extra_distance" type="double"/>
+        <property name="extra_amount" column="extra_amount" type="double"/>
+        <property name="driver_advance" column="driver_advance" type="double"/>
+        <property name="office_advance" column="office_advance" type="double"/>
+        <property name="check_post_fee" column="check_post_fee" type="double"/>
+        <property name="parking_toll_fee" column="parking_toll_fee" type="double"/>
+        <property name="total_amount" column="total_amount" type="double" not-null="true"/>
+        <property name = "comments" column = "comments" type = "string" />
+        <property name = "created_user_id" column = "created_user_id" type = "int"  not-null="true"/>
+        <property name = "created_epoch" column = "created_epoch" type = "int"  not-null="true"/>
+        <property name = "updated_user_id" column = "updated_user_id" type = "int" />
+        <property name = "updated_epoch" column = "updated_epoch" type = "int" />
+    </class>
+</hibernate-mapping>

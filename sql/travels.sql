@@ -46,7 +46,7 @@ CREATE TABLE trip (
     -- exceeded distance after slab range
 	extra_distance NUMERIC NULL,
 
-	extra_amount NUMERIC NOT NULL,
+	extra_amount NUMERIC NULL,
 
 	-- amount given by the customer to the driver in the trip
 	driver_advance NUMERIC NULL,

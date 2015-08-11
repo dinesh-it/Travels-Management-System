@@ -36,7 +36,7 @@ public class MainFrame extends JFrame {
 			public void run() {
 				try {
 					MainFrame frame = new MainFrame();
-					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -172,5 +172,6 @@ public class MainFrame extends JFrame {
 		btn_update_wheel.setBounds(89, 172, 251, 42);
 		pnl_sub_wheel.add(btn_update_wheel);
 		
+		setVisible(true);
 	}
 }

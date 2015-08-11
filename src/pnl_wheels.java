@@ -1,5 +1,4 @@
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Toolkit;
 
 import javax.swing.JLabel;
@@ -8,24 +7,15 @@ import javax.swing.border.TitledBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JTextField;
-import java.awt.GridLayout;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 
 
 public class pnl_wheels extends JPanel {
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTable table;
+	private JTextField txt_mobile_no, txt_customer_name, txt_vehicle_no_1, txt_vehicl_make, txt_vehicle_no_2, txt_vehicle_no_3, txt_date, txt_bill_no;
+	private JTable tbl_particulars;
 	private JPanel panel_1;
 
 	/**
@@ -43,72 +33,72 @@ public class pnl_wheels extends JPanel {
 		add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblMobileNo = new JLabel("Mobile No");
-		lblMobileNo.setBounds(118, 39, 80, 15);
-		panel.add(lblMobileNo);
+		JLabel lbl_mobile_no = new JLabel("Mobile No");
+		lbl_mobile_no.setBounds(118, 39, 80, 15);
+		panel.add(lbl_mobile_no);
 		
-		textField = new JTextField();
-		textField.setBounds(216, 35, 172, 24);
-		panel.add(textField);
-		textField.setColumns(10);
+		txt_mobile_no = new JTextField();
+		txt_mobile_no.setBounds(216, 35, 172, 24);
+		panel.add(txt_mobile_no);
+		txt_mobile_no.setColumns(10);
 		
-		JLabel lblCustomerName = new JLabel("Customer Name");
-		lblCustomerName.setBounds(81, 70, 117, 24);
-		panel.add(lblCustomerName);
+		JLabel lbl_customer_name = new JLabel("Customer Name");
+		lbl_customer_name.setBounds(81, 70, 117, 24);
+		panel.add(lbl_customer_name);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(216, 71, 172, 24);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
+		txt_customer_name = new JTextField();
+		txt_customer_name.setBounds(216, 71, 172, 24);
+		panel.add(txt_customer_name);
+		txt_customer_name.setColumns(10);
 		
-		JLabel lblVehicleN = new JLabel("Vehicle No");
-		lblVehicleN.setBounds(528, 39, 80, 15);
-		panel.add(lblVehicleN);
+		JLabel lbl_vehicle_no = new JLabel("Vehicle No");
+		lbl_vehicle_no.setBounds(528, 39, 80, 15);
+		panel.add(lbl_vehicle_no);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(614, 35, 34, 24);
-		panel.add(textField_2);
-		textField_2.setColumns(10);
+		txt_vehicle_no_1 = new JTextField();
+		txt_vehicle_no_1.setBounds(614, 35, 34, 24);
+		panel.add(txt_vehicle_no_1);
+		txt_vehicle_no_1.setColumns(10);
 		
-		JLabel lblVehicleMake = new JLabel("Vehicle Make");
-		lblVehicleMake.setBounds(515, 75, 93, 15);
-		panel.add(lblVehicleMake);
+		JLabel lbl_vehicle_make = new JLabel("Vehicle Make");
+		lbl_vehicle_make.setBounds(515, 75, 93, 15);
+		panel.add(lbl_vehicle_make);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(614, 71, 163, 23);
-		panel.add(textField_3);
-		textField_3.setColumns(10);
+		txt_vehicl_make = new JTextField();
+		txt_vehicl_make.setBounds(614, 71, 163, 23);
+		panel.add(txt_vehicl_make);
+		txt_vehicl_make.setColumns(10);
 		
-		textField_4 = new JTextField();
-		textField_4.setBounds(658, 36, 34, 23);
-		panel.add(textField_4);
-		textField_4.setColumns(10);
+		txt_vehicle_no_2 = new JTextField();
+		txt_vehicle_no_2.setBounds(658, 36, 34, 23);
+		panel.add(txt_vehicle_no_2);
+		txt_vehicle_no_2.setColumns(10);
 		
-		textField_5 = new JTextField();
-		textField_5.setBounds(704, 36, 73, 23);
-		panel.add(textField_5);
-		textField_5.setColumns(10);
+		txt_vehicle_no_3 = new JTextField();
+		txt_vehicle_no_3.setBounds(704, 36, 73, 23);
+		panel.add(txt_vehicle_no_3);
+		txt_vehicle_no_3.setColumns(10);
 		
-		JLabel lblDate = new JLabel("Date");
-		lblDate.setBounds(908, 39, 41, 15);
-		panel.add(lblDate);
+		JLabel lbl_date = new JLabel("Date");
+		lbl_date.setBounds(908, 39, 41, 15);
+		panel.add(lbl_date);
 		
-		textField_6 = new JTextField();
-		textField_6.setBounds(951, 35, 132, 24);
-		panel.add(textField_6);
-		textField_6.setColumns(10);
+		txt_date = new JTextField();
+		txt_date.setBounds(951, 35, 132, 24);
+		panel.add(txt_date);
+		txt_date.setColumns(10);
 		
-		JLabel lblBillNo = new JLabel("Bill No");
-		lblBillNo.setBounds(905, 75, 44, 15);
-		panel.add(lblBillNo);
+		JLabel lbl_bill_no = new JLabel("Bill No");
+		lbl_bill_no.setBounds(905, 75, 44, 15);
+		panel.add(lbl_bill_no);
 		
-		textField_7 = new JTextField();
-		textField_7.setBounds(951, 73, 132, 24);
-		panel.add(textField_7);
-		textField_7.setColumns(10);
+		txt_bill_no = new JTextField();
+		txt_bill_no.setBounds(951, 73, 132, 24);
+		panel.add(txt_bill_no);
+		txt_bill_no.setColumns(10);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		tbl_particulars = new JTable();
+		tbl_particulars.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null},
 				{null, null, null, null, null},
@@ -119,9 +109,9 @@ public class pnl_wheels extends JPanel {
 		));
 		
 		
-		JScrollPane jsp_table = new JScrollPane(table);
-		jsp_table.setBounds(270, 231, 804, 325);
-		add(jsp_table);
+		JScrollPane tbl_particulars_main = new JScrollPane(tbl_particulars);
+		tbl_particulars_main.setBounds(270, 231, 804, 325);
+		add(tbl_particulars_main);
 		
 		panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -129,16 +119,16 @@ public class pnl_wheels extends JPanel {
 		add(panel_1);
 		panel_1.setLayout(null);
 		
-		JButton btnNewButton = new JButton("Save Bill");
-		btnNewButton.setBounds(24, 24, 117, 25);
-		panel_1.add(btnNewButton);
+		JButton btn_save_bill = new JButton("Save Bill");
+		btn_save_bill.setBounds(24, 24, 117, 25);
+		panel_1.add(btn_save_bill);
 		
-		JButton btnNewButton_1 = new JButton("Reset Form");
-		btnNewButton_1.setBounds(169, 24, 117, 25);
-		panel_1.add(btnNewButton_1);
+		JButton btn_clear_form = new JButton("Clear Form");
+		btn_clear_form.setBounds(169, 24, 117, 25);
+		panel_1.add(btn_clear_form);
 		
-		JButton btnNewButton_2 = new JButton("Close Form");
-		btnNewButton_2.setBounds(308, 24, 117, 25);
-		panel_1.add(btnNewButton_2);
+		JButton btn_close_form = new JButton("Close Form");
+		btn_close_form.setBounds(308, 24, 117, 25);
+		panel_1.add(btn_close_form);
 	}
 }

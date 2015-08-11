@@ -36,7 +36,7 @@ public class MainFrame extends JFrame {
 			public void run() {
 				try {
 					MainFrame frame = new MainFrame();
-					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -106,13 +106,13 @@ public class MainFrame extends JFrame {
 		pnl_sub_trip.setLayout(null);
 
 		// New trip window navigation button with click action listener
-		JButton btn_new_trip = new JButton("New");
+		JButton btn_new_trip = new JButton("Add Trip");
 		btn_new_trip.setBounds(89, 64, 251, 42);
 		pnl_sub_trip.add(btn_new_trip);
 		btn_new_trip.setBorder(null);
 		btn_new_trip.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				pnl_trip obj_trip = new pnl_trip();
+				pnl_trip_add obj_trip = new pnl_trip_add();
 				setContentPane(obj_trip);
 			}
 		});
@@ -122,14 +122,14 @@ public class MainFrame extends JFrame {
 
 		
 		// view trip window navigation button
-		JButton btn_view_trip = new JButton("View");
+		JButton btn_view_trip = new JButton("Show Trips Report");
 		btn_view_trip.setBounds(89, 288, 251, 42);
 		pnl_sub_trip.add(btn_view_trip);
 		btn_view_trip.setForeground(Color.WHITE);
 		btn_view_trip.setBackground(new Color(219, 112, 147));
 		
 		// update trip window navigation button
-		JButton btn_update_trip = new JButton("Update");
+		JButton btn_update_trip = new JButton("Edit Trip");
 		btn_update_trip.setBounds(89, 172, 251, 42);
 		pnl_sub_trip.add(btn_update_trip);
 		btn_update_trip.setForeground(Color.WHITE);
@@ -144,7 +144,7 @@ public class MainFrame extends JFrame {
 		pnl_home.add(pnl_sub_wheel);
 		
 		// new wheel window navigation button with action listener
-		JButton btn_new_wheel = new JButton("New");
+		JButton btn_new_wheel = new JButton("Add Wheel Bill");
 		btn_new_wheel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -159,18 +159,19 @@ public class MainFrame extends JFrame {
 		pnl_sub_wheel.add(btn_new_wheel);
 		
 		// view wheel window navigation button
-		JButton btn_view_wheel = new JButton("View");
+		JButton btn_view_wheel = new JButton("Show Wheels Report");
 		btn_view_wheel.setForeground(Color.WHITE);
 		btn_view_wheel.setBackground(new Color(219, 112, 147));
 		btn_view_wheel.setBounds(89, 288, 251, 42);
 		pnl_sub_wheel.add(btn_view_wheel);
 		
 		// update wheel window navigation button
-		JButton btn_update_wheel = new JButton("Update");
+		JButton btn_update_wheel = new JButton("Edit Wheel Bill");
 		btn_update_wheel.setForeground(Color.WHITE);
 		btn_update_wheel.setBackground(new Color(219, 112, 147));
 		btn_update_wheel.setBounds(89, 172, 251, 42);
 		pnl_sub_wheel.add(btn_update_wheel);
 		
+		setVisible(true);
 	}
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name = "DataBaseInterface.CustomerVehicle" table = "customer_vehicle">
+        <meta attribute = "class-description" >
+            This class contains the Customer vehicle information
+        </meta>
+        
+        <id name = "id" type = "int" column = "id" >
+            <generator class = "native">
+                <param name="sequence">customer_vehicle_id_seq</param>
+            </generator>
+        </id>
+ 
+        <property name = "customer_id" column = "customer_id" type = "int"  not-null="true"/>
+        <property name="vehicle_number" column="vehicle_number" type="string"  not-null="true"/>
+        <property name="vehicle_make" column="vehicle_make" type="string" not-null="true"  />
+        <property name = "created_user_id" column = "created_user_id" type = "int"  not-null="true"/>
+        <property name = "created_epoch" column = "created_epoch" type = "int"  not-null="true"/>
+    </class>
+</hibernate-mapping>

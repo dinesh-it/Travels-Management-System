@@ -1,69 +1,39 @@
 package DataBaseInterface;
-
-import DataBaseInterface.SystemUser;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-//import org.postgresql.*;
+import DataBaseInterface.Handler;
+import DataBaseInterface.circle_type;
 
 public class TestMain {
 
-	private static TestMain user;
-	private static SessionFactory factory;
-
+	private static Handler dbh;
 	
 	public static void main(String[] args) throws Exception{
 		
-		try{	
-			Configuration configuration = new Configuration().configure();
-				StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().
-				applySettings(configuration.getProperties());
-				 factory = configuration.buildSessionFactory(builder.build());
-			
-			}catch (Throwable ex) {
-				System.err.println("Failed to create sessionFactory object." + ex);
-				throw new ExceptionInInitializerError(ex);
-			}
-			
-		user = new TestMain();
+		dbh = new Handler();
+		Integer user_id = dbh.add_system_user("baskar","Baskar nallathambi","bas@gmail.com","12345","Admin");
+		System.out.println("User Created with Id : "+user_id);
 		
-		/* Add few users
-		 * 
-		 */
-		
-			/* Add few employee records in database */
-			Integer user_id = user.addSystemUser("baskar","Baskar nallathambi","bas@gmail.com","12345","Admin");
-			
-			System.out.println("User Created with Id : "+user_id);
-			
-			
-		
-			/* List down all the employees */
-			//user.listEmployees();
-			/* Update employee's records */
-			//ME.updateEmployee(empID1, 5000);
-		
-	}
+	    circle_type  trip_circle = 	circle_type.Outstation;
+	    
+	    Integer trip_slab_id = dbh.add_trip_slab(100,100,user_id,111);
+	    System.out.println("Trip Slab Created with Id : "+trip_slab_id);
+	  
+	    //Integer trip_id = dbh.add_trip(111,123, trip_circle, 1.0, 1.0,100.0,0.0 ,0.0,0.0,0.0,0.0,0.0,0.0,100.0, "cocmments",user_id,1);
+	     //System.out.println("Trip Created with Id : "+trip_id);
+	    
+	    Integer customer_id = dbh.add_customer("name","+911232","bas@bas.com","address 1",user_id,111);
+	    System.out.println("Customer Created with Id : "+customer_id);
+	    
+	    Integer customer_vehicle_id = dbh.add_customer_vehicle(customer_id,"TN 47","TATA",user_id,111);
+	    System.out.println("Customer vehicle Created with Id : "+customer_vehicle_id);
+	    
+	    Integer service_particulars_id = dbh.add_service_particulars("service_name",true,true,true,user_id,111);
+	    System.out.println("SP Created with Id : "+ service_particulars_id);
+	    
+	    Integer vehicle_id = dbh.add_vehicle("TN 45","MARUTHI", user_id, 111);
+	    System.out.println("Vehicle Created with Id : "+vehicle_id);
+	    
+	    Integer vehicle_service_id = dbh.add_vehicle_service(vehicle_id,service_particulars_id,1,100.0,111,true,"comments",user_id,111);
+	    System.out.println("Vehicle Service Created with Id : "+vehicle_service_id);
 	
-	public Integer addSystemUser(String name, String username,String email,String password ,String role){
-		Session session = factory.openSession();
-		Transaction tx = null;
-		Integer user_id = null;
-		try{
-		tx = session.beginTransaction();
-		SystemUser user = new SystemUser(name,username,email,password,role);
-		user_id = (Integer) session.save(user);
-		tx.commit();
-		}catch (HibernateException e) {
-		if (tx!=null) tx.rollback();
-		e.printStackTrace();
-		}finally {
-		session.close();
-		}
-		return user_id;
-		}
-	
+	}	
 }

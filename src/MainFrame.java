@@ -36,7 +36,6 @@ public class MainFrame extends JFrame {
 			public void run() {
 				try {
 					MainFrame frame = new MainFrame();
-					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -123,6 +122,12 @@ public class MainFrame extends JFrame {
 		
 		// view trip window navigation button
 		JButton btn_view_trip = new JButton("Show Trips Report");
+		/*btn_view_trip.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			pnl_trip_view obj_trip_view = new pnl_trip_view();
+			setContentPane(obj_trip_view);
+			}
+		});*/
 		btn_view_trip.setBounds(89, 288, 251, 42);
 		pnl_sub_trip.add(btn_view_trip);
 		btn_view_trip.setForeground(Color.WHITE);
@@ -148,7 +153,7 @@ public class MainFrame extends JFrame {
 		btn_new_wheel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				pnl_wheels obj_wheels = new pnl_wheels();
+				pnl_wheels_add obj_wheels = new pnl_wheels_add();
 				setContentPane(obj_wheels);
 			}
 		});

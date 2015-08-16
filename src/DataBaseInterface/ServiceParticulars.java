@@ -9,6 +9,8 @@ public class ServiceParticulars {
     private int created_user_id;
     
     
+    public ServiceParticulars(){}
+    
 	public ServiceParticulars(String service_name, boolean is_multiple, boolean is_free_service,
 			Integer created_user_id, Integer created_epoch) {
 		this.service_name = service_name;

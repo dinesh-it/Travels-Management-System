@@ -1,3 +1,5 @@
+package UserInterface;
+
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
@@ -50,7 +52,7 @@ public class MainFrame extends JFrame {
 		
 		// Frame Properties
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Travals and Wheels");
+		setTitle("Travels and Wheels");
 		Toolkit tool=Toolkit.getDefaultToolkit();
 		Dimension dim=tool.getScreenSize();
 		setSize(dim.width,dim.height);

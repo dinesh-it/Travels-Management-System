@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name = "DataBaseInterface.ServiceParticulars" table = "service_particulars">
+        <meta attribute = "class-description" >
+            This class contains the ServiceParticulars information
+        </meta>
+        
+        <id name = "id" type = "int" column = "id" >
+            <generator class = "native">
+                <param name="sequence">service_particulars_id_seq</param>
+            </generator>
+        </id>
+
+        <property name="service_name" column="service_name" type="string"  not-null="true"/>
+        <property name="is_multiple" column="is_multiple" type="boolean"/>
+        <property name="is_free_service" column="is_free_service" type="boolean"/>
+        <property name = "created_user_id" column = "created_user_id" type = "int"  not-null="true"/>
+        <property name = "created_epoch" column = "created_epoch" type = "int"  not-null="true"/>
+
+    </class>
+</hibernate-mapping>

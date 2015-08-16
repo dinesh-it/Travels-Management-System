@@ -8,10 +8,13 @@
         <meta attribute = "class-description" >
             This class contains the Vehicle
         </meta>
+        
         <id name = "id" type = "int" column = "id" >
-            <generator class = "native" />
-        </id> 
-
+            <generator class = "native">
+                <param name="sequence">vehicle_id_seq</param>
+            </generator>
+        </id>
+ 
         <property name="v_number" column="v_number" type="string"  not-null="true"/>
         <property name="make" column="make" type="string"  />
         <property name = "created_user_id" column = "created_user_id" type = "int"  not-null="true"/>

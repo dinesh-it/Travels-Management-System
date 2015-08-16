@@ -1,10 +1,12 @@
 package DataBaseInterface;
+import DataBaseInterface.circle_type;
 
 public class Trip {
 	private int id;
 	private int trip_date;
 	private int vehicle_id;
-	private DataBaseInterface.Circle trip_circle;
+	private DataBaseInterface.circle_type trip_circle;
+	//private String trip_circle; 
 	private double distance;
 	private double number_of_hours;
 	private double slab_amount;
@@ -22,6 +24,29 @@ public class Trip {
 	private int updated_user_id;
 	private int updated_epoch;
 	
+public Trip(int trip_date, int vehicle_id, circle_type trip_circle, double distance, double number_of_hours,
+			double slab_amount, double extra_hours, double extra_distance, double extra_amount,
+			double driver_advance, double office_advance, double check_post_fee, double parking_toll_fee,
+			double total_amount, String comments, int created_user_id, int created_epoch) {
+	this.trip_date = trip_date;
+	this.vehicle_id =vehicle_id;
+	this.trip_circle = trip_circle;
+	this.distance =  distance;
+	this.number_of_hours = number_of_hours;
+	this.slab_amount = slab_amount;
+	this.extra_hours = extra_hours;
+	this.extra_distance = extra_distance;
+	this.extra_amount = extra_amount;
+	this.driver_advance =  driver_advance;
+	this.office_advance = office_advance;
+	this.check_post_fee = check_post_fee;
+	this.parking_toll_fee = parking_toll_fee;
+	this.total_amount = total_amount;
+	this.comments = comments;
+	this.created_user_id = created_user_id;
+	this.created_epoch = created_epoch;
+		
+}
 public int getId() {
 	return id;
 }
@@ -136,11 +161,10 @@ public int getUpdated_epoch() {
 public void setUpdated_epoch(int updated_epoch) {
 	this.updated_epoch = updated_epoch;
 }
-
-public DataBaseInterface.Circle getTrip_circle() {
+public DataBaseInterface.circle_type getTrip_circle() {
 	return trip_circle;
 }
-public void setTrip_circle(DataBaseInterface.Circle trip_circle) {
+public void setTrip_circle(DataBaseInterface.circle_type trip_circle) {
 	this.trip_circle = trip_circle;
 }
 

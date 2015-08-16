@@ -9,21 +9,28 @@
         <meta attribute = "class-description" >
             This class contains the Trip Data.
         </meta>
+        
         <id name = "id" type = "int" column = "id" >
-            <generator class = "native" />
+            <generator class = "native">
+                <param name="sequence">trip_id_seq</param>
+            </generator>
         </id>
+
         
         <property name = "trip_date" column = "trip_date" type = "int"  not-null="true"/>
         <property name = "vehicle_id" column = "vehicle_id" type = "int"  not-null="true"/>
         <property name="distance" column="distance" type="double" not-null="true"/>
         <property name="number_of_hours" column="number_of_hours" type="double"  not-null="true"/>
 
-        <property name="trip_circle" column="trip_circle"  not-null="true">
+         <property name="trip_circle" column="trip_circle"  not-null="true">
             <type name="org.hibernate.type.EnumType">
-                <param name="enumClass">DataBaseInterface.Circle</param>
-                <param name="type">12</param>
+                <param name="enumClass">DataBaseInterface.circle_type</param>
             </type>
         </property>
+        
+        <!-- For Now 
+        <property name="trip_circle" column="trip_circle" not-null="true"/> -->
+
 
         <property name="slab_amount" column="slab_amount" type="double" not-null="true"/>
         <property name="extra_hours" column="extra_hours" type="double"/>

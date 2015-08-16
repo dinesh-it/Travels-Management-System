@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name = "DataBaseInterface.VehicleService" table = "vehicle_service">
+        <meta attribute = "class-description" >
+            This class contains the Service information
+        </meta>
+        
+        <id name = "id" type = "int" column = "id" >
+            <generator class = "native">
+                <param name="sequence">vehicle_service_id_seq</param>
+            </generator>
+        </id>
+
+        <property name="vehicle_id" column="vehicle_id" type="int"  not-null="true"/>
+        <property name="service_id" column="service_id" type="int"  not-null="true"/>
+        <property name="quantity" column="quantity" type="int"/>
+        <property name="amount" column="amount" type="double"/>
+        <property name="free_checkup_date" column="free_checkup_date" type="int" />
+        <property name="is_sms_sent" column="is_sms_sent" type="boolean"/>
+        <property name="comments" column="comments" type="string"  />
+        <property name = "created_user_id" column = "created_user_id" type = "int"  not-null="true"/>
+        <property name = "created_epoch" column = "created_epoch" type = "int"  not-null="true"/>
+
+    </class>
+</hibernate-mapping>

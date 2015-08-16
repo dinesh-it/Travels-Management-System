@@ -8,6 +8,13 @@ public class Vehicle {
 	private int  created_epoch;
 	private int created_user_id;
 
+	public Vehicle(String vehicle_number, String make, Integer created_user_id, Integer created_epoch) {
+		this.v_number = vehicle_number;
+		this.make = make;
+		this.created_user_id = created_user_id;
+		this.created_epoch = created_epoch;
+	}
+	
 	public int getId() {
 		return id;
 	}

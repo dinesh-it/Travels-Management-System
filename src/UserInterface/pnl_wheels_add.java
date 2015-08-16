@@ -1,6 +1,7 @@
 package UserInterface;
 
 import java.awt.Dimension;
+
 import java.awt.TextField;
 import java.awt.Toolkit;
 
@@ -44,10 +45,8 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 	private JPanel pnl_buttons;
 	private DefaultTableModel mdl_particulars;
 	private Object[] is_multiple ;
-
-	private TableModelListener tml; 
-
-	private static SessionFactory factory = new Configuration().configure().buildSessionFactory();;
+	private TableModelListener tml;
+	private Handler dbh = Handler.getInstance();
 
 	public pnl_wheels_add() {
 		Toolkit tool=Toolkit.getDefaultToolkit();
@@ -172,60 +171,39 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		btn_clear_form.setBounds(259, 24, 117, 25);
 		pnl_buttons.add(btn_clear_form);
 
-		list_service_particulars();
-		tbl_particulars.setModel(mdl_particulars);
+		List<?> sp_list = dbh.list_service_particulars();
+		
+		ArrayList<Boolean>  is_multiple_list = new ArrayList(); 
+		for (Iterator iterator = sp_list.iterator(); iterator.hasNext();){
 
+			ServiceParticulars sp = (ServiceParticulars) iterator.next();
+			Object[] o = new Object[5];
 
-		tbl_particulars.getModel().addTableModelListener(this);
+			o[0] = sp.getId();
+			o[1] = sp.getService_name();
 
-	}
-
-	public void list_service_particulars( ){
-
-		Session session = factory.openSession();
-
-		Transaction tx = null;
-		try{
-			tx = session.beginTransaction();
-			List trip_slab = session.createQuery("FROM ServiceParticulars").list();
-			ArrayList<Boolean>  is_multiple_list = new ArrayList(); 
-			for (Iterator iterator = trip_slab.iterator(); iterator.hasNext();){
-
-				ServiceParticulars sp = (ServiceParticulars) iterator.next();
-				Object[] o = new Object[5];
-
-				o[0] = sp.getId();
-				o[1] = sp.getService_name();
-
-				boolean is_multi = sp.isIs_multiple();
-				if(is_multi){
-					o[2] = new Integer(1);
-				} else {
-					o[2] = "NA";
-				}
-
-				o[3] ="";
-				o[4] ="";
-
-				is_multiple_list.add(is_multi);
-
-				mdl_particulars.addRow(o);
-
+			boolean is_multi = sp.isIs_multiple();
+			if(is_multi){
+				o[2] = new Integer(1);
+			} else {
+				o[2] = "NA";
 			}
-			tx.commit();
-			is_multiple =  is_multiple_list.toArray();
 
-		}catch (HibernateException e) {
-			if (tx!=null) tx.rollback();
-			e.printStackTrace();
-		}finally {
-			session.close();
+			o[3] ="";
+			o[4] ="";
+
+			is_multiple_list.add(is_multi);
+
+			mdl_particulars.addRow(o);
 		}
 
+		is_multiple =  is_multiple_list.toArray();
+		tbl_particulars.setModel(mdl_particulars);
 
-
+		tbl_particulars.getModel().addTableModelListener(this);
 	}
 
+	
 	@Override
 	public void tableChanged(TableModelEvent e) {
 		// TODO Auto-generated method stub

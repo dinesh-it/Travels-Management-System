@@ -19,7 +19,7 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.LineBorder;
-
+import DataBaseInterface.Handler;
 
 public class MainFrame extends JFrame {
 
@@ -37,7 +37,10 @@ public class MainFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					Handler.getInstance();
+					//TODO Add progress bar later , if it takes more time
 					MainFrame frame = new MainFrame();
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

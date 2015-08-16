@@ -13,8 +13,8 @@ CREATE TABLE system_user (
 	role VARCHAR(255)	
 ); 
 
-DROP TYPE IF EXISTS circle CASCADE;
-CREATE TYPE circle AS ENUM ('Outstation','Local');
+DROP TYPE IF EXISTS circle_type CASCADE;
+CREATE TYPE circle_type AS ENUM ('Outstation','Local');
 DROP TABLE IF EXISTS trip CASCADE;
 CREATE TABLE trip (
 	id SERIAL PRIMARY KEY NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE trip (
 	vehicle_id INTEGER NOT NULL,
 
 	-- It can be either Outstation or Local
-	trip_circle circle NOT NULL,
+	trip_circle circle_type NOT NULL,
 
 	-- distance traveled by the customer
 	distance NUMERIC NOT NULL,
@@ -96,7 +96,7 @@ CREATE TABLE vehicle (
 -- eg: time - 4 and distance - 40 means 4/40 slab
 DROP TABLE IF EXISTS trip_slab CASCADE;
 CREATE TABLE trip_slab (
-	id SERIAL PRIMARY KEY NOT NULL,
+	id	SERIAL PRIMARY KEY NOT NULL,
 
 	time NUMERIC NOT NULL,
 
@@ -108,5 +108,87 @@ CREATE TABLE trip_slab (
 );
 
 
+DROP TABLE IF EXISTS customer;
+CREATE TABLE customer (
+	id					SERIAL			PRIMARY KEY		NOT NULL,
+
+	name				VARCHAR(200)					NOT NULL,
+
+	mobile				INTEGER,
+
+	email				VARCHAR(250),				
+
+	address				VARCHAR(300),
+
+	created_epoch		INTEGER							NOT NULL,
+
+	created_user_id		INTEGER							NOT NULL
+);
+
+
+DROP TABLE IF EXISTS customer_vehicle;
+CREATE TABLE customer_vehicle (
+	id					SERIAL			PRIMARY KEY		NOT NULL,
+
+	customer_id			INTEGER							NOT NULL,
+
+	vehicle_number		VARCHAR(100)					NOT NULL,
+
+	vehicle_make		VARCHAR(200)					NOT NULL,
+	
+	created_epoch		INTEGER							NOT NULL,
+
+	created_user_id		INTEGER							NOT NULL
+);
+
+
+DROP TABLE IF EXISTS vehicle_service;
+CREATE TABLE vehicle_service(
+	id					SERIAL			PRIMARY KEY		NOT NULL,
+	
+	vehicle_id			INTEGER							NOT NULL,
+
+	service_id			INTEGER							NOT NULL,
+
+	quantity			INTEGER							NOT NULL,
+
+	amount				NUMERIC							NOT NULL,
+
+	free_checkup_date	INTEGER,							
+
+	comments			VARCHAR(300),					
+	
+	created_epoch		INTEGER							NOT NULL,
+
+	created_user_id		INTEGER							NOT NULL
+
+);
+
+
+DROP TABLE IF EXISTS service_particulars;
+CREATE TABLE service_particulars (
+	id					SERIAL			PRIMARY KEY		NOT NULL,
+
+	service_name		VARCHAR(250)					NOT NULL,
+	
+	is_multiple			BOOLEAN							NOT NULL,
+	
+	is_free_service		BOOLEAN							NOT NULL,	
+	
+	created_epoch		INTEGER							NOT NULL,
+
+	created_user_id		INTEGER							NOT NULL
+);
+
 
 -- TODO References need to be add
+INSERT INTO service_particulars (service_name, is_multiple, is_free_service, created_epoch, created_user_id) 
+		VALUES	
+		('Wheel Alignment', false, true, 1439314988, 1),  
+		('Rear Wheel Alignment', false, true, 1439314988, 1), 
+		('Wheel Balance', true, false, 1439314988, 1),  
+		('Weights', true, false, 1439314988, 1), 
+		('Automatic Tires Change', true, false, 1439314988, 1), 
+		('Rim Bend Removing', true, false, 1439314988, 1), 
+		('Tire Puncher', true, false, 1439314988, 1),
+		('Tire Rotation', true, false, 1439314988, 1);  

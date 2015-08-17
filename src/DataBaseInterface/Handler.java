@@ -12,6 +12,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 import DataBaseInterface.*;
+import Util.*;
 
 
 // This class will provide database handler across the application
@@ -32,10 +33,11 @@ public class Handler {
                 applySettings(configuration.getProperties());
             factory = configuration.buildSessionFactory(builder.build());
         }catch (Throwable ex) {
-            System.err.println("Failed to create sessionFactory object." + ex);
+            Logger.log.severe("Failed to create sessionFactory object." + ex.toString());
+            ex.printStackTrace();
             throw new ExceptionInInitializerError(ex);
         }
-        System.out.println("Handler Instance created");
+        Logger.log.info("Handler Instance created !");
     }	
 
     //Table Insert Methods
@@ -50,6 +52,7 @@ public class Handler {
             tx.commit();
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
+            Logger.log.severe(e.toString());
             e.printStackTrace();
         }finally {
             session.close();
@@ -72,6 +75,7 @@ public class Handler {
             tx.commit();
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
+            Logger.log.severe(e.toString());
             e.printStackTrace();
         }finally {
             session.close();
@@ -91,6 +95,7 @@ public class Handler {
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace();
+            Logger.log.severe(e.toString());
         }finally {
             session.close();
         }
@@ -111,6 +116,7 @@ public class Handler {
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace();
+            Logger.log.severe(e.toString());
         }finally {
             session.close();
         }
@@ -129,6 +135,7 @@ public class Handler {
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace();
+            Logger.log.severe(e.toString());
         }finally {
             session.close();
         }
@@ -147,6 +154,7 @@ public class Handler {
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace();
+            Logger.log.severe(e.toString());
         }finally {
             session.close();
         }
@@ -166,6 +174,7 @@ public class Handler {
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace();
+            Logger.log.severe(e.toString());
         }finally {
             session.close();
         }
@@ -186,6 +195,7 @@ public class Handler {
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace();
+            Logger.log.severe(e.toString());
         }finally {
             session.close();
         }
@@ -211,6 +221,7 @@ public class Handler {
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace();
+            Logger.log.severe(e.toString());
         }finally {
             session.close();
         }

@@ -19,6 +19,10 @@ public class TestMain {
 
         int epoch_from_string = Time.get_epoch(today_string_formated,format);
         System.out.println("Epoch from given date format  = "+epoch_from_string);
-
+       
+        Logger.log.info("Log this information to a file");
+        Logger.log.warning("I am warning you !");
+        Logger.log.severe("OMG ! UnExpected Exception !");
+     
     }
 }

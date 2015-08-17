@@ -2,14 +2,11 @@ package DataBaseInterface;
 import DataBaseInterface.Handler;
 import DataBaseInterface.circle_type;
 
-
 public class TestMain {
 
     private static Handler dbh;
 
     public static void main(String[] args) throws Exception{
-
-
 
         dbh = Handler.getInstance();
         Integer user_id = dbh.add_system_user("baskar","Baskar nallathambi","bas@gmail.com","12345","Admin");

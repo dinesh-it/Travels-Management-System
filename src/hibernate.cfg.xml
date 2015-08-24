@@ -9,16 +9,17 @@
         <!-- SQL dialect -->  
         <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property> 
 
-        <!-- Database connection settings -->  
+        <!-- Database connection settings --> 
+        <!-- Make sure the PostgreSQL server is running on the mentioned host and
+             schema present in the 'travels' database -->
         <property name="connection.driver_class">org.postgresql.Driver</property>  
-        <property name="connection.url">jdbc:postgresql://localhost:5433/travels</property>  
-
-        <property name="connection.username">baskar</property>  
-        <property name="connection.password">baskar</property>  
+        <property name="connection.url">jdbc:postgresql://localhost:5432/travels</property>  
+        <property name="connection.username">#USERNAME#</property>  
+        <property name="connection.password">#PASSWORD#</property>  
 
         <!-- JDBC connection pool (use the built-in) -->  
         <property name="connection.pool_size">1</property>  
-        
+    
         <!-- Echo all executed SQL to stdout -->  
         <property name="show_sql">true</property>  
 
@@ -26,7 +27,6 @@
          <property name="hbm2ddl.auto">update</property> -->  
           
         <mapping resource="HibernateInterface/SystemUser.hbm.xml"/>
-        <!--        <mapping resource="HibernateInterface/Circle.hbm.xml"/> -->
         <mapping resource="HibernateInterface/Trip.hbm.xml"/>
         <mapping resource="HibernateInterface/TripSlab.hbm.xml"/>
         <mapping resource="HibernateInterface/Vehicle.hbm.xml"/>

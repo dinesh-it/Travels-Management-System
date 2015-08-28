@@ -227,6 +227,51 @@ public class Handler {
         }
         return sp_list;
     }
+    
+    public CustomerVehicle getVehicle(String vehicle_no){
+    	Session session = factory.openSession();
+    	CustomerVehicle cv = null;
+        try{
+            cv = (CustomerVehicle)session.createQuery("FROM CustomerVehicle WHERE vehicle_number = '" + vehicle_no + "'").uniqueResult();
+        }catch (HibernateException e) {
+            e.printStackTrace();
+            Logger.log.severe(e.toString());
+        }finally {
+            session.close();
+        }
+        
+        return cv;
+    }
+    
+    public Customer getCustomer(int id){
+    	Session session = factory.openSession();
+    	Customer cust = null;
+        try{
+            cust = (Customer)session.createQuery("FROM Customer WHERE id = '" + id + "'").uniqueResult();
+        }catch (HibernateException e) {
+            e.printStackTrace();
+            Logger.log.severe(e.toString());
+        }finally {
+            session.close();
+        }
+        
+        return cust;
+    }
+    
+    public int get_next_bill_id(){
+    	Session session = factory.openSession();
+    	int last_id = 0;
+        try{
+            last_id = (int)session.createQuery("SELECT COALESCE(MAX(id), 0) FROM VehicleService").uniqueResult();
+        }catch (HibernateException e) {
+            e.printStackTrace();
+            Logger.log.severe(e.toString());
+        }finally {
+            session.close();
+        }
+    
+        return last_id + 1;
+    }
 
 
 }

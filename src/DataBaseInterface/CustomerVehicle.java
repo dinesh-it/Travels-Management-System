@@ -8,6 +8,8 @@ public class CustomerVehicle {
     private int created_epoch;
     private int created_user_id;
     
+    public CustomerVehicle(){}
+    
 	public CustomerVehicle(Integer customer_id, String vehicle_number, String make, Integer created_user_id,
 			Integer created_epoch) {
 		

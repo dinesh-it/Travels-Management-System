@@ -9,6 +9,9 @@ public class Customer {
 	private int created_user_id;
 	private int created_epoch;
 	
+	public Customer(){}
+	
+	
 	public Customer(String name, String mobile, String email, String address, Integer created_user_id,
 			Integer created_epoch) {
 		this.name = name;

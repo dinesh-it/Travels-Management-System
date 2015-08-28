@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
@@ -20,6 +21,8 @@ import java.awt.Font;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.LineBorder;
 import DataBaseInterface.Handler;
+import java.awt.SystemColor;
+
 
 public class MainFrame extends JFrame {
 
@@ -29,6 +32,7 @@ public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1;
 	
 	private JPanel pnl_home;
+	static 	MainFrame frame;
 
 	/**
 	 * Launch the application.
@@ -39,8 +43,7 @@ public class MainFrame extends JFrame {
 				try {
 					Handler.getInstance();
 					//TODO Add progress bar later , if it takes more time
-					MainFrame frame = new MainFrame();
-					
+					frame = new MainFrame();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -82,6 +85,31 @@ public class MainFrame extends JFrame {
 			
 		// Add home and Logout button in menubar
 		mbr_home.add(Box.createHorizontalGlue());
+		
+		JButton btn_sms_notification = new JButton("SMS Notifications");
+		btn_sms_notification.setBackground(new Color(72, 61, 139));
+		btn_sms_notification.setForeground(new Color(127, 255, 0));
+		btn_sms_notification.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				sms_notifications sms_notify = new sms_notifications();
+				sms_notify.setDefaultCloseOperation(HIDE_ON_CLOSE);
+				sms_notify.setVisible(true);
+			}
+		});
+		
+		JButton btn_sms_template = new JButton("SMS Template");
+		btn_sms_template.setBackground(new Color(72, 61, 139));
+		btn_sms_template.setForeground(new Color(127, 255, 0));
+		btn_sms_template.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				sms_template sms_template = new sms_template();
+				sms_template.setVisible(true);
+			}
+		});
+		
+		mbr_home.add(btn_sms_template);
+		mbr_home.add(btn_sms_notification);
+		
 		mbr_home.add(btn_home);
 		mbr_home.add(btn_logout);
 
@@ -160,6 +188,7 @@ public class MainFrame extends JFrame {
 				
 				pnl_wheels_add obj_wheels = new pnl_wheels_add();
 				setContentPane(obj_wheels);
+				obj_wheels.setFieldFocus();
 			}
 		});
 		btn_new_wheel.setForeground(Color.WHITE);

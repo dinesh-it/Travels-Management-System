@@ -20,6 +20,8 @@ import java.awt.Font;
 import javax.swing.UIManager;
 import java.awt.SystemColor;
 
+import Util.*;
+
 public class pnl_trip_add extends JPanel {
 	/**
 	 * 
@@ -104,6 +106,7 @@ public class pnl_trip_add extends JPanel {
 		txt_date.setFont(new Font("Dialog", Font.PLAIN, 17));
 		txt_date.setColumns(10);
 		txt_date.setBounds(901, 30, 105, 24);
+		txt_date.setText(Time.get_date(Time.now()));
 		panel_2.add(txt_date);
 		
 		JLabel lbl_trip_no = new JLabel("Trip No");

@@ -12,6 +12,8 @@ public class VehicleService {
     private int created_user_id;
     private boolean is_sms_sent;
     
+    public VehicleService(){}
+    
 	public VehicleService(Integer vehicle_id, Integer service_particulars_id, Integer quantity, double amount,
 			String comments, int free_checkup_date,boolean is_sms_sent, Integer created_user_id, Integer created_epoch) {
 		this.vehicle_id = vehicle_id;

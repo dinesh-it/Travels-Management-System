@@ -13,8 +13,8 @@ CREATE TABLE system_user (
     role VARCHAR(255)	
 ); 
 
-DROP TYPE IF EXISTS circle_type CASCADE;
-CREATE TYPE circle_type AS ENUM ('Outstation','Local');
+-- DROP TYPE IF EXISTS circle_type CASCADE;
+-- CREATE TYPE circle_type AS ENUM ('Outstation','Local');
 
 DROP TABLE IF EXISTS trip CASCADE;
 CREATE TABLE trip (
@@ -27,7 +27,7 @@ CREATE TABLE trip (
     vehicle_id INTEGER NOT NULL,
 
     -- It can be either Outstation or Local
-    trip_circle circle_type NOT NULL,
+    trip_circle VARCHAR(255) NOT NULL,
 
     -- distance traveled by the customer
     distance NUMERIC NOT NULL,
@@ -145,31 +145,6 @@ CREATE TABLE customer_vehicle (
 );
 
 
-DROP TABLE IF EXISTS vehicle_service;
-CREATE TABLE vehicle_service(
-    id           SERIAL PRIMARY KEY NOT NULL,
-
-    vehicle_id   INTEGER NOT NULL,
-
-    service_id   INTEGER NOT NULL,
-
-    quantity     INTEGER NULL,
-
-    amount       NUMERIC NOT NULL,
-
-    free_checkup_date   INTEGER,                            
-    
-    is_sms_sent         BOOLEAN NULL,
-
-    comments            VARCHAR(300),                   
-
-    created_epoch       INTEGER  NOT NULL,
-
-    created_user_id     INTEGER  NOT NULL
-
-);
-
-
 DROP TABLE IF EXISTS service_particulars;
 CREATE TABLE service_particulars (
     id                  SERIAL PRIMARY KEY NOT NULL,
@@ -183,6 +158,99 @@ CREATE TABLE service_particulars (
     created_epoch       INTEGER NOT NULL,
 
     created_user_id     INTEGER NOT NULL
+);
+
+
+DROP TABLE IF EXISTS service_bill;
+CREATE TABLE service_bill(
+	id					SERIAL PRIMARY KEY NOT NULL,
+
+    vehicle_id			INTEGER NOT NULL,
+
+    comments            VARCHAR(300),
+
+	total_amt			NUMERIC NOT NULL,
+
+    free_checkup_date   INTEGER NULL,                            
+
+	free_checkup_completed	BOOLEAN NULL,	
+
+    created_epoch       INTEGER  NOT NULL,
+
+    created_user_id     INTEGER  NOT NULL
+
+);
+
+
+DROP TABLE IF EXISTS service_detail;
+CREATE TABLE service_detail(
+    id                  SERIAL PRIMARY KEY NOT NULL,
+
+    service_particular_id   INTEGER NOT NULL,
+
+	service_bill_id		INTEGER NOT NULL,
+
+    quantity			INTEGER NULL,
+
+    amount				NUMERIC NOT NULL
+
+);
+
+
+DROP TABLE IF EXISTS sms_template;
+CREATE TABLE sms_template (
+	id					SERIAL PRIMARY KEY NOT NULL,
+
+	-- template text
+	template			TEXT NOT NULL,
+
+	created_user_id     INTEGER NOT NULL,
+
+	created_epoch		INTEGER NOT NULL
+
+);
+
+DROP TABLE IF EXISTS template_parameter;
+CREATE TABLE template_parameter (
+	id					SERIAL PRIMARY KEY NOT NULL,
+
+	-- Parameter name eg: CustomerName, VehicleNumber
+	name				VARCHAR(255) NOT NULL,
+
+	-- Value reference for this parameter eg: customer.name for CustomerName and
+	-- customer_vehicle.vehicle_number for VehicleNumber
+	value_ref			VARCHAR(255) NOT NULL,
+
+	created_user_id     INTEGER NOT NULL,
+
+	created_epoch		INTEGER NOT NULL
+
+);
+
+DROP TABLE IF EXISTS sms_queue;
+CREATE TABLE sms_queue (
+	id					SERIAL PRIMARY KEY NOT NULL,
+
+	-- Id of service_bill table against which this message is created
+	service_bill_id  INTEGER NOT NULL,
+
+	mobile_number		VARCHAR(255) NOT NULL,
+
+	-- Actual SMS text with parameters replaced with actual values
+	message				TEXT NOT NULL,
+
+	-- SMS sent status
+	sent				BOOLEAN NOT NULL DEFAULT FALSE,
+
+	created_user_id     INTEGER NOT NULL,
+
+	created_epoch		INTEGER NOT NULL,
+
+	updated_epoch		INTEGER NULL,
+
+	-- SMS sent status updated epoch
+	sent_epoch			INTEGER NULL
+
 );
 
 

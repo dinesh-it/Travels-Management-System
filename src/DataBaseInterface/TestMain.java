@@ -1,6 +1,5 @@
 package DataBaseInterface;
 import DataBaseInterface.Handler;
-import DataBaseInterface.circle_type;
 
 public class TestMain {
 
@@ -12,13 +11,11 @@ public class TestMain {
         Integer user_id = dbh.add_system_user("baskar","Baskar nallathambi","bas@gmail.com","12345","Admin");
         System.out.println("User Created with Id : "+user_id);
 
-        circle_type  trip_circle = 	circle_type.Outstation;
-
         Integer trip_slab_id = dbh.add_trip_slab(100,100,user_id,111);
         System.out.println("Trip Slab Created with Id : "+trip_slab_id);
 
-        //Integer trip_id = dbh.add_trip(111,123, trip_circle, 1.0, 1.0,100.0,0.0 ,0.0,0.0,0.0,0.0,0.0,0.0,100.0, "cocmments",user_id,1);
-        //System.out.println("Trip Created with Id : "+trip_id);
+        Integer trip_id = dbh.add_trip(111,123, "Local", 1.0, 1.0,100.0,0.0 ,0.0,0.0,0.0,0.0,0.0,0.0,100.0, "cocmments",user_id,1);
+        System.out.println("Trip Created with Id : "+trip_id);
 
         Integer customer_id = dbh.add_customer("name","+911232","bas@bas.com","address 1",user_id,111);
         System.out.println("Customer Created with Id : "+customer_id);
@@ -32,8 +29,21 @@ public class TestMain {
         Integer vehicle_id = dbh.add_vehicle("TN 45","MARUTHI", user_id, 111);
         System.out.println("Vehicle Created with Id : "+vehicle_id);
 
-        Integer vehicle_service_id = dbh.add_vehicle_service(vehicle_id,service_particulars_id,1,100.0,111,true,"comments",user_id,111);
-        System.out.println("Vehicle Service Created with Id : "+vehicle_service_id);
+        Integer service_bill_id = dbh.add_service_bill(vehicle_id,"comment",100.0,user_id,111);
+        System.out.println("Service bill Created with Id : " + service_bill_id);
+        
+        
+        Integer service_detail_id = dbh.add_service_detail(service_particulars_id,service_bill_id,1,100.0);
+        System.out.println("Vehicle Service Created with Id : "+ service_detail_id);
+        
+        Integer sms_temp_id = dbh.add_sms_template("Template",user_id,111);
+        System.out.println("SMS Template Created with Id : " + sms_temp_id);
+        
+        Integer sms_queue_id = dbh.add_sms_queue(service_bill_id,"+0123456789","Hello World",user_id,111);
+        System.out.println("SMS Queue entry Created with Id : " + sms_queue_id);
+        
+        Integer temp_param_id = dbh.add_template_parameter("UserName","User.Name",user_id,111);
+        System.out.println("Template Parameter Created with Id : " + temp_param_id);
 
     }	
 }

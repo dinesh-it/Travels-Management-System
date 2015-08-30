@@ -1,7 +1,5 @@
 package DataBaseInterface;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -11,7 +9,6 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-import DataBaseInterface.*;
 import Util.*;
 
 
@@ -60,7 +57,7 @@ public class Handler {
         return user_id;
     }
 
-    public Integer add_trip(int trip_date,int vehicle_id,circle_type trip_circle,double distance,double number_of_hours,double slab_amount,
+    public Integer add_trip(int trip_date,int vehicle_id,String trip_circle,double distance,double number_of_hours,double slab_amount,
             double extra_hours,double extra_distance,double extra_amount,double driver_advance,double office_advance,double check_post_fee,
             double parking_toll_fee,double total_amount,String comments,int created_user_id,int created_epoch ){
         Session session = factory.openSession();
@@ -182,14 +179,13 @@ public class Handler {
 
     }
 
-    public Integer add_vehicle_service(Integer vehicle_id, Integer service_particulars_id, Integer quantity, double amount, int free_checkup_date,
-            boolean is_sms_sent,String comments, Integer created_user_id, Integer created_epoch) {
+    public Integer add_service_detail(Integer service_particulars_id,Integer service_bill_id, Integer quantity, double amount){
         Session session = factory.openSession();
         Transaction tx = null;
         Integer vehicle_service_id = null;
         try{
             tx = session.beginTransaction();
-            VehicleService vs =new VehicleService(vehicle_id,service_particulars_id,quantity,amount,comments,free_checkup_date,is_sms_sent, created_user_id,created_epoch);
+            ServiceDetail vs =new ServiceDetail(service_particulars_id,service_bill_id,quantity,amount);
             vehicle_service_id = (Integer) session.save(vs);
             tx.commit();
         }catch (HibernateException e) {
@@ -262,7 +258,7 @@ public class Handler {
     	Session session = factory.openSession();
     	int last_id = 0;
         try{
-            last_id = (int)session.createQuery("SELECT COALESCE(MAX(id), 0) FROM VehicleService").uniqueResult();
+            last_id = (int)session.createQuery("SELECT COALESCE(MAX(id), 0) FROM ServiceBill").uniqueResult();
         }catch (HibernateException e) {
             e.printStackTrace();
             Logger.log.severe(e.toString());
@@ -272,6 +268,82 @@ public class Handler {
     
         return last_id + 1;
     }
+
+	public Integer add_sms_template(String template, Integer user_id, int created_epoch) {
+		Session session = factory.openSession();
+        Transaction tx = null;
+        Integer template_id = null;
+        try{
+            tx = session.beginTransaction();
+            SMSTemplate sms_template = new SMSTemplate(template,user_id,created_epoch);
+            template_id = (Integer) session.save(sms_template);
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+            Logger.log.severe(e.toString());
+        }finally {
+            session.close();
+        }
+        return template_id;
+	}
+
+	public Integer add_sms_queue(int service_bill_id, String mobile_number, String msg, Integer user_id, int created_epoch) {
+		Session session = factory.openSession();
+        Transaction tx = null;
+        Integer sms_queue_id = null;
+        try{
+            tx = session.beginTransaction();
+            SMSQueue sms_queue = new SMSQueue(service_bill_id,mobile_number,msg,user_id,created_epoch);
+            sms_queue_id = (Integer) session.save(sms_queue);
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+            Logger.log.severe(e.toString());
+        }finally {
+            session.close();
+        }
+		return sms_queue_id;
+	}
+
+	public Integer add_template_parameter(String name, String value_ref, Integer user_id, int created_epoch) {
+		Session session = factory.openSession();
+        Transaction tx = null;
+        Integer temp_param_id = null;
+        try{
+            tx = session.beginTransaction();
+            TemplateParameter temp_param = new TemplateParameter(name,value_ref,user_id,created_epoch);
+            temp_param_id = (Integer) session.save(temp_param);
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+            Logger.log.severe(e.toString());
+        }finally {
+            session.close();
+        }
+        return temp_param_id;
+	}
+
+	public Integer add_service_bill(Integer vehicle_id, String comment, double amt, Integer user_id, int created_epoch) {
+		Session session = factory.openSession();
+        Transaction tx = null;
+        Integer service_bill_id = null;
+        try{
+            tx = session.beginTransaction();
+            ServiceBill bill = new ServiceBill(vehicle_id,comment,amt,user_id,created_epoch);
+            service_bill_id = (Integer) session.save(bill);
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+            Logger.log.severe(e.toString());
+        }finally {
+            session.close();
+        }
+        return service_bill_id;
+	}
 
 
 }

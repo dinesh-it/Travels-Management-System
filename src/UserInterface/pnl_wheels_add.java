@@ -17,7 +17,6 @@ import java.util.regex.Pattern;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.MaskFormatter;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 
@@ -30,8 +29,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.text.ParseException;
-
 import javax.swing.JFormattedTextField;
 
 
@@ -40,7 +37,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 	private JTable tbl_particulars;
 	private JPanel pnl_buttons;
 	private DefaultTableModel mdl_particulars;
-	private Object[] is_multiple ;
+	private Object[] is_multiple;
 	private Handler dbh = Handler.getInstance();
 	private double[] particulars_total;
 	private JLabel lbl_total_value;

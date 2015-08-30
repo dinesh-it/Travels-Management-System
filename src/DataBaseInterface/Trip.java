@@ -1,12 +1,12 @@
 package DataBaseInterface;
-import DataBaseInterface.circle_type;
+//import DataBaseInterface.circle_type;
 
 public class Trip {
 	private int id;
 	private int trip_date;
 	private int vehicle_id;
-	private DataBaseInterface.circle_type trip_circle;
-	//private String trip_circle; 
+	// private DataBaseInterface.circle_type trip_circle;
+	private String trip_circle; 
 	private double distance;
 	private double number_of_hours;
 	private double slab_amount;
@@ -24,7 +24,7 @@ public class Trip {
 	private int updated_user_id;
 	private int updated_epoch;
 	
-public Trip(int trip_date, int vehicle_id, circle_type trip_circle, double distance, double number_of_hours,
+public Trip(int trip_date, int vehicle_id, String trip_circle, double distance, double number_of_hours,
 			double slab_amount, double extra_hours, double extra_distance, double extra_amount,
 			double driver_advance, double office_advance, double check_post_fee, double parking_toll_fee,
 			double total_amount, String comments, int created_user_id, int created_epoch) {
@@ -161,10 +161,10 @@ public int getUpdated_epoch() {
 public void setUpdated_epoch(int updated_epoch) {
 	this.updated_epoch = updated_epoch;
 }
-public DataBaseInterface.circle_type getTrip_circle() {
+public String getTrip_circle() {
 	return trip_circle;
 }
-public void setTrip_circle(DataBaseInterface.circle_type trip_circle) {
+public void setTrip_circle(String trip_circle) {
 	this.trip_circle = trip_circle;
 }
 

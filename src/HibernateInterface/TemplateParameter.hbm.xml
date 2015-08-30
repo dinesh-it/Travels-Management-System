@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name = "DataBaseInterface.TemplateParameter" table = "template_parameter">
+        <meta attribute = "class-description" >
+            This class contains the sms template parameter information
+        </meta>
+        
+        <id name="id" type="int" column="id" >
+            <generator class = "native">
+                <param name="sequence">template_parameter_id_seq</param>
+            </generator>
+        </id>
+
+        <property name="name" column="name" type="string"  not-null="true"/>
+        <property name="value_ref" column="value_ref" type="string"  not-null="true"/>
+        <property name="created_user_id" column="created_user_id" type="int"  not-null="true"/>
+        <property name="created_epoch" column="created_epoch" type="int"  not-null="true"/>
+    </class>
+</hibernate-mapping>

@@ -22,14 +22,15 @@
         <property name="distance" column="distance" type="double" not-null="true"/>
         <property name="number_of_hours" column="number_of_hours" type="double"  not-null="true"/>
 
+		<!--
          <property name="trip_circle" column="trip_circle"  not-null="true">
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">DataBaseInterface.circle_type</param>
             </type>
-        </property>
+		</property>
+		-->
         
-        <!-- For Now 
-        <property name="trip_circle" column="trip_circle" not-null="true"/> -->
+        <property name="trip_circle" column="trip_circle" not-null="true"/>
 
 
         <property name="slab_amount" column="slab_amount" type="double" not-null="true"/>

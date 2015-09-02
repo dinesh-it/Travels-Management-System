@@ -32,8 +32,12 @@
         <mapping resource="HibernateInterface/Vehicle.hbm.xml"/>
         <mapping resource="HibernateInterface/Customer.hbm.xml"/>
         <mapping resource="HibernateInterface/CustomerVehicle.hbm.xml"/>
-        <mapping resource="HibernateInterface/VehicleService.hbm.xml"/>
+        <mapping resource="HibernateInterface/ServiceBill.hbm.xml"/>
+        <mapping resource="HibernateInterface/ServiceDetail.hbm.xml"/>
         <mapping resource="HibernateInterface/ServiceParticulars.hbm.xml"/>
+        <mapping resource="HibernateInterface/TemplateParameter.hbm.xml"/>
+        <mapping resource="HibernateInterface/SMSTemplate.hbm.xml"/>
+        <mapping resource="HibernateInterface/SMSQueue.hbm.xml"/>
 
         
     </session-factory>  

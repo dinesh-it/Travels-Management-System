@@ -17,7 +17,7 @@
 
         <property name="vehicle_id" column="vehicle_id" type="int"  not-null="true"/>
         <property name="comments" column="comments" type="string"/>
-        <property name="total_amt" column="total_amt" type="double"  not-null="true"/>
+        <property name="total_amount" column="total_amount" type="double"  not-null="true"/>
         <property name="free_checkup_date" column="free_checkup_date" type="int"/>
         <property name="free_checkup_completed" column="free_checkup_completed" type="boolean"/>
         <property name = "created_user_id" column = "created_user_id" type = "int"  not-null="true"/>

@@ -2,13 +2,13 @@ package DataBaseInterface;
 
 public class ServiceDetail {
 	private int id;
-    private int service_particular_id;
-    private int service_bill_id;
-    private int quantity;
-    private double amount;
-    
-    public ServiceDetail(){}
-    
+	private int service_particular_id;
+	private int service_bill_id;
+	private int quantity;
+	private double amount;
+
+	public ServiceDetail(){}
+
 	public ServiceDetail(Integer service_particulars_id, Integer service_bill_id,Integer quantity, double amount){
 		this.service_particular_id = service_particulars_id;
 		this.service_bill_id = service_bill_id;

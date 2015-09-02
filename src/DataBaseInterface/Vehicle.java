@@ -7,7 +7,7 @@ public class Vehicle {
 	private String  make;
 	private int  created_epoch;
 	private int created_user_id;
-	
+
 	public Vehicle(){}
 
 	public Vehicle(String vehicle_number, String make, Integer created_user_id, Integer created_epoch) {
@@ -16,7 +16,7 @@ public class Vehicle {
 		this.created_user_id = created_user_id;
 		this.created_epoch = created_epoch;
 	}
-	
+
 	public int getId() {
 		return id;
 	}

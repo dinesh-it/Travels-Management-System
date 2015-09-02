@@ -1,20 +1,20 @@
 package DataBaseInterface;
 
 public class SMSTemplate {
-	
- 	private int id;
+
+	private int id;
 	private String template;
 	private int created_user_id;
 	private int created_epoch;
-	
+
 	public SMSTemplate(){};
-	
-	
+
+
 	public SMSTemplate(String template, Integer user_id, int created_epoch) {
 		this.template = template;
 		this.created_user_id = user_id;
 		this.created_epoch = created_epoch;
-		
+
 	}
 
 
@@ -50,7 +50,7 @@ public class SMSTemplate {
 	public void setCreated_user_id(int created_user_id) {
 		this.created_user_id = created_user_id;
 	}
-	
-	
+
+
 
 }

@@ -1,20 +1,20 @@
 package DataBaseInterface;
 
 public class TemplateParameter {
-	
+
 	private int id;
 	private String name;
 	private String value_ref;
 	private int created_user_id;
 	private int created_epoch;
-	
+
 	public TemplateParameter(){}
 
-	public TemplateParameter(String name2, String value_ref2, Integer user_id, int created_epoch2) {
-		this.name = name2;
-		this.value_ref = value_ref2;
+	public TemplateParameter(String name, String value_ref, Integer user_id, int created_epoch) {
+		this.name = name;
+		this.value_ref = value_ref;
 		this.created_user_id = user_id;
-		this.created_epoch = created_epoch2;
+		this.created_epoch = created_epoch;
 	}
 
 	public int getId() {

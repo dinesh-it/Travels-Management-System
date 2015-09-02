@@ -21,6 +21,7 @@
         <property name="sent" column="sent" type="boolean"  not-null="true"/>
         <property name="created_user_id" column="created_user_id" type="int"  not-null="true"/>
         <property name="created_epoch" column="created_epoch" type="int"  not-null="true"/>
+        <property name="updated_user_id" column="updated_user_id" type="int"/>
         <property name="updated_epoch" column="updated_epoch" type="int"/>
         <property name="sent_epoch" column="sent_epoch" type="int"/>
 

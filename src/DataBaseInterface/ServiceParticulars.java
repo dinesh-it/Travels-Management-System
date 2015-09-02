@@ -2,24 +2,24 @@ package DataBaseInterface;
 
 public class ServiceParticulars {
 	private int id;
-    private String service_name;
-    private boolean is_multiple;
-    private boolean is_free_service;
-    private int created_epoch;
-    private int created_user_id;
-    
-    
-    public ServiceParticulars(){}
-    
+	private String service_name;
+	private boolean is_multiple;
+	private boolean is_free_service;
+	private int created_epoch;
+	private int created_user_id;
+
+
+	public ServiceParticulars(){}
+
 	public ServiceParticulars(String service_name, boolean is_multiple, boolean is_free_service,
 			Integer created_user_id, Integer created_epoch) {
 		this.service_name = service_name;
 		this.is_free_service = is_free_service;
 		this.is_multiple = is_multiple;
-       
+
 		this.created_epoch = created_epoch;
 		this.created_user_id = created_user_id;
-		
+
 	}
 	public int getId() {
 		return id;
@@ -45,7 +45,7 @@ public class ServiceParticulars {
 	public void setIs_free_service(boolean is_free_service) {
 		this.is_free_service = is_free_service;
 	}
-	
+
 	public int getCreated_epoch() {
 		return created_epoch;
 	}

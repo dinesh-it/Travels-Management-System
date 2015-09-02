@@ -9,17 +9,18 @@ public class SMSQueue {
 	private boolean sent;
 	private int created_user_id;
 	private int created_epoch;
+	private int updated_user_id;
 	private int updated_epoch;
 	private int sent_epoch;
-	
+
 	public SMSQueue() {};
-	
-	public SMSQueue(int service_bill_id2, String mobile_number2, String msg, Integer user_id, int created_epoch2) {
-		this.service_bill_id = service_bill_id2;
-		this.mobile_number = mobile_number2;
+
+	public SMSQueue(int service_bill_id, String mobile_number, String msg, Integer user_id, int created_epoch) {
+		this.service_bill_id = service_bill_id;
+		this.mobile_number = mobile_number;
 		this.message = msg;
 		this.created_user_id = user_id;
-		this.created_epoch = created_epoch2;
+		this.created_epoch = created_epoch;
 	}
 
 	public int getId() {
@@ -76,6 +77,12 @@ public class SMSQueue {
 	public void setSent_epoch(int sent_epoch) {
 		this.sent_epoch = sent_epoch;
 	}
-	
+	public int getUpdated_user_id() {
+		return updated_user_id;
+	}
+	public void setUpdated_user_id(int updated_user_id) {
+		this.updated_user_id = updated_user_id;
+	}
+
 
 }

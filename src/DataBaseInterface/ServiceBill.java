@@ -4,18 +4,18 @@ public class ServiceBill {
 	private int id;
 	private int vehicle_id;
 	private String comments;
-	private double total_amt;
+	private double total_amount;
 	private int free_checkup_date;
 	private boolean free_checkup_completed;
 	private int created_epoch;
 	private int created_user_id;
-	
+
 	public ServiceBill() {}
 
 	public ServiceBill(Integer vehicle_id2, String comment2, double amt, Integer user_id, int created_epoch2) {
 		this.setVehicle_id(vehicle_id2);
 		this.setComments(comment2);
-		this.setTotal_amt(amt);
+		this.setTotal_amount(amt);
 		this.setCreated_user_id(user_id);
 		this.setCreated_epoch(created_epoch2);
 	}
@@ -42,14 +42,6 @@ public class ServiceBill {
 
 	public void setComments(String comments) {
 		this.comments = comments;
-	}
-
-	public double getTotal_amt() {
-		return total_amt;
-	}
-
-	public void setTotal_amt(double total_amt) {
-		this.total_amt = total_amt;
 	}
 
 	public int getFree_checkup_date() {
@@ -82,6 +74,14 @@ public class ServiceBill {
 
 	public void setCreated_user_id(int created_user_id) {
 		this.created_user_id = created_user_id;
+	}
+
+	public double getTotal_amount() {
+		return total_amount;
+	}
+
+	public void setTotal_amount(double total_amount) {
+		this.total_amount = total_amount;
 	};	
 
 }

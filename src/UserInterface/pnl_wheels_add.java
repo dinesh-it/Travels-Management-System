@@ -300,9 +300,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 
 			bill_summary = "\n      Name: " + c_name + "                              Mobile: " + c_mobile + "\n" ;
 			bill_summary += "      Vehicle: " + v_num + " " + v_make + "          Date: " + date + "\n\n";
-			String service_details[][];
 			String table_data[][] = this.getTableData(tbl_particulars);
-			service_details = new String[table_data.length][table_data[0].length];
 			// For each service entered
 			for(String row[] : table_data){
 
@@ -376,7 +374,8 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 			}
 
 			boolean sms_remiander = false;
-			for(String row[] : service_details){
+			// For each service entered
+			for(String row[] : table_data){
 
 				// Consider only entered rows
 				if(row[3] != null && ! row[3].equals("")){
@@ -388,7 +387,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 					}
 					double amount = Double.parseDouble(row[3]);
 					dbh.add_service_detail(service_id, bill_id, quantity, amount);
-
+					
 					// set SMS flag if free service available
 					if(service_particular.isIs_free_service()){
 						sms_remiander = true;

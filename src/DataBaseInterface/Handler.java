@@ -437,4 +437,21 @@ public class Handler {
 		if(obj != null) return obj.toString();
 		return "";
 	}
+
+    public List<?> get_sms_queue() {
+		System.out.println("Geeting queue");
+		
+		Session session = factory.openSession();
+		List<?> data = null;
+		try{
+
+			data = session.createQuery("FROM SMSQueue WHERE sent = 'f'").list();
+		}catch (HibernateException e) {
+			e.printStackTrace();
+			Logger.log.severe(e.toString());
+		}finally {
+			session.close();
+		}
+		return data;
+	}
 }

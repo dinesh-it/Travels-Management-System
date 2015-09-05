@@ -265,4 +265,15 @@ INSERT INTO service_particulars (service_name, is_multiple, is_free_service, cre
         ('Automatic Tires Change', true, false, 1439314988, 1), 
         ('Rim Bend Removing', true, false, 1439314988, 1), 
         ('Tire Puncher', true, false, 1439314988, 1),
-        ('Tire Rotation', true, false, 1439314988, 1);  
+        ('Tire Rotation', true, false, 1439314988, 1);
+
+INSERT INTO template_parameter (name, value_ref, created_user_id, created_epoch)
+        VALUES
+        ('CustomerName','Customer.name', 1439314988, 1),
+        ('VehicleNumber','CustomerVehicle.vehicle_number', 1439314988, 1),
+        ('VehicleMake','CustomerVehicle.vehicle_make', 1439314988, 1),
+        ('DueDate','ServiceBill.free_checkup_date', 1439314988, 1);
+
+INSERT INTO sms_template (template, created_user_id, created_epoch)
+        VALUES
+        ('[CustomerName] Your Vehicle number [VehicleNumber] [VehicleMake] is due for free checkup. ABHI WHEELS (wheel Alignment & Emission test center For Petrol &Diesel - Due date [DueDate]', 1439314988, 1);

@@ -7,6 +7,8 @@ public class TripSlab {
 	private int created_user_id;
 	private int created_epoch;
 
+	public TripSlab() {}
+	
 	public TripSlab(int time, int distance, int created_user_id, int created_epoch) {
 		this.time = time;
 		this.distance = distance;

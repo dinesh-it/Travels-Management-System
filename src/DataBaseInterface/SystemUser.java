@@ -8,6 +8,8 @@ public class SystemUser {
 	private String  password;
 	private String  role;
 
+	public SystemUser(){}
+	
 	public SystemUser(String user,String user_name,String email,String password,String role) {
 		this.name = user;
 		this.username = user_name;

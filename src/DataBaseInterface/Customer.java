@@ -8,10 +8,9 @@ public class Customer {
 	private String address;
 	private int created_user_id;
 	private int created_epoch;
-	
+
 	public Customer(){}
-	
-	
+
 	public Customer(String name, String mobile, String email, String address, Integer created_user_id,
 			Integer created_epoch) {
 		this.name = name;
@@ -21,7 +20,7 @@ public class Customer {
 		this.created_user_id= created_user_id;
 		this.created_epoch = created_epoch;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -52,7 +51,7 @@ public class Customer {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-		public int getCreated_epoch() {
+	public int getCreated_epoch() {
 		return created_epoch;
 	}
 	public void setCreated_epoch(int created_epoch) {

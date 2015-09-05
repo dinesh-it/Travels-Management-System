@@ -33,6 +33,7 @@ public class Handler {
 			ex.printStackTrace();
 			throw new ExceptionInInitializerError(ex);
 		}
+
 		Logger.log.info("Handler Instance created !");
 	}	
 
@@ -198,76 +199,6 @@ public class Handler {
 
 	}
 
-
-
-
-	// Table update methods 
-	// Table select methods
-
-	public List list_service_particulars( ){
-
-		Session session = factory.openSession();
-		List sp_list = null;
-		Transaction tx = null;
-		try{
-			tx = session.beginTransaction();
-			sp_list = session.createQuery("FROM ServiceParticulars").list();
-			tx.commit();
-		}catch (HibernateException e) {
-			if (tx!=null) tx.rollback();
-			e.printStackTrace();
-			Logger.log.severe(e.toString());
-		}finally {
-			session.close();
-		}
-		return sp_list;
-	}
-
-	public CustomerVehicle getVehicle(String vehicle_no){
-		Session session = factory.openSession();
-		CustomerVehicle cv = null;
-		try{
-			cv = (CustomerVehicle)session.createQuery("FROM CustomerVehicle WHERE vehicle_number = '" + vehicle_no + "'").uniqueResult();
-		}catch (HibernateException e) {
-			e.printStackTrace();
-			Logger.log.severe(e.toString());
-		}finally {
-			session.close();
-		}
-
-		return cv;
-	}
-
-	public Customer getCustomer(int id){
-		Session session = factory.openSession();
-		Customer cust = null;
-		try{
-			cust = (Customer)session.createQuery("FROM Customer WHERE id = '" + id + "'").uniqueResult();
-		}catch (HibernateException e) {
-			e.printStackTrace();
-			Logger.log.severe(e.toString());
-		}finally {
-			session.close();
-		}
-
-		return cust;
-	}
-
-	public int get_next_bill_id(){
-		Session session = factory.openSession();
-		int last_id = 0;
-		try{
-			last_id = (int)session.createQuery("SELECT COALESCE(MAX(id), 0) FROM ServiceBill").uniqueResult();
-		}catch (HibernateException e) {
-			e.printStackTrace();
-			Logger.log.severe(e.toString());
-		}finally {
-			session.close();
-		}
-
-		return last_id + 1;
-	}
-
 	public Integer add_sms_template(String template, Integer user_id, int created_epoch) {
 		Session session = factory.openSession();
 		Transaction tx = null;
@@ -345,4 +276,165 @@ public class Handler {
 	}
 
 
+
+	// Table update methods 
+	public void update(Object obj){
+		Session sess = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = sess.beginTransaction();
+			sess.update(obj);
+			tx.commit();
+		}
+		catch (Exception e) {
+			if (tx!=null) tx.rollback();
+			Logger.log.severe(e.toString());
+		}
+		finally {
+			sess.close();
+		}
+	}
+
+	public void saveOrUpdate(Object obj){
+		Session sess = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = sess.beginTransaction();
+			sess.saveOrUpdate(obj);
+			tx.commit();
+		}
+		catch (Exception e) {
+			if (tx!=null) tx.rollback();
+			Logger.log.severe(e.toString());
+		}
+		finally {
+			sess.close();
+		}
+	}
+
+	// Table select methods
+	public List<String> list_service_particulars( ){
+
+		Session session = factory.openSession();
+		List<String> sp_list = null;
+		Transaction tx = null;
+		try{
+			tx = session.beginTransaction();
+			sp_list = session.createQuery("FROM ServiceParticulars").list();
+			tx.commit();
+		}catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+			Logger.log.severe(e.toString());
+		}finally {
+			session.close();
+		}
+		return sp_list;
+	}
+
+	public CustomerVehicle getVehicle(String vehicle_no){
+		Session session = factory.openSession();
+		CustomerVehicle cv = null;
+		try{
+			cv = (CustomerVehicle)session.createQuery("FROM CustomerVehicle WHERE vehicle_number = '" + vehicle_no + "'").uniqueResult();
+		}catch (HibernateException e) {
+			e.printStackTrace();
+			Logger.log.severe(e.toString());
+		}finally {
+			session.close();
+		}
+
+		return cv;
+	}
+
+	public Customer getCustomer(int id){
+		Session session = factory.openSession();
+		Customer cust = null;
+		try{
+			cust = (Customer)session.createQuery("FROM Customer WHERE id = '" + id + "'").uniqueResult();
+		}catch (HibernateException e) {
+			e.printStackTrace();
+			Logger.log.severe(e.toString());
+		}finally {
+			session.close();
+		}
+
+		return cust;
+	}
+
+	public int get_next_bill_id(){
+		Session session = factory.openSession();
+		int last_id = 0;
+		try{
+			last_id = (int)session.createQuery("SELECT COALESCE(MAX(id), 0) FROM ServiceBill").uniqueResult();
+		}catch (HibernateException e) {
+			e.printStackTrace();
+			Logger.log.severe(e.toString());
+		}finally {
+			session.close();
+		}
+
+		return last_id + 1;
+	}
+
+	public String get_sms_template(){
+		Session session = factory.openSession();
+		String template = null;
+		try{
+			// Get the latest template
+			template = (String)session.createQuery("SELECT template FROM SMSTemplate ORDER BY id DESC").setMaxResults(1).uniqueResult();
+		}catch (HibernateException e) {
+			e.printStackTrace();
+			Logger.log.severe(e.toString());
+		}finally {
+			session.close();
+		}
+
+		return template;
+	}
+
+	public List<TemplateParameter> get_template_params_list(){
+		List<TemplateParameter> params = null;
+		Session session = factory.openSession();
+		try{
+			params = session.createQuery("FROM TemplateParameter").list();
+		}catch (HibernateException e) {
+			e.printStackTrace();
+			Logger.log.severe(e.toString());
+		}finally {
+			session.close();
+		}
+		return params;
+	}
+
+	public ServiceParticulars get_service_particular(int id){
+		Session session = factory.openSession();
+		ServiceParticulars service_particular = null;
+		try{
+			service_particular = (ServiceParticulars)session.createQuery("FROM ServiceParticulars WHERE id = '" + id + "'").uniqueResult();
+		}catch (HibernateException e) {
+			e.printStackTrace();
+			Logger.log.severe(e.toString());
+		}finally {
+			session.close();
+		}
+
+		return service_particular;
+	}
+
+	public String get_value(String table_name, String field_name, Integer primary_value){
+		Object obj = null;
+		Session session = factory.openSession();
+		try{
+			// Get the latest template
+			obj = session.createQuery("SELECT " + field_name + " FROM " + table_name + " WHERE id = " + primary_value).uniqueResult();
+		}catch (HibernateException e) {
+			e.printStackTrace();
+			Logger.log.severe(e.toString());
+		}finally {
+			session.close();
+		}
+		if(obj != null) return obj.toString();
+		return "";
+	}
 }

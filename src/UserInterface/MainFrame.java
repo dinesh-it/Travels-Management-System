@@ -30,8 +30,8 @@ public class MainFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1;
-	
-	private JPanel pnl_home;
+
+	static public JPanel pnl_home;
 	static 	MainFrame frame;
 
 	/**
@@ -55,24 +55,24 @@ public class MainFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFrame() {
-		
+
 		// Frame Properties
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Travels and Wheels");
 		Toolkit tool=Toolkit.getDefaultToolkit();
 		Dimension dim=tool.getScreenSize();
 		setSize(dim.width,dim.height);
-		
+
 		// Initialize menubar
 		JMenuBar mbr_home=new JMenuBar();
 		mbr_home.setBackground(new Color(119, 136, 153));
 		setJMenuBar(mbr_home);
-		
+
 		// logout button
 		JButton btn_logout=new JButton("Logout");
 		btn_logout.setForeground(new Color(127, 255, 0));
 		btn_logout.setBackground(new Color(72, 61, 139));
-		
+
 		// home button with click action listener 
 		JButton btn_home = new JButton("Home");
 		btn_home.setBackground(new Color(72, 61, 139));
@@ -82,10 +82,10 @@ public class MainFrame extends JFrame {
 				setContentPane(pnl_home);
 			}
 		});
-			
+
 		// Add home and Logout button in menubar
 		mbr_home.add(Box.createHorizontalGlue());
-		
+
 		JButton btn_sms_notification = new JButton("SMS Notifications");
 		btn_sms_notification.setBackground(new Color(72, 61, 139));
 		btn_sms_notification.setForeground(new Color(127, 255, 0));
@@ -96,7 +96,7 @@ public class MainFrame extends JFrame {
 				sms_notify.setVisible(true);
 			}
 		});
-		
+
 		JButton btn_sms_template = new JButton("SMS Template");
 		btn_sms_template.setBackground(new Color(72, 61, 139));
 		btn_sms_template.setForeground(new Color(127, 255, 0));
@@ -106,10 +106,10 @@ public class MainFrame extends JFrame {
 				sms_template.setVisible(true);
 			}
 		});
-		
+
 		mbr_home.add(btn_sms_template);
 		mbr_home.add(btn_sms_notification);
-		
+
 		mbr_home.add(btn_home);
 		mbr_home.add(btn_logout);
 
@@ -148,11 +148,11 @@ public class MainFrame extends JFrame {
 				setContentPane(obj_trip);
 			}
 		});
-		
+
 		btn_new_trip.setForeground(new Color(255, 255, 255));
 		btn_new_trip.setBackground(new Color(219, 112, 147));
 
-		
+
 		// view trip window navigation button
 		JButton btn_view_trip = new JButton("Show Trips Report");
 		/*btn_view_trip.addActionListener(new ActionListener() {
@@ -165,14 +165,14 @@ public class MainFrame extends JFrame {
 		pnl_sub_trip.add(btn_view_trip);
 		btn_view_trip.setForeground(Color.WHITE);
 		btn_view_trip.setBackground(new Color(219, 112, 147));
-		
+
 		// update trip window navigation button
 		JButton btn_update_trip = new JButton("Edit Trip");
 		btn_update_trip.setBounds(89, 172, 251, 42);
 		pnl_sub_trip.add(btn_update_trip);
 		btn_update_trip.setForeground(Color.WHITE);
 		btn_update_trip.setBackground(new Color(219, 112, 147));
-		
+
 		// Group box for Wheel buttons 
 		JPanel pnl_sub_wheel = new JPanel();
 		pnl_sub_wheel.setLayout(null);
@@ -180,12 +180,12 @@ public class MainFrame extends JFrame {
 		pnl_sub_wheel.setBackground(new Color(0, 206, 209));
 		pnl_sub_wheel.setBounds(789, 149, 428, 417);
 		pnl_home.add(pnl_sub_wheel);
-		
+
 		// new wheel window navigation button with action listener
 		JButton btn_new_wheel = new JButton("Add Wheel Bill");
 		btn_new_wheel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				pnl_wheels_add obj_wheels = new pnl_wheels_add();
 				setContentPane(obj_wheels);
 				obj_wheels.setFieldFocus();
@@ -196,21 +196,25 @@ public class MainFrame extends JFrame {
 		btn_new_wheel.setBackground(new Color(219, 112, 147));
 		btn_new_wheel.setBounds(89, 64, 251, 42);
 		pnl_sub_wheel.add(btn_new_wheel);
-		
+
 		// view wheel window navigation button
 		JButton btn_view_wheel = new JButton("Show Wheels Report");
 		btn_view_wheel.setForeground(Color.WHITE);
 		btn_view_wheel.setBackground(new Color(219, 112, 147));
 		btn_view_wheel.setBounds(89, 288, 251, 42);
 		pnl_sub_wheel.add(btn_view_wheel);
-		
+
 		// update wheel window navigation button
 		JButton btn_update_wheel = new JButton("Edit Wheel Bill");
 		btn_update_wheel.setForeground(Color.WHITE);
 		btn_update_wheel.setBackground(new Color(219, 112, 147));
 		btn_update_wheel.setBounds(89, 172, 251, 42);
 		pnl_sub_wheel.add(btn_update_wheel);
-		
+
 		setVisible(true);
+	}
+
+	public static JFrame get_main_frame(){
+		return frame;
 	}
 }

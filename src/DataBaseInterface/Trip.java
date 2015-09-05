@@ -24,6 +24,8 @@ public class Trip {
 	private int updated_user_id;
 	private int updated_epoch;
 
+	public Trip() {}
+	
 	public Trip(int trip_date, int vehicle_id, String trip_circle, double distance, double number_of_hours,
 			double slab_amount, double extra_hours, double extra_distance, double extra_amount,
 			double driver_advance, double office_advance, double check_post_fee, double parking_toll_fee,

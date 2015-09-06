@@ -5,6 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -459,13 +461,12 @@ public class Handler {
 		return "";
 	}
 
-	public List<?> get_sms_queue() {
+    public List<?> get_sms_queue() {
 		System.out.println("Geeting queue");
 
 		Session session = factory.openSession();
 		List<?> data = null;
 		try{
-
 			data = session.createQuery("FROM SMSQueue WHERE sent = 'f'").list();
 		}catch (HibernateException e) {
 			e.printStackTrace();
@@ -509,3 +510,40 @@ public class Handler {
 		return result;
 	}
 }
+
+public List get_bill_details(){
+	Session session = factory.openSession();
+	Transaction tx = null;
+	Integer service_bill_id = null;
+
+	List result = null;
+	try{
+		// Query have to be optimize (instead of get all columns, should fetch required columns)
+		//fetching particular columns throws error. 
+		SQLQuery query = session.createSQLQuery(
+				"SELECT *" 
+				+ " FROM service_detail as sd"
+				+ " JOIN service_bill as sb ON sd.service_bill_id = sb.id"
+				+ " JOIN service_particulars as sp ON sd.service_particular_id = sp.id"
+				+ " JOIN customer_vehicle as veh ON sb.vehicle_id = veh.id"
+				+ " JOIN customer as cus ON veh.customer_id = cus.id order by sb.id"
+				);
+		query.addEntity(ServiceDetail.class);
+		query.addEntity(ServiceBill.class);
+		query.addEntity(ServiceParticulars.class);
+		query.addEntity(CustomerVehicle.class);
+		query.addEntity(Customer.class);
+
+		result = query.list();
+
+	}catch (HibernateException e) {
+		if (tx!=null) tx.rollback();
+		e.printStackTrace();
+		Logger.log.severe(e.toString());
+	}finally {
+		session.close();
+	}
+	return result;
+
+}
+

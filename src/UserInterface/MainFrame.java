@@ -31,9 +31,6 @@ public class MainFrame extends JFrame {
 	static public JPanel pnl_home;
 	static 	MainFrame frame;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 
         ProgressBar.showProgress("Loading Components....", 10);
@@ -247,6 +244,12 @@ public class MainFrame extends JFrame {
 
 		pnl_sub_wheel.add(btn_view_wheel);
 
+		btn_view_wheel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pnl_wheels_view obj_wheels_view = new pnl_wheels_view();
+				setContentPane(obj_wheels_view);
+				}
+			});
 		// update wheel window navigation button
 		JButton btn_update_wheel = new JButton("Edit Wheel Bill");
 		btn_update_wheel.setFont(btn_font);

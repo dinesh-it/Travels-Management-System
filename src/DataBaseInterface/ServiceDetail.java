@@ -9,8 +9,8 @@ public class ServiceDetail {
 
 	public ServiceDetail(){}
 
-	public ServiceDetail(Integer service_particulars_id, Integer service_bill_id,Integer quantity, double amount){
-		this.service_particular_id = service_particulars_id;
+	public ServiceDetail(Integer service_particular_id, Integer service_bill_id,Integer quantity, double amount){
+		this.service_particular_id = service_particular_id;
 		this.service_bill_id = service_bill_id;
 		this.quantity = quantity;
 		this.amount = amount;

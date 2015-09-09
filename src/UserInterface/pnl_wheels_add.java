@@ -32,6 +32,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextArea;
 
@@ -248,14 +252,14 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 
 		tbl_particulars.getModel().addTableModelListener(this);
 
-		JLabel lbl_comment = new JLabel("Comments:");
+		JLabel lbl_comment = new JLabel("Remarks \nby technician");
 		lbl_comment.setFont(new Font("Dialog", Font.BOLD, 12));
-		lbl_comment.setBounds(270, 477, 99, 15);
+		lbl_comment.setBounds(270, 477, 172, 26);
 		add(lbl_comment);
 
 		txt_comment = new JTextArea();
 		txt_comment.setBorder(new LineBorder(new Color(0, 0, 0)));
-		txt_comment.setBounds(360, 477, 417, 49);
+		txt_comment.setBounds(435, 476, 393, 49);
 		add(txt_comment);
 
 		txt_vehicle_no.addFocusListener(new FocusAdapter() {
@@ -275,7 +279,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 
 	private void save_bill(){
 
-		// Atleast one perticular should be entered to proceed bill saving
+		// At-least one particular should be entered to proceed bill saving
 		double total_amount = Double.parseDouble(lbl_total_value.getText());
 		if(total_amount <= 0){
 			alert("No bill entries to save");
@@ -387,7 +391,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 					}
 					double amount = Double.parseDouble(row[3]);
 					dbh.add_service_detail(service_id, bill_id, quantity, amount);
-					
+
 					// set SMS flag if free service available
 					if(service_particular.isIs_free_service()){
 						sms_remiander = true;
@@ -398,14 +402,18 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 			// Create SMS queue if flag set
 			if(sms_remiander){
 				// date + 30 days
-				service_bill.setFree_checkup_date(date_epoch + (60 * 60 * 24 * 30));
+				// 1 day * 29 days
+				service_bill.setFree_checkup_date(date_epoch + (86400 * 29));
 				dbh.update(service_bill);
 
 				String message = this.process_template(bill_id, customer_id, vehicle_id);
 				dbh.add_sms_queue(bill_id, c_mobile, message, 1, Time.now());
 			}
 
-			alert("Service Bill saved successfully");
+			// Wheel bill print preview and print 
+			wheel_bill_print bill_print = new wheel_bill_print(bill_id);
+			bill_print.setVisible(true);
+
 			MainFrame.get_main_frame().setContentPane(MainFrame.pnl_home);
 		}
 		catch(Exception e){

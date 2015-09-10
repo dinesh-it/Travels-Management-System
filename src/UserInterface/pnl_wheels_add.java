@@ -59,10 +59,6 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 	private CustomerVehicle vehicle;
 	private JButton btn_save_bill; 
 
-	String vehicle_number_pattern = "^[A-Za-z]{2}\\d{1,2}[A-Za-z]{0,3}\\d{1,4}$";
-	String mobile_number_pattern = "^(\\+91)?\\d{10}$";
-	String date_pattern = "^\\d{1,2}/\\d{1,2}/\\d{4}$";
-
 	public pnl_wheels_add() {
 		setSize(1362,715);
 		setLayout(null);
@@ -463,7 +459,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		c_name = txt_customer_name.getText();
 		c_mobile = txt_mobile_no.getText();
 		date = txt_date.getText();
-		if(!v_num.matches(vehicle_number_pattern)){
+		if(!v_num.matches(Formatter.VEHICLE_PATTERN)){
 			alert("Vehicle number is invalid, Please correct it");
 			txt_vehicle_no.requestFocus();
 			return false;
@@ -478,12 +474,12 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 			txt_customer_name.requestFocus();
 			return false;
 		}
-		if(!c_mobile.matches(mobile_number_pattern)){
+		if(!c_mobile.matches(Formatter.MOBILE_NUMBER_PATTERN)){
 			alert("Mobile number is invalid, Please correct it");
 			txt_mobile_no.requestFocus();
 			return false;
 		}
-		if(!date.matches(date_pattern)){
+		if(!date.matches(Formatter.DATE_PATTERN)){
 			alert("Please enter a valid date in dd/mm/yyyy format");
 			txt_date.requestFocus();
 			return false;
@@ -493,7 +489,6 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 	}
 
 	private void populate_fields(String vehicle_no){
-		txt_vehicle_no.setText(vehicle_no);
 		vehicle = dbh.getVehicle(vehicle_no);
 		if(vehicle != null){
 			txt_vehicle_make.setText(vehicle.getVehicle_make());
@@ -501,6 +496,12 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 			txt_customer_name.setText(customer.getName());
 			txt_mobile_no.setText(customer.getMobile());
 		}
+		else{
+			txt_vehicle_make.setText("");
+			txt_customer_name.setText("");
+			txt_mobile_no.setText("");
+		}
+		txt_vehicle_no.setText(Formatter.getFormattedVehicleNo(vehicle_no));
 	}
 
 	@Override

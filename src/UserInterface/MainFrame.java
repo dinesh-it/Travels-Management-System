@@ -25,7 +25,6 @@ import java.awt.SystemColor;
 import javax.swing.UIManager;
 import java.awt.Cursor;
 
-
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1;
@@ -37,11 +36,14 @@ public class MainFrame extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+
+        ProgressBar.showProgress("Loading Components....", 10);
+        Handler.getInstance();
+        ProgressBar.showProgress("Launching Application..", ProgressBar.MAXIMUM_VALUE);
+        
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Handler.getInstance();
-					//TODO Add progress bar later , if it takes more time
 					frame = new MainFrame();
 				} catch (Exception e) {
 					e.printStackTrace();

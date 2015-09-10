@@ -10,7 +10,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 import Util.*;
-
+import UserInterface.ProgressBar;
 
 // This class will provide database handler across the application
 public class Handler {
@@ -23,17 +23,18 @@ public class Handler {
 
 	private Handler() {			
 		try{	
-
+			ProgressBar.showProgress("Initializing configurations....",20);
 			Configuration configuration = new Configuration().configure();
+			ProgressBar.showProgress("Initializing service registry builder....",30);
 			StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().
 					applySettings(configuration.getProperties());
+			ProgressBar.showProgress("Building service factory....",30);
 			factory = configuration.buildSessionFactory(builder.build());
 		}catch (Throwable ex) {
 			Logger.log.severe("Failed to create sessionFactory object." + ex.toString());
 			ex.printStackTrace();
 			throw new ExceptionInInitializerError(ex);
 		}
-
 		Logger.log.info("Handler Instance created !");
 	}	
 

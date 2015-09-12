@@ -10,6 +10,7 @@ public class Formatter {
 	public static String VEHICLE_PATTERN = "^([A-Za-z]{2})(\\d{1,2})([A-Za-z]{0,3})(\\d{1,4})$";
 	public static String MOBILE_NUMBER_PATTERN = "^(\\+91)?\\d{10}$";
 	public static String DATE_PATTERN = "^\\d{1,2}/\\d{1,2}/\\d{4}$";
+	public static String TIME_PATTERN = "^\\d{1,2}:\\d{1,2}\\s[AaPp][Mm]$";
 	
 	public static String getCurrencyFormat(double value){
 		NumberFormat format =  NumberFormat.getInstance();

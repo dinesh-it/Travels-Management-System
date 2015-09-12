@@ -1,6 +1,8 @@
 package DataBaseInterface;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -9,7 +11,6 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 
 import Util.*;
@@ -313,6 +314,22 @@ public class Handler {
 		}
 		finally {
 			sess.close();
+		}
+	}
+
+	public void update_tire(){
+		List<ServiceParticulars> sp_list = this.list_service_particulars();
+
+		for(ServiceParticulars sp : sp_list){
+			String service_name = sp.getService_name();
+			Pattern p = Pattern.compile("(.*)([Tt])ire(.*)");
+			Matcher m = p.matcher(service_name);
+			if (m.find()) {
+				service_name = m.replaceFirst("$1$2yre$3");
+				sp.setService_name(service_name);
+				this.update(sp);
+				Logger.log.info(service_name + " changed");
+			}
 		}
 	}
 

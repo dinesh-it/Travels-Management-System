@@ -57,70 +57,70 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 	private JButton btn_save_bill; 
 
 	public pnl_wheels_add() {
-		setSize(1362,715);
+		setSize(982,648);
 		setLayout(null);
 
 		JPanel pnl_customer_details = new JPanel();
 		pnl_customer_details.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Customer Details", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		pnl_customer_details.setBounds(85, 40, 1189, 128);
+		pnl_customer_details.setBounds(17, 40, 941, 128);
 		add(pnl_customer_details);
 		pnl_customer_details.setLayout(null);
 		
 		int now_epoch = Time.now();
 
 		JLabel lbl_mobile_no = new JLabel("Mobile No");
-		lbl_mobile_no.setBounds(499, 41, 80, 15);
+		lbl_mobile_no.setBounds(379, 41, 80, 15);
 		pnl_customer_details.add(lbl_mobile_no);
 
 		txt_mobile_no = new JTextField();
 		txt_mobile_no.setFont(new Font("Dialog", Font.BOLD, 15));
-		txt_mobile_no.setBounds(597, 37, 172, 24);
+		txt_mobile_no.setBounds(477, 37, 172, 24);
 		pnl_customer_details.add(txt_mobile_no);
 		txt_mobile_no.setColumns(10);
 
 		JLabel lbl_customer_name = new JLabel("Customer Name");
 		lbl_customer_name.setFont(new Font("Dialog", Font.BOLD, 12));
-		lbl_customer_name.setBounds(462, 72, 117, 24);
+		lbl_customer_name.setBounds(342, 72, 117, 24);
 		pnl_customer_details.add(lbl_customer_name);
 
 		txt_customer_name = new JTextField();
 		txt_customer_name.setFont(new Font("Dialog", Font.BOLD, 15));
-		txt_customer_name.setBounds(597, 73, 172, 24);
+		txt_customer_name.setBounds(477, 73, 172, 24);
 		pnl_customer_details.add(txt_customer_name);
 		txt_customer_name.setColumns(10);
 
 		JLabel lbl_vehicle_no = new JLabel("Vehicle No");
-		lbl_vehicle_no.setBounds(107, 42, 80, 15);
+		lbl_vehicle_no.setBounds(51, 42, 80, 15);
 		pnl_customer_details.add(lbl_vehicle_no);
 
 		JLabel lbl_vehicle_make = new JLabel("Vehicle Make");
-		lbl_vehicle_make.setBounds(94, 78, 93, 15);
+		lbl_vehicle_make.setBounds(38, 78, 93, 15);
 		pnl_customer_details.add(lbl_vehicle_make);
 
 		txt_vehicle_make = new JTextField();
 		txt_vehicle_make.setFont(new Font("Dialog", Font.BOLD, 15));
-		txt_vehicle_make.setBounds(193, 74, 163, 23);
+		txt_vehicle_make.setBounds(137, 74, 163, 23);
 		pnl_customer_details.add(txt_vehicle_make);
 		txt_vehicle_make.setColumns(10);
 
 		JLabel lbl_date = new JLabel("Date");
-		lbl_date.setBounds(908, 39, 41, 15);
+		lbl_date.setBounds(724, 39, 41, 15);
 		pnl_customer_details.add(lbl_date);
 
 		txt_date = new JTextField();
 		txt_date.setFont(new Font("Dialog", Font.BOLD, 15));
-		txt_date.setBounds(951, 35, 132, 24);
+		txt_date.setBounds(767, 35, 132, 24);
 		pnl_customer_details.add(txt_date);
 		txt_date.setText(Time.get_date(now_epoch));
 		txt_date.setColumns(10);
 
 		JLabel lbl_time = new JLabel("Time");
-		lbl_time.setBounds(910, 75, 33, 15);
+		lbl_time.setBounds(726, 75, 33, 15);
 		pnl_customer_details.add(lbl_time);
 
 		txt_time = new JTextField();
 		txt_time.setFont(new Font("Dialog", Font.BOLD, 15));
-		txt_time.setBounds(951, 73, 132, 24);
+		txt_time.setBounds(767, 73, 132, 24);
 		pnl_customer_details.add(txt_time);
 		txt_time.setColumns(10);
 		txt_time.setText(Time.get_date(now_epoch, "hh:mm a"));
@@ -128,7 +128,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		txt_vehicle_no = new JFormattedTextField();
 		txt_vehicle_no.setText("KA");
 		txt_vehicle_no.setFont(new Font("Dialog", Font.BOLD, 15));
-		txt_vehicle_no.setBounds(193, 39, 163, 24);
+		txt_vehicle_no.setBounds(137, 39, 163, 24);
 		pnl_customer_details.add(txt_vehicle_no);
 
 
@@ -163,12 +163,12 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		mdl_particulars.setColumnIdentifiers(columns);
 
 		JScrollPane tbl_particulars_main = new JScrollPane(tbl_particulars);
-		tbl_particulars_main.setBounds(270, 180, 804, 278);
+		tbl_particulars_main.setBounds(82, 180, 804, 278);
 		add(tbl_particulars_main);
 
 		pnl_buttons = new JPanel();
 		pnl_buttons.setBorder(new LineBorder(new Color(0, 0, 0)));
-		pnl_buttons.setBounds(440, 568, 458, 76);
+		pnl_buttons.setBounds(244, 546, 458, 76);
 		add(pnl_buttons);
 		pnl_buttons.setLayout(null);
 
@@ -232,12 +232,12 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 
 		JLabel lbl_total = new JLabel("Total (Rs)");
 		lbl_total.setFont(new Font("Dialog", Font.BOLD, 17));
-		lbl_total.setBounds(837, 477, 93, 15);
+		lbl_total.setBounds(649, 477, 93, 15);
 		add(lbl_total);
 
 		lbl_total_value = new JLabel("0.0");
 		lbl_total_value.setFont(new Font("Dialog", Font.BOLD, 17));
-		lbl_total_value.setBounds(942, 477, 132, 15);
+		lbl_total_value.setBounds(754, 477, 132, 15);
 		add(lbl_total_value);
 
 
@@ -245,13 +245,24 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 
 		JLabel lbl_comment = new JLabel("Remarks \nby technician");
 		lbl_comment.setFont(new Font("Dialog", Font.BOLD, 12));
-		lbl_comment.setBounds(270, 477, 172, 26);
+		lbl_comment.setBounds(82, 477, 172, 26);
 		add(lbl_comment);
 
 		txt_comment = new JTextArea();
 		txt_comment.setBorder(new LineBorder(new Color(0, 0, 0)));
-		txt_comment.setBounds(435, 476, 393, 49);
+		txt_comment.setBounds(247, 476, 393, 49);
 		add(txt_comment);
+
+		JButton btnTestBill = new JButton("Test Bill");
+		btnTestBill.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Wheel bill print preview and print 
+				wheel_bill_print bill_print = new wheel_bill_print(18);
+				bill_print.setVisible(true);
+			}
+		});
+		btnTestBill.setBounds(733, 570, 117, 25);
+		add(btnTestBill);
 
 		txt_vehicle_no.addFocusListener(new FocusAdapter() {
 			@Override

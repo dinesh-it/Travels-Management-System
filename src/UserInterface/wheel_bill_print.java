@@ -3,7 +3,10 @@ package UserInterface;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.MediaPrintableArea;
+import javax.print.attribute.standard.MediaSizeName;
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
 import javax.swing.border.LineBorder;
@@ -196,7 +199,7 @@ public class wheel_bill_print extends JFrame {
 
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-		
+
 		JTableHeader table_header = tbl_particulars.getTableHeader();
 		table_header.setFont(new Font("Dialog", Font.BOLD, 12));
 
@@ -367,18 +370,23 @@ public class wheel_bill_print extends JFrame {
 		PrinterJob pjob = PrinterJob.getPrinterJob();
 		PageFormat preformat = pjob.defaultPage();
 		preformat.setOrientation(PageFormat.PORTRAIT);
-		PageFormat postformat = pjob.pageDialog(preformat);
-		//If user does not hit cancel then print.
-		if (preformat != postformat) {
-			//Set print component
-			pjob.setPrintable(new Printer(this), postformat);
-			if (pjob.printDialog()) {
-				try {
-					pjob.print();
-				} catch (PrinterException e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(this, "Print not succeed!!! Someting went wrong!");
-				}
+
+		PrintRequestAttributeSet printRequestAttrSet = new HashPrintRequestAttributeSet();
+		printRequestAttrSet.add(MediaSizeName.ISO_A5);
+		printRequestAttrSet.add(new MediaPrintableArea((float)0.0,(float)0.0,350,500, MediaPrintableArea.MM));
+
+		// To show page setup dialog
+		//PageFormat postformat = pjob.pageDialog(preformat);
+		
+		//Set print component
+		// Shows printer select dialog
+		pjob.setPrintable(new Printer(this), preformat);
+		if (pjob.printDialog(printRequestAttrSet)) {
+			try {
+				pjob.print(printRequestAttrSet);
+			} catch (PrinterException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Print not succeed!!! Someting went wrong!");
 			}
 		}
 	}

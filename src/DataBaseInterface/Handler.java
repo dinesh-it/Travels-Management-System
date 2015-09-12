@@ -9,6 +9,9 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+
 import Util.*;
 import UserInterface.ProgressBar;
 
@@ -17,7 +20,7 @@ public class Handler {
 	private static SessionFactory factory;
 	private static 	Handler dbh = new Handler();
 
-	public static Handler getInstance( ) {
+	public static Handler getInstance() {
 		return dbh;
 	}
 
@@ -314,10 +317,10 @@ public class Handler {
 	}
 
 	// Table select methods
-	public List<String> list_service_particulars( ){
+	public List<ServiceParticulars> list_service_particulars( ){
 
 		Session session = factory.openSession();
-		List<String> sp_list = null;
+		List<ServiceParticulars> sp_list = null;
 		Transaction tx = null;
 		try{
 			tx = session.beginTransaction();
@@ -439,9 +442,9 @@ public class Handler {
 		return "";
 	}
 
-    public List<?> get_sms_queue() {
+	public List<?> get_sms_queue() {
 		System.out.println("Geeting queue");
-		
+
 		Session session = factory.openSession();
 		List<?> data = null;
 		try{
@@ -454,5 +457,38 @@ public class Handler {
 			session.close();
 		}
 		return data;
+	}
+
+	public List<Object[]> get_single_bill_detail(int bill_id){
+		Session session = factory.openSession();
+
+		List<Object[]> result = null;
+		try{
+			// Query have to be optimize (instead of get all columns, should fetch required columns)
+			//fetching particular columns throws error. 
+			SQLQuery query = session.createSQLQuery(
+					"SELECT *" 
+							+ " FROM service_particulars as sp "
+							+ " JOIN service_detail as sd ON sp.id = sd.service_particular_id "
+							+ " JOIN service_bill as sb ON sd.service_bill_id = sb.id"
+							+ " JOIN customer_vehicle as veh ON sb.vehicle_id = veh.id"
+							+ " JOIN customer as cus ON veh.customer_id = cus.id"
+							+ " WHERE sb.id = " + bill_id + " OR sb.id IS NULL"
+					);
+			query.addEntity(ServiceParticulars.class);
+			query.addEntity(ServiceDetail.class);
+			query.addEntity(ServiceBill.class);
+			query.addEntity(CustomerVehicle.class);
+			query.addEntity(Customer.class);
+
+			result = query.list();
+
+		}catch (HibernateException e) {
+			e.printStackTrace();
+			Logger.log.severe(e.toString());
+		}finally {
+			session.close();
+		}
+		return result;
 	}
 }

@@ -32,9 +32,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.print.PageFormat;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextArea;
@@ -45,7 +42,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTextField txt_mobile_no, txt_customer_name, txt_vehicle_make, txt_date, txt_bill_no;
+	private JTextField txt_mobile_no, txt_customer_name, txt_vehicle_make, txt_date, txt_time;
 	private JTextArea txt_comment;
 	private JTable tbl_particulars;
 	private JPanel pnl_buttons;
@@ -60,85 +57,83 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 	private JButton btn_save_bill; 
 
 	public pnl_wheels_add() {
-		setSize(1362,715);
+		setSize(982,648);
 		setLayout(null);
 
 		JPanel pnl_customer_details = new JPanel();
 		pnl_customer_details.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Customer Details", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		pnl_customer_details.setBounds(85, 40, 1189, 128);
+		pnl_customer_details.setBounds(17, 40, 941, 128);
 		add(pnl_customer_details);
 		pnl_customer_details.setLayout(null);
+		
+		int now_epoch = Time.now();
 
 		JLabel lbl_mobile_no = new JLabel("Mobile No");
-		lbl_mobile_no.setBounds(499, 41, 80, 15);
+		lbl_mobile_no.setBounds(379, 41, 80, 15);
 		pnl_customer_details.add(lbl_mobile_no);
 
 		txt_mobile_no = new JTextField();
 		txt_mobile_no.setFont(new Font("Dialog", Font.BOLD, 15));
-		txt_mobile_no.setBounds(597, 37, 172, 24);
+		txt_mobile_no.setBounds(477, 37, 172, 24);
 		pnl_customer_details.add(txt_mobile_no);
 		txt_mobile_no.setColumns(10);
 
 		JLabel lbl_customer_name = new JLabel("Customer Name");
 		lbl_customer_name.setFont(new Font("Dialog", Font.BOLD, 12));
-		lbl_customer_name.setBounds(462, 72, 117, 24);
+		lbl_customer_name.setBounds(342, 72, 117, 24);
 		pnl_customer_details.add(lbl_customer_name);
 
 		txt_customer_name = new JTextField();
 		txt_customer_name.setFont(new Font("Dialog", Font.BOLD, 15));
-		txt_customer_name.setBounds(597, 73, 172, 24);
+		txt_customer_name.setBounds(477, 73, 172, 24);
 		pnl_customer_details.add(txt_customer_name);
 		txt_customer_name.setColumns(10);
 
 		JLabel lbl_vehicle_no = new JLabel("Vehicle No");
-		lbl_vehicle_no.setBounds(107, 42, 80, 15);
+		lbl_vehicle_no.setBounds(51, 42, 80, 15);
 		pnl_customer_details.add(lbl_vehicle_no);
 
 		JLabel lbl_vehicle_make = new JLabel("Vehicle Make");
-		lbl_vehicle_make.setBounds(94, 78, 93, 15);
+		lbl_vehicle_make.setBounds(38, 78, 93, 15);
 		pnl_customer_details.add(lbl_vehicle_make);
 
 		txt_vehicle_make = new JTextField();
 		txt_vehicle_make.setFont(new Font("Dialog", Font.BOLD, 15));
-		txt_vehicle_make.setBounds(193, 74, 163, 23);
+		txt_vehicle_make.setBounds(137, 74, 163, 23);
 		pnl_customer_details.add(txt_vehicle_make);
 		txt_vehicle_make.setColumns(10);
 
 		JLabel lbl_date = new JLabel("Date");
-		lbl_date.setBounds(908, 39, 41, 15);
+		lbl_date.setBounds(724, 39, 41, 15);
 		pnl_customer_details.add(lbl_date);
 
 		txt_date = new JTextField();
 		txt_date.setFont(new Font("Dialog", Font.BOLD, 15));
-		txt_date.setBounds(951, 35, 132, 24);
+		txt_date.setBounds(767, 35, 132, 24);
 		pnl_customer_details.add(txt_date);
-		txt_date.setText(Time.get_date(Time.now()));
+		txt_date.setText(Time.get_date(now_epoch));
 		txt_date.setColumns(10);
 
-		JLabel lbl_bill_no = new JLabel("Bill No");
-		lbl_bill_no.setBounds(905, 75, 44, 15);
-		pnl_customer_details.add(lbl_bill_no);
+		JLabel lbl_time = new JLabel("Time");
+		lbl_time.setBounds(726, 75, 33, 15);
+		pnl_customer_details.add(lbl_time);
 
-		txt_bill_no = new JTextField();
-		txt_bill_no.setEditable(false);
-		txt_bill_no.setFont(new Font("Dialog", Font.BOLD, 15));
-		txt_bill_no.setBounds(951, 73, 132, 24);
-		pnl_customer_details.add(txt_bill_no);
-		txt_bill_no.setColumns(10);
-		txt_bill_no.setText(dbh.get_next_bill_id() + "");
+		txt_time = new JTextField();
+		txt_time.setFont(new Font("Dialog", Font.BOLD, 15));
+		txt_time.setBounds(767, 73, 132, 24);
+		pnl_customer_details.add(txt_time);
+		txt_time.setColumns(10);
+		txt_time.setText(Time.get_date(now_epoch, "hh:mm a"));
 
 		txt_vehicle_no = new JFormattedTextField();
 		txt_vehicle_no.setText("KA");
 		txt_vehicle_no.setFont(new Font("Dialog", Font.BOLD, 15));
-		txt_vehicle_no.setBounds(193, 39, 163, 24);
+		txt_vehicle_no.setBounds(137, 39, 163, 24);
 		pnl_customer_details.add(txt_vehicle_no);
 
 
 		tbl_particulars = new JTable(){
 
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
 			public boolean isCellEditable(int row, int column) { 
@@ -168,13 +163,12 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		mdl_particulars.setColumnIdentifiers(columns);
 
 		JScrollPane tbl_particulars_main = new JScrollPane(tbl_particulars);
-		tbl_particulars_main.setBounds(270, 180, 804, 285);
+		tbl_particulars_main.setBounds(82, 180, 804, 278);
 		add(tbl_particulars_main);
-
 
 		pnl_buttons = new JPanel();
 		pnl_buttons.setBorder(new LineBorder(new Color(0, 0, 0)));
-		pnl_buttons.setBounds(440, 568, 458, 76);
+		pnl_buttons.setBounds(244, 546, 458, 76);
 		add(pnl_buttons);
 		pnl_buttons.setLayout(null);
 
@@ -192,6 +186,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		btn_clear_form.setBounds(259, 24, 117, 25);
 		pnl_buttons.add(btn_clear_form);
 
+		dbh.update_tire();
 		List<?> sp_list = dbh.list_service_particulars();
 
 		particulars_total = new double[sp_list.size() + 1];
@@ -237,12 +232,12 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 
 		JLabel lbl_total = new JLabel("Total (Rs)");
 		lbl_total.setFont(new Font("Dialog", Font.BOLD, 17));
-		lbl_total.setBounds(837, 477, 93, 15);
+		lbl_total.setBounds(649, 477, 93, 15);
 		add(lbl_total);
 
 		lbl_total_value = new JLabel("0.0");
 		lbl_total_value.setFont(new Font("Dialog", Font.BOLD, 17));
-		lbl_total_value.setBounds(942, 477, 132, 15);
+		lbl_total_value.setBounds(754, 477, 132, 15);
 		add(lbl_total_value);
 
 
@@ -250,13 +245,24 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 
 		JLabel lbl_comment = new JLabel("Remarks \nby technician");
 		lbl_comment.setFont(new Font("Dialog", Font.BOLD, 12));
-		lbl_comment.setBounds(270, 477, 172, 26);
+		lbl_comment.setBounds(82, 477, 172, 26);
 		add(lbl_comment);
 
 		txt_comment = new JTextArea();
 		txt_comment.setBorder(new LineBorder(new Color(0, 0, 0)));
-		txt_comment.setBounds(435, 476, 393, 49);
+		txt_comment.setBounds(247, 476, 393, 49);
 		add(txt_comment);
+
+		JButton btnTestBill = new JButton("Test Bill");
+		btnTestBill.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Wheel bill print preview and print 
+				wheel_bill_print bill_print = new wheel_bill_print(18);
+				bill_print.setVisible(true);
+			}
+		});
+		btnTestBill.setBounds(733, 570, 117, 25);
+		add(btnTestBill);
 
 		txt_vehicle_no.addFocusListener(new FocusAdapter() {
 			@Override
@@ -284,7 +290,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 
 		tbl_particulars.getModel().setValueAt("1", 0, 0);
 		try {
-			String v_num, v_make, c_name, c_mobile, date, comment;
+			String v_num, v_make, c_name, c_mobile, date, comment, time;
 			int vehicle_id, customer_id = 0;
 			v_num = txt_vehicle_no.getText().replace(" ", "");
 			v_make = txt_vehicle_make.getText();
@@ -292,6 +298,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 			c_mobile = txt_mobile_no.getText();
 			date = txt_date.getText();
 			comment = txt_comment.getText();
+			time = txt_time.getText();
 
 			// Validation
 			if(!this.validate_details()) return;
@@ -299,7 +306,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 			String bill_summary;
 
 			bill_summary = "\n      Name: " + c_name + "                              Mobile: " + c_mobile + "\n" ;
-			bill_summary += "      Vehicle: " + v_num + " " + v_make + "          Date: " + date + "\n\n";
+			bill_summary += "      Vehicle: " + v_num + " " + v_make + "       Date Time: " + date + " " + time + "\n\n";
 			String table_data[][] = this.getTableData(tbl_particulars);
 			// For each service entered
 			for(String row[] : table_data){
@@ -327,6 +334,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 			}
 
 			// DB Operations
+			int date_epoch = Time.get_epoch(date + " " + time, "dd/MM/yyyy hh:mm a");
 			if(vehicle != null){
 				vehicle_id = vehicle.getId();
 				if(customer != null){
@@ -334,7 +342,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 					// customer for a vehicle is changed
 					if(!customer.getName().equalsIgnoreCase(c_name) && !customer.getMobile().equalsIgnoreCase(c_mobile)){
 						customer = null;
-						customer_id = dbh.add_customer(c_name, c_mobile, " ", " ", 1, Time.now());
+						customer_id = dbh.add_customer(c_name, c_mobile, " ", " ", 1, date_epoch);
 						vehicle.setCustomer_id(customer_id);
 						vehicle.setVehicle_make(v_make);
 						dbh.update(vehicle);
@@ -354,17 +362,17 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 					}
 				}
 				else{
-					customer_id = dbh.add_customer(c_name, c_mobile, " ", " ", 1, Time.now());
+					customer_id = dbh.add_customer(c_name, c_mobile, " ", " ", 1, date_epoch);
 					vehicle.setCustomer_id(customer_id);
 					dbh.update(vehicle);
 				}
 			}
 			else{
 				// Create new customer and vehicle
-				customer_id = dbh.add_customer(c_name, c_mobile, " ", " ", 1, Time.now());
-				vehicle_id = dbh.add_customer_vehicle(customer_id, v_num, v_make, 1, Time.now());
+				customer_id = dbh.add_customer(c_name, c_mobile, " ", " ", 1, date_epoch);
+				vehicle_id = dbh.add_customer_vehicle(customer_id, v_num, v_make, 1, date_epoch);
 			}
-			int date_epoch = Time.get_epoch(date);
+			
 			int bill_id = dbh.add_service_bill(vehicle_id, comment, total_amount, 1, date_epoch);
 			ServiceBill service_bill = new ServiceBill(vehicle_id, comment, total_amount, 1, date_epoch);
 			service_bill.setId(bill_id);
@@ -397,9 +405,8 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 
 			// Create SMS queue if flag set
 			if(sms_remiander){
-				// date + 30 days
 				// 1 day * 29 days
-				service_bill.setFree_checkup_date(date_epoch + (86400 * 29));
+				service_bill.setFree_checkup_date(date_epoch + (86000 * 29));
 				dbh.update(service_bill);
 
 				String message = this.process_template(bill_id, customer_id, vehicle_id);
@@ -453,12 +460,14 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 
 	private boolean validate_details() {
 
-		String v_num, v_make, c_name, c_mobile, date;
+		String v_num, v_make, c_name, c_mobile, date, time;
 		v_num = txt_vehicle_no.getText().replace(" ", "");
 		v_make = txt_vehicle_make.getText();
 		c_name = txt_customer_name.getText();
 		c_mobile = txt_mobile_no.getText();
 		date = txt_date.getText();
+		time = txt_time.getText();
+		
 		if(!v_num.matches(Formatter.VEHICLE_PATTERN)){
 			alert("Vehicle number is invalid, Please correct it");
 			txt_vehicle_no.requestFocus();
@@ -482,6 +491,12 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		if(!date.matches(Formatter.DATE_PATTERN)){
 			alert("Please enter a valid date in dd/mm/yyyy format");
 			txt_date.requestFocus();
+			return false;
+		}
+		
+		if(!time.matches(Formatter.TIME_PATTERN)){
+			alert("Please enter a valid time in hh:mm am/pm format");
+			txt_time.requestFocus();
 			return false;
 		}
 

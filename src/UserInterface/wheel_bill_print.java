@@ -3,7 +3,10 @@ package UserInterface;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.MediaPrintableArea;
+import javax.print.attribute.standard.MediaSizeName;
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
 import javax.swing.border.LineBorder;
@@ -15,7 +18,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.table.JTableHeader;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -51,7 +54,7 @@ public class wheel_bill_print extends JFrame {
 		Insets text_area_margin = new Insets(0, 5, 0, 0);
 
 		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(10, 11, 170, 97);
+		lblNewLabel.setBounds(10, 11, 175, 97);
 		ImageIcon wheels_logo = getScaledImage("/resources/abhi wheels logo.jpg", lblNewLabel.getWidth(), lblNewLabel.getHeight());
 
 		lblNewLabel.setIcon(wheels_logo);
@@ -69,7 +72,7 @@ public class wheel_bill_print extends JFrame {
 		String[] columns =  {
 				"S.No.",
 				"Particulars",
-				"Quanity",
+				"Qty",
 				"Amount",
 				"Sub Total"
 		};
@@ -197,6 +200,9 @@ public class wheel_bill_print extends JFrame {
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
+		JTableHeader table_header = tbl_particulars.getTableHeader();
+		table_header.setFont(new Font("Dialog", Font.BOLD, 12));
+
 		tbl_particulars.getColumnModel().getColumn(0).setResizable(false);
 		tbl_particulars.getColumnModel().getColumn(0).setPreferredWidth(40);
 		tbl_particulars.getColumnModel().getColumn(0).setMaxWidth(40);
@@ -207,17 +213,17 @@ public class wheel_bill_print extends JFrame {
 		tbl_particulars.getColumnModel().getColumn(1).setMaxWidth(250);
 
 		tbl_particulars.getColumnModel().getColumn(2).setResizable(false);
-		tbl_particulars.getColumnModel().getColumn(2).setPreferredWidth(60);
-		tbl_particulars.getColumnModel().getColumn(2).setMaxWidth(60);
+		tbl_particulars.getColumnModel().getColumn(2).setPreferredWidth(30);
+		tbl_particulars.getColumnModel().getColumn(2).setMaxWidth(40);
 
 		tbl_particulars.getColumnModel().getColumn(3).setResizable(false);
-		tbl_particulars.getColumnModel().getColumn(3).setPreferredWidth(90);
+		tbl_particulars.getColumnModel().getColumn(3).setPreferredWidth(100);
 		tbl_particulars.getColumnModel().getColumn(3).setMaxWidth(100);
 		tbl_particulars.getColumnModel().getColumn(3).setCellRenderer(NumberRenderer.getCurrencyRenderer());
 
 		tbl_particulars.getColumnModel().getColumn(4).setResizable(false);
-		tbl_particulars.getColumnModel().getColumn(4).setPreferredWidth(110);
-		tbl_particulars.getColumnModel().getColumn(4).setMaxWidth(120);
+		tbl_particulars.getColumnModel().getColumn(4).setPreferredWidth(120);
+		tbl_particulars.getColumnModel().getColumn(4).setMaxWidth(130);
 		tbl_particulars.getColumnModel().getColumn(4).setCellRenderer(NumberRenderer.getCurrencyRenderer());
 		tbl_particulars.setBounds(10, 224, 535, 279);
 
@@ -270,14 +276,14 @@ public class wheel_bill_print extends JFrame {
 		getContentPane().add(txt_address);
 
 		JTextPane txtpnComputerizedEmissionTest = new JTextPane();
-		txtpnComputerizedEmissionTest.setFont(new Font("Dialog", Font.BOLD, 11));
+		txtpnComputerizedEmissionTest.setFont(new Font("Droid Sans Fallback", Font.BOLD, 12));
 		txtpnComputerizedEmissionTest.setText("Computerised Emission test center for Petrol and Diesel");
-		txtpnComputerizedEmissionTest.setBounds(176, 40, 367, 15);
+		txtpnComputerizedEmissionTest.setBounds(181, 37, 359, 18);
 		getContentPane().add(txtpnComputerizedEmissionTest);
 
 		JLabel lblEmail = new JLabel("email:");
 		lblEmail.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblEmail.setBounds(189, 76, 44, 15);
+		lblEmail.setBounds(196, 76, 37, 15);
 		getContentPane().add(lblEmail);
 
 		JLabel lblAbhiweelsgmailcom = new JLabel("abhiweels@gmail.com");
@@ -287,7 +293,7 @@ public class wheel_bill_print extends JFrame {
 
 		JLabel lblMobile_1 = new JLabel("Mobile:");
 		lblMobile_1.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblMobile_1.setBounds(180, 93, 59, 15);
+		lblMobile_1.setBounds(190, 93, 44, 15);
 		getContentPane().add(lblMobile_1);
 
 		JLabel label = new JLabel("9880067133, 9379667133, 8023597133");
@@ -305,12 +311,12 @@ public class wheel_bill_print extends JFrame {
 
 		JLabel lblTotal = new JLabel("Total:");
 		lblTotal.setFont(new Font("Dialog", Font.BOLD, 15));
-		lblTotal.setBounds(356, 498, 53, 15);
+		lblTotal.setBounds(367, 498, 53, 15);
 		getContentPane().add(lblTotal);
 
 		lbl_total_value = new JLabel("");
 		lbl_total_value.setFont(new Font("Dialog", Font.BOLD, 15));
-		lbl_total_value.setBounds(407, 493, 140, 25);
+		lbl_total_value.setBounds(423, 493, 124, 25);
 		lbl_total_value.setText(Formatter.getCurrencyFormat(total_amt) + " /-");
 		getContentPane().add(lbl_total_value);
 
@@ -353,8 +359,8 @@ public class wheel_bill_print extends JFrame {
 		getContentPane().add(lbl_free_checkup_date);
 
 		JLabel lblAlignmentTyres = new JLabel("Wheel Alignment & Multi Brand Tyres");
-		lblAlignmentTyres.setFont(new Font("Dialog", Font.BOLD, 11));
-		lblAlignmentTyres.setBounds(239, 55, 246, 15);
+		lblAlignmentTyres.setFont(new Font("Droid Sans Fallback", Font.BOLD, 12));
+		lblAlignmentTyres.setBounds(239, 57, 246, 15);
 		getContentPane().add(lblAlignmentTyres);
 
 	}
@@ -364,21 +370,25 @@ public class wheel_bill_print extends JFrame {
 		PrinterJob pjob = PrinterJob.getPrinterJob();
 		PageFormat preformat = pjob.defaultPage();
 		preformat.setOrientation(PageFormat.PORTRAIT);
-		PageFormat postformat = pjob.pageDialog(preformat);
-		//If user does not hit cancel then print.
-		if (preformat != postformat) {
-			//Set print component
-			pjob.setPrintable(new Printer(this), postformat);
-			if (pjob.printDialog()) {
-				try {
-					pjob.print();
-				} catch (PrinterException e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(this, "Print not succeed!!! Someting went wrong!");
-				}
+
+		PrintRequestAttributeSet printRequestAttrSet = new HashPrintRequestAttributeSet();
+		printRequestAttrSet.add(MediaSizeName.ISO_A5);
+		printRequestAttrSet.add(new MediaPrintableArea((float)0.0,(float)0.0,350,500, MediaPrintableArea.MM));
+
+		// To show page setup dialog
+		//PageFormat postformat = pjob.pageDialog(preformat);
+		
+		//Set print component
+		// Shows printer select dialog
+		pjob.setPrintable(new Printer(this), preformat);
+		if (pjob.printDialog(printRequestAttrSet)) {
+			try {
+				pjob.print(printRequestAttrSet);
+			} catch (PrinterException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Print not succeed!!! Someting went wrong!");
 			}
 		}
-		JOptionPane.showMessageDialog(this,"Print completed");
 	}
 
 	private ImageIcon getScaledImage(String path, int w, int h){

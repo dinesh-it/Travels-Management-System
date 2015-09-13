@@ -416,7 +416,6 @@ return the normal renderer*/
 			if(tbl_row_height == -1){
 				tbl_row_height = table.getRowHeight();
 			}
-			System.out.println(curr_height + " " + tbl_row_height );
 			if(curr_height != tbl_row_height){
 				curr_height = (passed.length * passed.length + 20 ) + tbl_row_height;
 

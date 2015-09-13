@@ -47,7 +47,7 @@ public class Handler {
 		Logger.log.info("Handler Instance created !");
 	}	
 
-	//Table Insert Meths
+	//Table Insert Methods
 	public Integer add_system_user(String name, String username,String email,String password ,String role){
 		Session session = factory.openSession();
 		Transaction tx = null;

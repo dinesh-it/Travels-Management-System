@@ -19,29 +19,29 @@ import java.util.regex.Pattern;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 
 import DataBaseInterface.*;
+
 import javax.swing.ListSelectionModel;
+
 import java.awt.Font;
 
 import Util.*;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextArea;
 
 
 public class pnl_wheels_add extends JPanel implements TableModelListener {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
+	
 	private JTextField txt_mobile_no, txt_customer_name, txt_vehicle_make, txt_date, txt_time;
 	private JTextArea txt_comment;
 	private JTable tbl_particulars;
@@ -65,6 +65,8 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		pnl_customer_details.setBounds(17, 40, 941, 128);
 		add(pnl_customer_details);
 		pnl_customer_details.setLayout(null);
+		
+		
 		
 		int now_epoch = Time.now();
 
@@ -201,9 +203,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 			o[1] = sp.getService_name();
 
 			boolean is_multi = sp.isIs_multiple();
-			if(is_multi){
-				o[2] = new Integer(1);
-			} else {
+			if(!is_multi){
 				o[2] = "NA";
 			}
 
@@ -253,7 +253,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		txt_comment.setBounds(247, 476, 393, 49);
 		add(txt_comment);
 
-		JButton btnTestBill = new JButton("Test Bill");
+		/*JButton btnTestBill = new JButton("Test Bill");
 		btnTestBill.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Wheel bill print preview and print 
@@ -262,7 +262,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 			}
 		});
 		btnTestBill.setBounds(733, 570, 117, 25);
-		add(btnTestBill);
+		add(btnTestBill);*/
 
 		txt_vehicle_no.addFocusListener(new FocusAdapter() {
 			@Override
@@ -467,7 +467,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		c_mobile = txt_mobile_no.getText();
 		date = txt_date.getText();
 		time = txt_time.getText();
-		
+
 		if(!v_num.matches(Formatter.VEHICLE_PATTERN)){
 			alert("Vehicle number is invalid, Please correct it");
 			txt_vehicle_no.requestFocus();
@@ -526,7 +526,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 			int column = e.getColumn();
 			Pattern pattern = Pattern.compile("(^\\d+\\.?\\d*$)");
 
-			// validation for accept only numbers
+		
 			String current_cell_str = tbl_particulars.getValueAt(row, column).toString();					
 			if((! current_cell_str.trim().isEmpty()) && (!pattern.matcher(current_cell_str).find())){
 				if(column == 3 )
@@ -542,6 +542,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 					// parsing null value will throw NumberFormatException
 					// To avoid that exception amount stored in string 
 					String str_amount = tbl_particulars.getValueAt(row, 3).toString();
+					
 
 					if(! str_amount.trim().isEmpty()){
 
@@ -551,8 +552,14 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 						if(is_multiple[row].toString() == "false") {
 							total = amount;
 						} else { 
-							int quantity = Integer.parseInt(tbl_particulars.getValueAt(row, 2).toString());
-							total = amount * quantity;
+													
+							int quan = 1;
+							if( tbl_particulars.getValueAt(row, 2) != null)
+								quan = Integer.parseInt(tbl_particulars.getValueAt(row, 2).toString());
+							else 
+								tbl_particulars.setValueAt(new Integer(1), row, 2);
+							
+							total = amount * quan;
 						}
 
 						tbl_particulars.setValueAt(new Double(total), row, 4);

@@ -1,6 +1,8 @@
 Features on 0.1
 ----------------
     * Wheel bill addition
+    * Wheel bill print
+    * Wheel bill report
     * Manage SMS template and SMS Notification
     * Add trip (UI only)
     * Log Support

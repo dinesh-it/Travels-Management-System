@@ -39,9 +39,9 @@ import javax.swing.JTextArea;
 
 
 public class pnl_wheels_add extends JPanel implements TableModelListener {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private JTextField txt_mobile_no, txt_customer_name, txt_vehicle_make, txt_date, txt_time;
 	private JTextArea txt_comment;
 	private JTable tbl_particulars;
@@ -65,9 +65,9 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		pnl_customer_details.setBounds(17, 40, 941, 128);
 		add(pnl_customer_details);
 		pnl_customer_details.setLayout(null);
-		
-		
-		
+
+
+
 		int now_epoch = Time.now();
 
 		JLabel lbl_mobile_no = new JLabel("Mobile No");
@@ -372,7 +372,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 				customer_id = dbh.add_customer(c_name, c_mobile, " ", " ", 1, date_epoch);
 				vehicle_id = dbh.add_customer_vehicle(customer_id, v_num, v_make, 1, date_epoch);
 			}
-			
+
 			int bill_id = dbh.add_service_bill(vehicle_id, comment, total_amount, 1, date_epoch);
 			ServiceBill service_bill = new ServiceBill(vehicle_id, comment, total_amount, 1, date_epoch);
 			service_bill.setId(bill_id);
@@ -493,7 +493,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 			txt_date.requestFocus();
 			return false;
 		}
-		
+
 		if(!time.matches(Formatter.TIME_PATTERN)){
 			alert("Please enter a valid time in hh:mm am/pm format");
 			txt_time.requestFocus();
@@ -526,7 +526,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 			int column = e.getColumn();
 			Pattern pattern = Pattern.compile("(^\\d+\\.?\\d*$)");
 
-		
+
 			String current_cell_str = tbl_particulars.getValueAt(row, column).toString();					
 			if((! current_cell_str.trim().isEmpty()) && (!pattern.matcher(current_cell_str).find())){
 				if(column == 3 )
@@ -542,7 +542,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 					// parsing null value will throw NumberFormatException
 					// To avoid that exception amount stored in string 
 					String str_amount = tbl_particulars.getValueAt(row, 3).toString();
-					
+
 
 					if(! str_amount.trim().isEmpty()){
 
@@ -552,13 +552,13 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 						if(is_multiple[row].toString() == "false") {
 							total = amount;
 						} else { 
-													
+
 							int quan = 1;
 							if( tbl_particulars.getValueAt(row, 2) != null)
 								quan = Integer.parseInt(tbl_particulars.getValueAt(row, 2).toString());
 							else 
 								tbl_particulars.setValueAt(new Integer(1), row, 2);
-							
+
 							total = amount * quan;
 						}
 
@@ -592,7 +592,12 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		String[][] tableData = new String[nRow][nCol];
 		for (int i = 0 ; i < nRow ; i++)
 			for (int j = 0 ; j < nCol ; j++)
-				tableData[i][j] = dtm.getValueAt(i,j).toString();
+				if(dtm.getValueAt(i,j) != null){
+					tableData[i][j] = dtm.getValueAt(i,j).toString();
+				}
+				else{
+					tableData[i][j] = null;
+				}
 		return tableData;
 	}
 

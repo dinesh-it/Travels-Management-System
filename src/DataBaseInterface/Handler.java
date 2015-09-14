@@ -4,13 +4,18 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.persistence.EntityManager;
+
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 
 import Util.*;
@@ -465,7 +470,6 @@ public class Handler {
 		Session session = factory.openSession();
 		List<?> data = null;
 		try{
-
 			data = session.createQuery("FROM SMSQueue WHERE sent = 'f'").list();
 		}catch (HibernateException e) {
 			e.printStackTrace();
@@ -475,6 +479,44 @@ public class Handler {
 		}
 		return data;
 	}
+
+	public List<Object[]>  get_bill_details(){
+
+		Session session = factory.openSession();
+
+		List<Object[]> result = null;
+
+		try{
+			// Query have to be optimize (instead of get all columns, should fetch required columns)
+			//fetching particular columns throws error.
+
+			SQLQuery query = session.createSQLQuery(
+					"SELECT *" 
+							+ " FROM service_detail as sd"
+							+ " JOIN service_bill as sb ON sd.service_bill_id = sb.id"
+							+ " JOIN service_particulars as sp ON sd.service_particular_id = sp.id"
+							+ " JOIN customer_vehicle as veh ON sb.vehicle_id = veh.id"
+							+ " JOIN customer as cus ON veh.customer_id = cus.id order by sb.id"
+					);
+
+			query.addEntity(ServiceDetail.class);
+			query.addEntity(ServiceBill.class);
+			query.addEntity(ServiceParticulars.class);
+			query.addEntity(CustomerVehicle.class);
+			query.addEntity(Customer.class);
+
+			result = query.list();
+
+		}catch (HibernateException e) {
+
+			e.printStackTrace();
+			Logger.log.severe(e.toString());
+		}finally {
+			session.close();
+		}
+		return result;
+	}
+
 
 	public List<Object[]> get_single_bill_detail(int bill_id){
 		Session session = factory.openSession();
@@ -497,15 +539,33 @@ public class Handler {
 			query.addEntity(ServiceBill.class);
 			query.addEntity(CustomerVehicle.class);
 			query.addEntity(Customer.class);
-
 			result = query.list();
 
+
 		}catch (HibernateException e) {
+
 			e.printStackTrace();
 			Logger.log.severe(e.toString());
 		}finally {
 			session.close();
 		}
 		return result;
+	}
+
+	public ServiceBill get_service_bill(int vehicle_id, String date_str ) {
+		System.out.println(vehicle_id  + "    " + date_str);
+		Session session = factory.openSession();
+		ServiceBill obj_service_bill = null;
+		int epoch = Time.get_epoch(date_str, "dd/MM/yyyy HH:mm:ss");
+		try{
+			obj_service_bill = (ServiceBill)session.createQuery("FROM ServiceBill WHERE vehicle_id = '" + vehicle_id + "' and created_epoch = " + epoch).uniqueResult();
+		}catch (HibernateException e) {
+			e.printStackTrace();
+			Logger.log.severe(e.toString());
+		}finally {
+			session.close();
+		}
+
+		return obj_service_bill;
 	}
 }

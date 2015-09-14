@@ -31,15 +31,12 @@ public class MainFrame extends JFrame {
 	static public JPanel pnl_home;
 	static 	MainFrame frame;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 
-        ProgressBar.showProgress("Loading Components....", 10);
-        Handler.getInstance();
-        ProgressBar.showProgress("Launching Application..", ProgressBar.MAXIMUM_VALUE);
-        
+		ProgressBar.showProgress("Loading Components....", 10);
+		Handler.getInstance();
+		ProgressBar.showProgress("Launching Application..", ProgressBar.MAXIMUM_VALUE);
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -144,7 +141,7 @@ public class MainFrame extends JFrame {
 
 		// Title Lable
 		// TODO have to add icon 
-		JLabel lbl_title = new JLabel("ABHI TRAVELS AND WHEELS");
+		JLabel lbl_title = new JLabel("ABHI WHEELS");
 		lbl_title.setForeground(new Color(210, 105, 30));
 		lbl_title.setFont(new Font("URW Bookman L", Font.ITALIC, 32));
 		lbl_title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -247,6 +244,12 @@ public class MainFrame extends JFrame {
 
 		pnl_sub_wheel.add(btn_view_wheel);
 
+		btn_view_wheel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pnl_wheels_view obj_wheels_view = new pnl_wheels_view();
+				setContentPane(obj_wheels_view);
+			}
+		});
 		// update wheel window navigation button
 		JButton btn_update_wheel = new JButton("Edit Wheel Bill");
 		btn_update_wheel.setFont(btn_font);

@@ -42,7 +42,7 @@ public class TestMain {
 		Integer sms_queue_id = dbh.add_sms_queue(service_bill_id,"+0123456789","Hello World",user_id,111);
 		System.out.println("SMS Queue entry Created with Id : " + sms_queue_id);
 
-		Integer temp_param_id = dbh.add_template_parameter("UserName","User.Name",user_id,111);
+		Integer temp_param_id = dbh.add_template_parameter("CustomerName","Customer.name",user_id,111);
 		System.out.println("Template Parameter Created with Id : " + temp_param_id);
 
 	}	

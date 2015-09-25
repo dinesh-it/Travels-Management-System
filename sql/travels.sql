@@ -261,13 +261,13 @@ INSERT INTO service_particulars (service_name, is_multiple, is_free_service, cre
         ('Wheel Alignment', false, true, 1439314988, 1),  
         ('Rear Wheel Alignment', false, true, 1439314988, 1), 
         ('Wheel Balance', true, false, 1439314988, 1),  
-        ('Weights', true, false, 1439314988, 1), 
+        ('Weights (in grams)', true, false, 1439314988, 1), 
         ('Automatic Tyres Change', true, false, 1439314988, 1), 
         ('Rim Bend Removing', true, false, 1439314988, 1), 
         ('Tyre Puncher', true, false, 1439314988, 1),
         ('Tyre Rotation', true, false, 1439314988, 1);
 
-INSERT INTO template_parameter (name, value_ref, created_user_id, created_epoch)
+INSERT INTO template_parameter (name, value_ref, created_epoch, created_user_id)
         VALUES
         ('CustomerName','Customer.name', 1439314988, 1),
         ('VehicleNumber','CustomerVehicle.vehicle_number', 1439314988, 1),

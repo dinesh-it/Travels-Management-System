@@ -20,8 +20,8 @@
         <property name="total_amount" column="total_amount" type="double"  not-null="true"/>
         <property name="free_checkup_date" column="free_checkup_date" type="int"/>
         <property name="free_checkup_completed" column="free_checkup_completed" type="boolean"/>
-        <property name = "created_user_id" column = "created_user_id" type = "int"  not-null="true"/>
-        <property name = "created_epoch" column = "created_epoch" type = "int"  not-null="true"/>
+        <property name = "sb_created_user_id" column = "created_user_id" type = "int"  not-null="true"/>
+        <property name = "sb_created_epoch" column = "created_epoch" type = "int"  not-null="true"/>
 
     </class>
 </hibernate-mapping>

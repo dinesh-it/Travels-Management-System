@@ -327,13 +327,13 @@ public class Handler {
 
 		for(ServiceParticulars sp : sp_list){
 			String service_name = sp.getService_name();
-			Pattern p = Pattern.compile("(.*)([Tt])ire(.*)");
+			Pattern p = Pattern.compile("^Weights$");
 			Matcher m = p.matcher(service_name);
 			if (m.find()) {
-				service_name = m.replaceFirst("$1$2yre$3");
+				service_name = m.replaceFirst("Weights (in grams)");
 				sp.setService_name(service_name);
 				this.update(sp);
-				Logger.log.info(service_name + " changed");
+				Logger.log.info(service_name + " changed to Weights (in grams)");
 			}
 		}
 	}
@@ -527,20 +527,17 @@ public class Handler {
 			//fetching particular columns throws error. 
 			SQLQuery query = session.createSQLQuery(
 					"SELECT *" 
-							+ " FROM service_particulars as sp "
-							+ " JOIN service_detail as sd ON sp.id = sd.service_particular_id "
+							+ " FROM service_detail as sd "
 							+ " JOIN service_bill as sb ON sd.service_bill_id = sb.id"
 							+ " JOIN customer_vehicle as veh ON sb.vehicle_id = veh.id"
 							+ " JOIN customer as cus ON veh.customer_id = cus.id"
 							+ " WHERE sb.id = " + bill_id + " OR sb.id IS NULL"
 					);
-			query.addEntity(ServiceParticulars.class);
 			query.addEntity(ServiceDetail.class);
 			query.addEntity(ServiceBill.class);
 			query.addEntity(CustomerVehicle.class);
 			query.addEntity(Customer.class);
 			result = query.list();
-
 
 		}catch (HibernateException e) {
 

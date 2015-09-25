@@ -7,8 +7,8 @@ public class ServiceBill {
 	private double total_amount;
 	private int free_checkup_date;
 	private boolean free_checkup_completed;
-	private int created_epoch;
-	private int created_user_id;
+	private int sb_created_epoch;
+	private int sb_created_user_id;
 
 	public ServiceBill() {}
 
@@ -16,8 +16,8 @@ public class ServiceBill {
 		this.setVehicle_id(vehicle_id2);
 		this.setComments(comment2);
 		this.setTotal_amount(amt);
-		this.setCreated_user_id(user_id);
-		this.setCreated_epoch(created_epoch2);
+		this.setSb_created_user_id(user_id);
+		this.setSb_created_epoch(created_epoch2);
 	}
 
 	public int getId() {
@@ -60,20 +60,20 @@ public class ServiceBill {
 		this.free_checkup_completed = free_checkup_completed;
 	}
 
-	public int getCreated_epoch() {
-		return created_epoch;
+	public int getSb_created_epoch() {
+		return sb_created_epoch;
 	}
 
-	public void setCreated_epoch(int created_epoch) {
-		this.created_epoch = created_epoch;
+	public void setSb_created_epoch(int created_epoch) {
+		this.sb_created_epoch = created_epoch;
 	}
 
-	public int getCreated_user_id() {
-		return created_user_id;
+	public int getSb_created_user_id() {
+		return sb_created_user_id;
 	}
 
-	public void setCreated_user_id(int created_user_id) {
-		this.created_user_id = created_user_id;
+	public void setSb_created_user_id(int created_user_id) {
+		this.sb_created_user_id = created_user_id;
 	}
 
 	public double getTotal_amount() {

@@ -323,7 +323,7 @@ public class pnl_wheels_view extends JPanel {
 				row[2] = obj_cus.getMobile();
 				row[3] = obj_cveh.getVehicle_number() + "\n" + obj_cveh.getVehicle_make();
 				vehicle_id.add(obj_sb.getVehicle_id());
-				row[4] = Time.get_date(obj_sb.getCreated_epoch(), "dd/MM/yyyy HH:mm:ss a");
+				row[4] = Time.get_date(obj_sb.getSb_created_epoch(), "dd/MM/yyyy hh:mm:ss a");
 				row[5] = obj_sb.getComments();
 
 				service_name  = obj_sp.getService_name();

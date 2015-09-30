@@ -335,6 +335,9 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 
 			// DB Operations
 			int date_epoch = Time.get_epoch(date + " " + time, "dd/MM/yyyy hh:mm a");
+			System.out.println(date + " " + time);
+			System.out.println(date_epoch);
+
 			if(vehicle != null){
 				vehicle_id = vehicle.getId();
 				if(customer != null){
@@ -405,8 +408,8 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 
 			// Create SMS queue if flag set
 			if(sms_remiander){
-				// 1 day * 29 days
-				service_bill.setFree_checkup_date(date_epoch + (86000 * 29));
+				// 1 day * 20 days
+				service_bill.setFree_checkup_date(date_epoch + (86000 * 20));
 				dbh.update(service_bill);
 
 				String message = this.process_template(bill_id, customer_id, vehicle_id);

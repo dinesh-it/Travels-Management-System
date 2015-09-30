@@ -60,7 +60,7 @@ public class sms_notifications extends JFrame {
 	public sms_notifications() {
 		setTitle("SMS Notifications List");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		
+
 		setSize(dim.width,dim.height);		
 		//setBounds(100, 100, 686, 533);
 		pnl_sms_notofication_main = new JPanel();

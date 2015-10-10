@@ -45,5 +45,7 @@ public class TestMain {
 		Integer temp_param_id = dbh.add_template_parameter("CustomerName","Customer.name",user_id,111);
 		System.out.println("Template Parameter Created with Id : " + temp_param_id);
 
+		System.exit(0);
+
 	}	
 }

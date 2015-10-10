@@ -295,6 +295,7 @@ public class Handler {
 			tx = sess.beginTransaction();
 			sess.update(obj);
 			tx.commit();
+			Logger.log.info("Updated a row " + obj.toString());
 		}
 		catch (Exception e) {
 			if (tx!=null) tx.rollback();
@@ -322,19 +323,20 @@ public class Handler {
 		}
 	}
 
-	public void update_tire(){
-		List<ServiceParticulars> sp_list = this.list_service_particulars();
-
-		for(ServiceParticulars sp : sp_list){
-			String service_name = sp.getService_name();
-			Pattern p = Pattern.compile("^Weights$");
-			Matcher m = p.matcher(service_name);
-			if (m.find()) {
-				service_name = m.replaceFirst("Weights (in grams)");
-				sp.setService_name(service_name);
-				this.update(sp);
-				Logger.log.info(service_name + " changed to Weights (in grams)");
+	public void update_db(){
+		// Any temporary client database update will happen here
+		Session session = factory.openSession();
+		ServiceParticulars sp_list = null;
+		try{
+			sp_list = (ServiceParticulars)session.createQuery("FROM ServiceParticulars WHERE service_name = 'Rim Tubeless Neck'").uniqueResult();
+			if(sp_list == null){
+				// add this
+				this.add_service_particulars("Rim Tubeless Neck", true, false, false, 1, Time.now());
+				Logger.log.info("Rim Tubeless Neck service particular added to the table...!");
 			}
+		}catch (HibernateException e) {
+			e.printStackTrace();
+			Logger.log.severe(e.toString());
 		}
 	}
 

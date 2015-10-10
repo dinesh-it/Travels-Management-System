@@ -36,6 +36,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextArea;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class pnl_wheels_add extends JPanel implements TableModelListener {
@@ -55,6 +57,9 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 	private Customer customer;
 	private CustomerVehicle vehicle;
 	private JButton btn_save_bill; 
+	private int developer_mode_click = 0;
+	private JButton btnTestBill;
+	private int bill_added = 0;
 
 	public pnl_wheels_add() {
 		setSize(982,648);
@@ -66,28 +71,26 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		add(pnl_customer_details);
 		pnl_customer_details.setLayout(null);
 
-
-
 		int now_epoch = Time.now();
 
 		JLabel lbl_mobile_no = new JLabel("Mobile No");
-		lbl_mobile_no.setBounds(379, 41, 80, 15);
+		lbl_mobile_no.setBounds(379, 78, 80, 15);
 		pnl_customer_details.add(lbl_mobile_no);
 
 		txt_mobile_no = new JTextField();
 		txt_mobile_no.setFont(new Font("Dialog", Font.BOLD, 15));
-		txt_mobile_no.setBounds(477, 37, 172, 24);
+		txt_mobile_no.setBounds(477, 73, 172, 24);
 		pnl_customer_details.add(txt_mobile_no);
 		txt_mobile_no.setColumns(10);
 
 		JLabel lbl_customer_name = new JLabel("Customer Name");
 		lbl_customer_name.setFont(new Font("Dialog", Font.BOLD, 12));
-		lbl_customer_name.setBounds(342, 72, 117, 24);
+		lbl_customer_name.setBounds(342, 37, 117, 24);
 		pnl_customer_details.add(lbl_customer_name);
 
 		txt_customer_name = new JTextField();
 		txt_customer_name.setFont(new Font("Dialog", Font.BOLD, 15));
-		txt_customer_name.setBounds(477, 73, 172, 24);
+		txt_customer_name.setBounds(477, 39, 172, 24);
 		pnl_customer_details.add(txt_customer_name);
 		txt_customer_name.setColumns(10);
 
@@ -149,8 +152,6 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 				return true;
 			}
 		};
-		tbl_particulars.setRowHeight(32);
-		//tbl_particulars.getColumnModel().getColumn(0).setPreferredWidth(100);
 		tbl_particulars.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		mdl_particulars = new DefaultTableModel();
@@ -164,13 +165,22 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		};
 		mdl_particulars.setColumnIdentifiers(columns);
 
-		JScrollPane tbl_particulars_main = new JScrollPane(tbl_particulars);
-		tbl_particulars_main.setBounds(82, 180, 804, 278);
-		add(tbl_particulars_main);
-
 		pnl_buttons = new JPanel();
+
+		pnl_buttons.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				developer_mode_click++;
+
+				if(developer_mode_click == 5){
+					alert("Test bill button enabled");
+					btnTestBill.setVisible(true);
+				}
+			}
+		});
+
 		pnl_buttons.setBorder(new LineBorder(new Color(0, 0, 0)));
-		pnl_buttons.setBounds(244, 546, 458, 76);
+		pnl_buttons.setBounds(247, 546, 458, 76);
 		add(pnl_buttons);
 		pnl_buttons.setLayout(null);
 
@@ -188,7 +198,24 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		btn_clear_form.setBounds(259, 24, 117, 25);
 		pnl_buttons.add(btn_clear_form);
 
-		dbh.update_tire();
+		btnTestBill = new JButton("Test Bill");
+		btnTestBill.setBounds(174, 54, 116, 22);
+		btnTestBill.setVisible(false);
+		pnl_buttons.add(btnTestBill);
+		btnTestBill.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Wheel bill print preview and print 
+				try {
+					int bill_id = Integer.parseInt(txt_comment.getText());
+					wheel_bill_print bill_print = new wheel_bill_print(bill_id);
+					bill_print.setVisible(true);
+				} catch (Exception er){
+					alert(er.getMessage());
+				}
+			}
+		});
+
+		dbh.update_db();
 		List<?> sp_list = dbh.list_service_particulars();
 
 		particulars_total = new double[sp_list.size() + 1];
@@ -230,6 +257,21 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		tbl_particulars.getColumnModel().getColumn(4).setPreferredWidth(60);
 		tbl_particulars.getColumnModel().getColumn(4).setCellRenderer(NumberRenderer.getCurrencyRenderer());
 
+		// 273 is the maximum table height space available
+		int table_row_height = 273 / mdl_particulars.getRowCount();
+		tbl_particulars.setRowHeight(table_row_height);
+		Logger.log.info("Setting Table row height to " + table_row_height);
+
+		JScrollPane tbl_particulars_main = new JScrollPane(tbl_particulars);
+		tbl_particulars_main.setViewportBorder(null);
+		tbl_particulars_main.getViewport().setBackground(Color.WHITE);
+		tbl_particulars_main.setBorder(null);
+
+		// Adjusting ScrollPane size to fit the table
+		// + 22 for header
+		tbl_particulars_main.setBounds(82, 176, 804, (table_row_height * mdl_particulars.getRowCount()) + 22);
+		add(tbl_particulars_main);
+
 		JLabel lbl_total = new JLabel("Total (Rs)");
 		lbl_total.setFont(new Font("Dialog", Font.BOLD, 17));
 		lbl_total.setBounds(649, 477, 93, 15);
@@ -253,17 +295,6 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		txt_comment.setBounds(247, 476, 393, 49);
 		add(txt_comment);
 
-		/*JButton btnTestBill = new JButton("Test Bill");
-		btnTestBill.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Wheel bill print preview and print 
-				wheel_bill_print bill_print = new wheel_bill_print(18);
-				bill_print.setVisible(true);
-			}
-		});
-		btnTestBill.setBounds(733, 570, 117, 25);
-		add(btnTestBill);*/
-
 		txt_vehicle_no.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -283,7 +314,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 
 		// At-least one particular should be entered to proceed bill saving
 		double total_amount = Double.parseDouble(lbl_total_value.getText());
-		if(total_amount <= 0){
+		if(total_amount <= 0 && bill_added == 0){
 			alert("No bill entries to save");
 			return;
 		}
@@ -400,7 +431,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 					dbh.add_service_detail(service_id, bill_id, quantity, amount);
 
 					// set SMS flag if free service available
-					if(service_particular.isIs_free_service()){
+					if(service_particular.isIs_free_service() && amount > 0){
 						sms_remiander = true;
 					}
 				}
@@ -548,6 +579,9 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 
 
 					if(! str_amount.trim().isEmpty()){
+						
+						// To keep track of whether a bill entry added or not
+						bill_added++;
 
 						double total = 0;
 						double amount = Double.parseDouble(tbl_particulars.getValueAt(row, 3).toString());
@@ -569,6 +603,9 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 
 						// sum value for particular row
 						particulars_total[row] = total;
+					}
+					else if(bill_added > 0){
+						bill_added--;
 					}
 				}
 				catch (NumberFormatException nex){

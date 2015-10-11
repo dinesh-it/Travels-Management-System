@@ -7,7 +7,8 @@ import java.util.regex.Pattern;
 
 public class Formatter {
 
-	public static String VEHICLE_PATTERN = "^([A-Za-z]{2})(\\d{1,2})([A-Za-z]{0,3})(\\d{1,4})$";
+	// Supports CAR 9324, MYS 123, KA 48 S 4957, KA 48 4957
+	public static String VEHICLE_PATTERN = "^([A-Za-z]{2,3})[-\\s]?(\\d{1,4})[-\\s]?([A-Za-z]{0,3})[-\\s]?(\\d{1,4})$";
 	public static String MOBILE_NUMBER_PATTERN = "^(\\+91)?\\d{10}$";
 	public static String DATE_PATTERN = "^\\d{1,2}/\\d{1,2}/\\d{4}$";
 	public static String TIME_PATTERN = "^\\d{1,2}:\\d{1,2}\\s[AaPp][Mm]$";

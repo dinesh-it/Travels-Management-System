@@ -37,6 +37,7 @@ import java.awt.SystemColor;
 import javax.swing.JScrollPane;
 import DataBaseInterface.*;
 import Util.*;
+import javax.swing.UIManager;
 
 public class wheel_bill_print extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -46,6 +47,9 @@ public class wheel_bill_print extends JFrame {
 	private DefaultTableModel mdl_particulars;
 	private Handler dbh;
 	private JPanel bill_panel;
+
+	// Settings values
+	String address = "# 53, 14th \"C\" Cross, Geleyarabalaga, Mahalakshmipuram, Behind Nandini Theatre, Opp. Dr. Rajkumar Indoor Stadium, Bangalore - 86";
 
 	public wheel_bill_print(int bill_id) {
 		setTitle("Bill Preview");
@@ -317,17 +321,18 @@ public class wheel_bill_print extends JFrame {
 		bill_panel.add(lblAbhiEnterprices);
 
 		JTextPane txt_address = new JTextPane();
+		txt_address.setFont(new Font("Dialog", Font.BOLD, 12));
+		txt_address.setBackground(UIManager.getColor("ColorChooser.background"));
 		txt_address.setEditable(false);
-		txt_address.setBackground(SystemColor.window);
 		txt_address.setContentType("text/html");
-		String address = "# 53, 14th \"C\" Cross, Geleyarabalaga, Mahalakshmipuram, Behind Nandini Theatre, Opp. Dr. Rajkumar Indoor Stadium, Bangalore - 86";
+		//txt_address.setText(address);
 		txt_address.setText("<html><center>" + address + "</center></html>");
 		txt_address.setBounds(17, 113, 525, 42);
 		bill_panel.add(txt_address);
 
 		JLabel lblComputerizedEmissionTest = new JLabel("Computerised Emission test center for Petrol and Diesel");
-		lblComputerizedEmissionTest.setFont(new Font("Droid Sans Fallback", Font.BOLD, 12));
-		lblComputerizedEmissionTest.setBounds(188, 39, 355, 20);
+		lblComputerizedEmissionTest.setFont(new Font("Dialog", Font.BOLD, 11));
+		lblComputerizedEmissionTest.setBounds(185, 39, 365, 20);
 		bill_panel.add(lblComputerizedEmissionTest);
 
 		JLabel lblEmail = new JLabel("email:");
@@ -421,8 +426,8 @@ public class wheel_bill_print extends JFrame {
 		bill_panel.add(txt_comments);
 
 		JLabel lblAlignmentTyres = new JLabel("Wheel Alignment & Multi Brand Tyres");
-		lblAlignmentTyres.setFont(new Font("Droid Sans Fallback", Font.BOLD, 12));
-		lblAlignmentTyres.setBounds(239, 59, 246, 15);
+		lblAlignmentTyres.setFont(new Font("Dialog", Font.BOLD, 12));
+		lblAlignmentTyres.setBounds(225, 55, 273, 15);
 		bill_panel.add(lblAlignmentTyres);
 
 	}

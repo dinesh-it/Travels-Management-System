@@ -1,22 +1,13 @@
 package DataBaseInterface;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.persistence.EntityManager;
-
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 
 import Util.*;
 import UserInterface.ProgressBar;
@@ -542,7 +533,6 @@ public class Handler {
 			result = query.list();
 
 		}catch (HibernateException e) {
-
 			e.printStackTrace();
 			Logger.log.severe(e.toString());
 		}finally {

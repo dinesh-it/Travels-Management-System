@@ -264,6 +264,7 @@ INSERT INTO service_particulars (service_name, is_multiple, is_free_service, cre
         ('Weights (in grams)', true, false, 1439314988, 1), 
         ('Automatic Tyres Change', true, false, 1439314988, 1), 
         ('Rim Bend Removing', true, false, 1439314988, 1), 
+        ('Rim Tubeless Neck', true, false, 1439314988, 1), 
         ('Tyre Puncher', true, false, 1439314988, 1),
         ('Tyre Rotation', true, false, 1439314988, 1);
 

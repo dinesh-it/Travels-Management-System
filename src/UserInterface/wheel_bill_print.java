@@ -10,7 +10,6 @@ import javax.print.attribute.standard.MediaPrintableArea;
 import javax.print.attribute.standard.MediaSizeName;
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Font;
 import java.awt.Image;
@@ -33,18 +32,24 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
+
 import java.awt.SystemColor;
 import javax.swing.JScrollPane;
 import DataBaseInterface.*;
 import Util.*;
+import javax.swing.UIManager;
 
 public class wheel_bill_print extends JFrame {
+	private static final long serialVersionUID = 1L;
 	private JTable tbl_particulars;
 	private JLabel lbl_name_value, lbl_mobile_value, lbl_vehicle_no_value, lbl_make_value, lbl_date_value, lbl_time_value, lbl_total_value, lbl_free_checkup_date;
 	private JTextArea txt_rupees, txt_comments;
 	private DefaultTableModel mdl_particulars;
 	private Handler dbh;
 	private JPanel bill_panel;
+
+	// Settings values
+	String address = "# 53, 14th \"C\" Cross, Geleyarabalaga, Mahalakshmipuram, Behind Nandini Theatre, Opp. Dr. Rajkumar Indoor Stadium, Bangalore - 86";
 
 	public wheel_bill_print(int bill_id) {
 		setTitle("Bill Preview");
@@ -129,15 +134,38 @@ public class wheel_bill_print extends JFrame {
 				System.out.println("CreatedEpoch " + obj_sb.getSb_created_epoch());
 				date = Time.get_date(obj_sb.getSb_created_epoch());
 				time = Time.get_date(obj_sb.getSb_created_epoch(),"hh:mm a");
-				free_checkup_date = Time.get_date(obj_sb.getFree_checkup_date());
+				if(obj_sb.getFree_checkup_date() != 0){
+					free_checkup_date = Time.get_date(obj_sb.getFree_checkup_date());
+				}
 				comments = obj_sb.getComments();
 				total_amt = obj_sb.getTotal_amount();
 			}
 
-			double total = obj_sd.getQuantity() * obj_sd.getAmount();
-			mdl_particulars.setValueAt(obj_sd.getQuantity(), service_row_map.get(obj_sd.getService_particular_id()), 2);
-			mdl_particulars.setValueAt(Formatter.getCurrencyFormat(obj_sd.getAmount()), service_row_map.get(obj_sd.getService_particular_id()), 3);
-			mdl_particulars.setValueAt(Formatter.getCurrencyFormat(total), service_row_map.get(obj_sd.getService_particular_id()), 4);
+			String quantity = obj_sd.getQuantity() + "";
+
+			// Set value as 01, 02, 10 ..
+			if(Integer.parseInt(quantity) < 10){
+				quantity = "0" + quantity;
+			}
+
+			// Append space before the quantity value for clear visiblity
+			quantity = " " + quantity;
+			String total = Formatter.getCurrencyFormat(obj_sd.getQuantity() * obj_sd.getAmount());
+
+			String amount = obj_sd.getAmount() + "" ;
+
+			// Set amount as Free if it is 0
+			if(Double.parseDouble(amount) == 0){
+				amount = "Free";
+				total = "0.00";
+			}
+			else{
+				amount = Formatter.getCurrencyFormat(Double.parseDouble(amount));
+			}
+
+			mdl_particulars.setValueAt(quantity, service_row_map.get(obj_sd.getService_particular_id()), 2);
+			mdl_particulars.setValueAt(amount, service_row_map.get(obj_sd.getService_particular_id()), 3);
+			mdl_particulars.setValueAt(total, service_row_map.get(obj_sd.getService_particular_id()), 4);
 		}
 
 		JLabel lblName = new JLabel("Name:");
@@ -200,11 +228,16 @@ public class wheel_bill_print extends JFrame {
 		lbl_time_value.setText(time);
 		bill_panel.add(lbl_time_value);
 
-		tbl_particulars = new JTable();
+		tbl_particulars = new JTable(){
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) { 
+				return false;
+			}
+		};
 		tbl_particulars.setModel(mdl_particulars);
-		tbl_particulars.setRowHeight(30);
 		tbl_particulars.setColumnSelectionAllowed(false);
-		tbl_particulars.setBorder(new LineBorder(new Color(0, 0, 0)));
+		//tbl_particulars.setBorder(new LineBorder(new Color(0, 0, 0)));
 
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -236,11 +269,22 @@ public class wheel_bill_print extends JFrame {
 		tbl_particulars.getColumnModel().getColumn(4).setCellRenderer(NumberRenderer.getCurrencyRenderer());
 		tbl_particulars.setBounds(10, 224, 535, 265);
 
-		JScrollPane tbl_particulars_main = new JScrollPane(tbl_particulars);
-		tbl_particulars_main.setBackground(Color.WHITE);
-		tbl_particulars_main.setBounds(10, 224, 535, 265);
-		bill_panel.add(tbl_particulars_main);
+		// Don't change background color on select
+		tbl_particulars.setSelectionBackground(getBackground());
 
+		// 260 is the maximum table height space available
+		int table_row_height = 260 / mdl_particulars.getRowCount();
+		tbl_particulars.setRowHeight(table_row_height);
+		Logger.log.info("Setting Table row height to " + table_row_height);
+
+		JScrollPane tbl_particulars_main = new JScrollPane(tbl_particulars);
+		tbl_particulars_main.setViewportBorder(null);
+		tbl_particulars_main.getViewport().setBackground(Color.WHITE);
+		tbl_particulars_main.setBorder(null);
+
+		// Adjusting ScrollPane size to fit the table
+		// + 22 for header
+		tbl_particulars_main.setBounds(10, 216, 535, (table_row_height * mdl_particulars.getRowCount()) + 22);
 		bill_panel.add(tbl_particulars_main);
 
 		JLabel lblRupees = new JLabel("Rupees:");
@@ -277,18 +321,19 @@ public class wheel_bill_print extends JFrame {
 		bill_panel.add(lblAbhiEnterprices);
 
 		JTextPane txt_address = new JTextPane();
-		txt_address.setBackground(SystemColor.window);
+		txt_address.setFont(new Font("Dialog", Font.BOLD, 12));
+		txt_address.setBackground(UIManager.getColor("ColorChooser.background"));
+		txt_address.setEditable(false);
 		txt_address.setContentType("text/html");
-		String address = "# 53, 14th \"C\" Cross, Geleyarabalaga, Mahalakshmipuram, Behind Nandini Theatre, Opp. Dr. Rajkumar Indoor Stadium, Bangalore - 86";
+		//txt_address.setText(address);
 		txt_address.setText("<html><center>" + address + "</center></html>");
 		txt_address.setBounds(17, 113, 525, 42);
 		bill_panel.add(txt_address);
 
-		JTextPane txtpnComputerizedEmissionTest = new JTextPane();
-		txtpnComputerizedEmissionTest.setFont(new Font("Droid Sans Fallback", Font.BOLD, 12));
-		txtpnComputerizedEmissionTest.setText("Computerised Emission test center for Petrol and Diesel");
-		txtpnComputerizedEmissionTest.setBounds(181, 37, 359, 18);
-		bill_panel.add(txtpnComputerizedEmissionTest);
+		JLabel lblComputerizedEmissionTest = new JLabel("Computerised Emission test center for Petrol and Diesel");
+		lblComputerizedEmissionTest.setFont(new Font("Dialog", Font.BOLD, 11));
+		lblComputerizedEmissionTest.setBounds(185, 39, 365, 20);
+		bill_panel.add(lblComputerizedEmissionTest);
 
 		JLabel lblEmail = new JLabel("email:");
 		lblEmail.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -311,22 +356,29 @@ public class wheel_bill_print extends JFrame {
 		bill_panel.add(label);
 
 		txt_rupees = new JTextArea();
+		txt_rupees.setEditable(false);
 		txt_rupees.setFont(new Font("Dialog", Font.BOLD, 12));
 		txt_rupees.setBorder(null);
 		txt_rupees.setMargin(text_area_margin);
-		txt_rupees.setText(NumberWordConverter.convert((int)Math.round(total_amt)) + " rupees only");
 		txt_rupees.setBounds(67, 522, 478, 36);
 		bill_panel.add(txt_rupees);
 
 		JLabel lblTotal = new JLabel("Total:");
 		lblTotal.setFont(new Font("Dialog", Font.BOLD, 15));
-		lblTotal.setBounds(367, 498, 53, 15);
+		lblTotal.setBounds(367, 500, 53, 15);
 		bill_panel.add(lblTotal);
 
 		lbl_total_value = new JLabel("");
 		lbl_total_value.setFont(new Font("Dialog", Font.BOLD, 15));
-		lbl_total_value.setBounds(423, 493, 124, 25);
-		lbl_total_value.setText(Formatter.getCurrencyFormat(total_amt) + " /-");
+		lbl_total_value.setBounds(423, 495, 124, 25);
+		if(total_amt > 0){
+			lbl_total_value.setText(Formatter.getCurrencyFormat(total_amt) + " /-");
+			txt_rupees.setText(NumberWordConverter.convert((int)Math.round(total_amt)) + " rupees only");
+		}
+		else{
+			lbl_total_value.setText("0.00 /-");
+			txt_rupees.setText("FREE");
+		}
 		bill_panel.add(lbl_total_value);
 
 		JSeparator separator_1 = new JSeparator();
@@ -335,11 +387,22 @@ public class wheel_bill_print extends JFrame {
 		bill_panel.add(separator_1);
 
 		JTextPane txtpnFreeCheckupWithin = new JTextPane();
-		txtpnFreeCheckupWithin.setBackground(SystemColor.window);
-		txtpnFreeCheckupWithin.setFont(new Font("Dialog", Font.BOLD, 15));
-		txtpnFreeCheckupWithin.setText("FREE CHECK-UP WITHIN 21 DAYS");
+		txtpnFreeCheckupWithin.setEditable(false);
 		txtpnFreeCheckupWithin.setBounds(20, 565, 298, 25);
-		bill_panel.add(txtpnFreeCheckupWithin);
+
+		lbl_free_checkup_date = new JLabel();
+		lbl_free_checkup_date.setBounds(29, 591, 277, 15);
+
+		if(free_checkup_date != null && total_amt > 0.1){
+			txtpnFreeCheckupWithin.setFont(new Font("Dialog", Font.BOLD, 15));
+			txtpnFreeCheckupWithin.setBackground(SystemColor.window);
+			txtpnFreeCheckupWithin.setText("FREE CHECK-UP WITHIN 21 DAYS");
+			bill_panel.add(txtpnFreeCheckupWithin);
+
+			lbl_free_checkup_date.setFont(new Font("Dialog", Font.PLAIN, 12));
+			lbl_free_checkup_date.setText("Your free checkup due date is " + free_checkup_date);
+			bill_panel.add(lbl_free_checkup_date);
+		}
 
 		JLabel lblAbhiWheels = new JLabel("ABHI WHEELS");
 		lblAbhiWheels.setFont(new Font("Dialog", Font.BOLD, 20));
@@ -355,21 +418,16 @@ public class wheel_bill_print extends JFrame {
 		bill_panel.add(lblRemarksByTechnician);
 
 		txt_comments = new JTextArea();
+		txt_comments.setEditable(false);
 		txt_comments.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txt_comments.setText(" " + comments);
 		txt_comments.setBounds(28, 629, 305, 69);
 		txt_comments.setMargin(text_area_margin);
 		bill_panel.add(txt_comments);
 
-		lbl_free_checkup_date = new JLabel("free_checkup_date");
-		lbl_free_checkup_date.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lbl_free_checkup_date.setBounds(29, 591, 277, 15);
-		lbl_free_checkup_date.setText("Your free checkup due date is " + free_checkup_date);
-		bill_panel.add(lbl_free_checkup_date);
-
 		JLabel lblAlignmentTyres = new JLabel("Wheel Alignment & Multi Brand Tyres");
-		lblAlignmentTyres.setFont(new Font("Droid Sans Fallback", Font.BOLD, 12));
-		lblAlignmentTyres.setBounds(239, 57, 246, 15);
+		lblAlignmentTyres.setFont(new Font("Dialog", Font.BOLD, 12));
+		lblAlignmentTyres.setBounds(225, 55, 273, 15);
 		bill_panel.add(lblAlignmentTyres);
 
 	}

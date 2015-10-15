@@ -17,7 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -30,6 +29,7 @@ import Util.*;
 
 public class sms_notifications extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel pnl_sms_notofication_main;
 	private JTable tbl_sms_notifications;
 	private static Handler dbh = Handler.getInstance();
@@ -146,8 +146,6 @@ class LabelRenderer extends DefaultTableCellRenderer {
 	public Component getTableCellRendererComponent(JTable table,
 			Object value, boolean isSelected, boolean hasFocus, int row,
 			int column) {
-		Logger.log.info("Rendering (" + row + "," + column + ") - " + value.toString() + " as a label");
-		System.out.println("Column " + column + "Row "+row);
 
 		JLabel label = new JLabel(value.toString());
 		if ( column == 3 ) {

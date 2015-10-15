@@ -1,11 +1,12 @@
 package Util;
 
 import java.text.NumberFormat;
-import java.util.Locale;
 import javax.swing.SwingConstants;
 
 public class NumberRenderer extends FormatRenderer
 {
+	private static final long serialVersionUID = 1L;
+
 	/*
 	 *  Use the specified number formatter and right align the text
 	 */

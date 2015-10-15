@@ -10,6 +10,9 @@ public class Logger{
 	private static String file = "Travels-Management-System.log";
 	public static  java.util.logging.Logger log;  
 	private static FileHandler fh;
+	
+	@SuppressWarnings("unused")
+	private static Logger log_instance = new Logger();
 
 	private Logger() {
 

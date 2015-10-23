@@ -163,21 +163,21 @@ CREATE TABLE service_particulars (
 
 DROP TABLE IF EXISTS service_bill;
 CREATE TABLE service_bill(
-    id                    SERIAL PRIMARY KEY NOT NULL,
+    id                     SERIAL PRIMARY KEY NOT NULL,
 
-    vehicle_id            INTEGER NOT NULL,
+    vehicle_id             INTEGER NOT NULL,
 
-    comments              VARCHAR(300),
+    comments               VARCHAR(300),
 
-    total_amount          NUMERIC NOT NULL,
+    total_amount           NUMERIC NOT NULL,
 
-    free_checkup_date     INTEGER NULL,                            
+    free_checkup_date      INTEGER NULL,                            
 
-    free_checkup_completed    BOOLEAN NULL,    
+    free_checkup_completed INTEGER NULL DEFAULT 0,    
 
-    created_epoch         INTEGER  NOT NULL,
+    created_epoch          INTEGER  NOT NULL,
 
-    created_user_id       INTEGER  NOT NULL
+    created_user_id        INTEGER  NOT NULL
 
 );
 

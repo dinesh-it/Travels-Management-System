@@ -14,6 +14,30 @@ public class Time {
 		}
 		return epoch;
 	}
+	
+	public static String get_current_date_time(){
+		String date_time = "";
+		try{
+			int current_epoch = now();
+			date_time = get_date(current_epoch);
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		return date_time;
+	}
+	
+	public static String get_current_date_time (String date_format) {
+		String date_time = "";
+		
+		try{
+			int current_epoch = now();
+			date_time = get_date(current_epoch, date_format);
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+				
+		return date_time;
+	}
 
 	public static String get_date(int epoch){
 		String date_string = null;

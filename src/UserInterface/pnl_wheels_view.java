@@ -2,6 +2,7 @@ package UserInterface;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -93,6 +94,7 @@ public class pnl_wheels_view extends JPanel {
 						String tip = null;
 						java.awt.Point p = e.getPoint();
 						int index = columnModel.getColumnIndexAtX(p.x);
+
 						if(index == 8){
 							tip = "Enable checkbox if Free checkup is Completed";
 						}
@@ -101,6 +103,19 @@ public class pnl_wheels_view extends JPanel {
 
 					}
 				};
+			}
+
+			@Override
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
+				Component comp = super.prepareRenderer(renderer, row, col);
+				int index = (int) getModel().getValueAt(row, 0);
+				int due_date = fcd_completed_due_date.get(index-1);
+				if (col == 8) {
+					if (due_date == 0) {
+						comp.setBackground(Color.LIGHT_GRAY);
+					}
+				} 
+				return comp;
 			}
 		};
 
@@ -111,7 +126,7 @@ public class pnl_wheels_view extends JPanel {
 			private static final long serialVersionUID = 1L;
 
 			public boolean isCellEditable(int row, int col) {
-				
+
 				if (col == 9) 
 					return true;
 				else if( col == 8 && fcd_completed_due_date .get((int)getValueAt(row, 0) -1 ) != 0) 
@@ -170,9 +185,9 @@ public class pnl_wheels_view extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				int row = Integer.valueOf( e.getActionCommand() );
-				
+
 				int epoch = fcd_completed_date.get(row);
 				String name = (String) mdl_service_details.getValueAt(row, 1);
 
@@ -200,6 +215,7 @@ public class pnl_wheels_view extends JPanel {
 		tbl_service_details.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
+
 				int col = tbl_service_details.columnAtPoint(evt.getPoint());
 				int row = tbl_service_details.rowAtPoint(evt.getPoint());
 
@@ -207,7 +223,9 @@ public class pnl_wheels_view extends JPanel {
 
 				int index = (int) tbl_service_details.getValueAt(row, 0) - 1;
 
-				if( col== 0 || col == 8 ) {
+				boolean is_fcd_update = (col == 8  && fcd_completed_due_date.get(index) > 0) ? true : false;
+
+				if( col== 0 || is_fcd_update ) {
 
 					String date_str = tbl_service_details.getValueAt(row, 4).toString();
 
@@ -215,15 +233,17 @@ public class pnl_wheels_view extends JPanel {
 
 				}
 
-				if(  (col == 0 || col == 8) &&  obj_service_bill == null) {
+				if(  (col == 0 || is_fcd_update) &&  obj_service_bill == null) {
+
 					JOptionPane.showMessageDialog(tbl_service_details, "error while getting service bill id" );
+
 				}else if(col == 0){
 
 					wheel_bill_print obj_wbp = new wheel_bill_print(obj_service_bill.getId());
 
 					obj_wbp.setVisible(true);
 
-				} else if(col == 8) {
+				} else if(is_fcd_update) {
 
 					int epoch = (boolean) tbl_service_details.getValueAt(row, col) ? Time.now() : 0;
 
@@ -515,7 +535,9 @@ public class pnl_wheels_view extends JPanel {
 
 				int fcd_value = obj_sb.getFree_checkup_completed();
 				fcd_completed_due_date.add( obj_sb.getFree_checkup_date());
+
 				row[8] = fcd_value > 0 ? true : false;
+
 				fcd_completed_date.add(fcd_value);
 
 				row[9] = "Info";

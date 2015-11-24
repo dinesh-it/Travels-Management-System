@@ -2,7 +2,6 @@ package UserInterface;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,8 +45,7 @@ import javax.swing.border.LineBorder;
 
 import org.jdesktop.swingx.JXDatePicker;
 
-import Util.Time;
-import Util.ButtonColumn;
+import Util.*;
 
 public class pnl_wheels_view extends JPanel {
 
@@ -233,10 +231,10 @@ public class pnl_wheels_view extends JPanel {
 
 				}
 
-				if(  (col == 0 || is_fcd_update) &&  obj_service_bill == null) {
+				if((col == 0 || is_fcd_update) &&  obj_service_bill == null) {
 
-					JOptionPane.showMessageDialog(tbl_service_details, "error while getting service bill id" );
-
+					JOptionPane.showMessageDialog(tbl_service_details, "Error while getting service bill object");
+					Logger.log.severe("Error while getting service bill object for service bill id " + index);
 				}else if(col == 0){
 
 					wheel_bill_print obj_wbp = new wheel_bill_print(obj_service_bill.getId());

@@ -246,7 +246,10 @@ public class MainFrame extends JFrame {
 
 		btn_view_wheel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				pnl_wheels_view obj_wheels_view = new pnl_wheels_view();
+				int width =  getWidth();
+				int height =  getHeight();
+				
+				pnl_wheels_view obj_wheels_view = new pnl_wheels_view(width, height);
 				setContentPane(obj_wheels_view);
 			}
 		});

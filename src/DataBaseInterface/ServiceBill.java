@@ -6,7 +6,7 @@ public class ServiceBill {
 	private String comments;
 	private double total_amount;
 	private int free_checkup_date;
-	private boolean free_checkup_completed;
+	private int free_checkup_completed;
 	private int sb_created_epoch;
 	private int sb_created_user_id;
 
@@ -52,14 +52,6 @@ public class ServiceBill {
 		this.free_checkup_date = free_checkup_date;
 	}
 
-	public boolean isFree_checkup_completed() {
-		return free_checkup_completed;
-	}
-
-	public void setFree_checkup_completed(boolean free_checkup_completed) {
-		this.free_checkup_completed = free_checkup_completed;
-	}
-
 	public int getSb_created_epoch() {
 		return sb_created_epoch;
 	}
@@ -82,6 +74,14 @@ public class ServiceBill {
 
 	public void setTotal_amount(double total_amount) {
 		this.total_amount = total_amount;
-	};	
+	}
+
+	public int getFree_checkup_completed() {
+		return free_checkup_completed;
+	}
+
+	public void setFree_checkup_completed(int free_checkup_completed) {
+		this.free_checkup_completed = free_checkup_completed;
+	}	
 
 }

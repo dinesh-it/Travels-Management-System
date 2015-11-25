@@ -37,6 +37,7 @@ dependencies {
     compile ("javassist:javassist-3.18.1-GA")
     compile ("antlr:antlr-2.7.7")
     compile ("jandex:jandex-1.1.0.Final");
+    compile ("swingx-all:swingx-all-1.6.4");
 }
 
 task listJars << {

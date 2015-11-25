@@ -473,7 +473,7 @@ public class Handler {
 		return data;
 	}
 
-	public List<Object[]>  get_bill_details(){
+	public List<Object[]> get_bill_details(){
 
 		Session session = factory.openSession();
 
@@ -509,7 +509,49 @@ public class Handler {
 		}
 		return result;
 	}
+	public List<Object[]> get_bill_details_between_date_range(String from_date, String to_date){
 
+		Session session = factory.openSession();
+		String date_format = "EEE MMM dd HH:ss:mm z yyyy"; 
+		int from_epoch = Time.get_epoch(from_date, date_format);
+		int to_epoch   = Time.get_epoch(to_date, date_format);
+		
+		System.out.println(from_epoch + " " + to_epoch);
+
+		List<Object[]> result = null;
+
+		try{
+			// Query have to be optimize (instead of get all columns, should fetch required columns)
+			//fetching particular columns throws error.
+
+			SQLQuery query = session.createSQLQuery(
+					"SELECT *" 
+							+ " FROM service_detail as sd"
+							+ " JOIN service_bill as sb ON sd.service_bill_id = sb.id"
+							+ " JOIN service_particulars as sp ON sd.service_particular_id = sp.id"
+							+ " JOIN customer_vehicle as veh ON sb.vehicle_id = veh.id"
+							+ " JOIN customer as cus ON veh.customer_id = cus.id "
+							+ " WHERE sb.created_epoch between " + from_epoch + " and " + to_epoch
+							+ " order by sb.id"
+					);
+
+			query.addEntity(ServiceDetail.class);
+			query.addEntity(ServiceBill.class);
+			query.addEntity(ServiceParticulars.class);
+			query.addEntity(CustomerVehicle.class);
+			query.addEntity(Customer.class);
+
+			result = query.list();
+
+		}catch (HibernateException e) {
+
+			e.printStackTrace();
+			Logger.log.severe(e.toString());
+		}finally {
+			session.close();
+		}
+		return result;
+	}
 
 	public List<Object[]> get_single_bill_detail(int bill_id){
 		Session session = factory.openSession();
@@ -542,10 +584,11 @@ public class Handler {
 	}
 
 	public ServiceBill get_service_bill(int vehicle_id, String date_str ) {
-		System.out.println(vehicle_id  + "    " + date_str);
+		
 		Session session = factory.openSession();
 		ServiceBill obj_service_bill = null;
-		int epoch = Time.get_epoch(date_str, "dd/MM/yyyy HH:mm:ss");
+		int epoch = Time.get_epoch(date_str, "dd/MM/yyyy hh:mm:ss a");
+		System.out.println(vehicle_id  + "    " + epoch);
 		try{
 			obj_service_bill = (ServiceBill)session.createQuery("FROM ServiceBill WHERE vehicle_id = '" + vehicle_id + "' and created_epoch = " + epoch).uniqueResult();
 		}catch (HibernateException e) {

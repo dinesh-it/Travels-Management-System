@@ -363,7 +363,7 @@ public class wheel_bill_print extends JFrame {
 		txt_rupees.setBounds(67, 522, 478, 36);
 		bill_panel.add(txt_rupees);
 
-		JLabel lblTotal = new JLabel("Total:");
+		JLabel lblTotal = new JLabel("Total: ");
 		lblTotal.setFont(new Font("Dialog", Font.BOLD, 15));
 		lblTotal.setBounds(367, 500, 53, 15);
 		bill_panel.add(lblTotal);
@@ -372,11 +372,11 @@ public class wheel_bill_print extends JFrame {
 		lbl_total_value.setFont(new Font("Dialog", Font.BOLD, 15));
 		lbl_total_value.setBounds(423, 495, 124, 25);
 		if(total_amt > 0){
-			lbl_total_value.setText(Formatter.getCurrencyFormat(total_amt) + " /-");
+			lbl_total_value.setText(Formatter.getCurrencyFormat(total_amt));
 			txt_rupees.setText(NumberWordConverter.convert((int)Math.round(total_amt)) + " rupees only");
 		}
 		else{
-			lbl_total_value.setText("0.00 /-");
+			lbl_total_value.setText("0.00 \u20B9");
 			txt_rupees.setText("FREE");
 		}
 		bill_panel.add(lbl_total_value);

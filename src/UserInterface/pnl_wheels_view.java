@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
@@ -32,19 +31,15 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
 import DataBaseInterface.Customer;
 import DataBaseInterface.CustomerVehicle;
 import DataBaseInterface.Handler;
 import DataBaseInterface.ServiceBill;
 import DataBaseInterface.ServiceDetail;
 import DataBaseInterface.ServiceParticulars;
-
 import javax.swing.JComboBox;
 import javax.swing.border.LineBorder;
-
 import org.jdesktop.swingx.JXDatePicker;
-
 import Util.*;
 
 public class pnl_wheels_view extends JPanel {

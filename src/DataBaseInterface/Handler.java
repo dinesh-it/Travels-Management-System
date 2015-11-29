@@ -457,13 +457,32 @@ public class Handler {
 		return "";
 	}
 
-	public List<?> get_sms_queue() {
-		System.out.println("Geeting queue");
-
+	public List<Object[]> get_sms_queue(int remaining_days, boolean show_sent) {
 		Session session = factory.openSession();
-		List<?> data = null;
+		
+		String show_sent_str = show_sent ? "" : " AND sq.sent = false";
+
+		// remaining_days to epoch
+		int today_morning = Time.get_epoch(Time.get_current_date_time("dd/MM/yyyy") + " 00:00:00" , "dd/MM/yyyy HH:mm:ss");
+		System.out.println("Today morning date is: " + Time.get_date(today_morning, "dd/MM/yyyy HH:mm:ss"));
+		int remaining_epoch = today_morning + ((remaining_days + 1) * 86400) - 1;
+		System.out.println("Remaining date is: " + Time.get_date(remaining_epoch, "dd/MM/yyyy HH:mm:ss"));
+		List<Object[]> data = null;
 		try{
-			data = session.createQuery("FROM SMSQueue WHERE sent = 'f'").list();
+			SQLQuery query = session.createSQLQuery("SELECT *" 
+					+ " FROM sms_queue as sq"
+					+ " JOIN service_bill as sb ON sq.service_bill_id = sb.id"
+					+ " WHERE sb.free_checkup_date > " + today_morning 
+					+ " AND sb.free_checkup_date < " + remaining_epoch 
+					+ " AND sb.free_checkup_completed = 0" + show_sent_str
+					+ " ORDER BY sb.free_checkup_date"
+					);
+
+			query.addEntity(SMSQueue.class);
+			query.addEntity(ServiceBill.class);
+
+			data = query.list();
+
 		}catch (HibernateException e) {
 			e.printStackTrace();
 			Logger.log.severe(e.toString());
@@ -471,6 +490,34 @@ public class Handler {
 			session.close();
 		}
 		return data;
+	}
+
+	public List<?> get_sms_queue() {
+		Session session = factory.openSession();
+		List<?> data = null;
+		try{
+			data = session.createQuery("FROM SMSQueue WHERE sent = false").list();
+		}catch (HibernateException e) {
+			e.printStackTrace();
+			Logger.log.severe(e.toString());
+		}finally {
+			session.close();
+		}
+		return data;
+	}
+
+	public SMSQueue get_sms(int sms_id) {
+		Session session = factory.openSession();
+		SMSQueue sms = null;
+		try{
+			sms = (SMSQueue) session.createQuery("FROM SMSQueue WHERE id = " + sms_id).uniqueResult();
+		}catch (HibernateException e) {
+			e.printStackTrace();
+			Logger.log.severe(e.toString());
+		}finally {
+			session.close();
+		}
+		return sms;
 	}
 
 	public List<Object[]> get_bill_details(){
@@ -509,13 +556,15 @@ public class Handler {
 		}
 		return result;
 	}
+
+
 	public List<Object[]> get_bill_details_between_date_range(String from_date, String to_date){
 
 		Session session = factory.openSession();
 		String date_format = "EEE MMM dd HH:ss:mm z yyyy"; 
 		int from_epoch = Time.get_epoch(from_date, date_format);
 		int to_epoch   = Time.get_epoch(to_date, date_format);
-		
+
 		System.out.println(from_epoch + " " + to_epoch);
 
 		List<Object[]> result = null;
@@ -584,7 +633,7 @@ public class Handler {
 	}
 
 	public ServiceBill get_service_bill(int vehicle_id, String date_str ) {
-		
+
 		Session session = factory.openSession();
 		ServiceBill obj_service_bill = null;
 		int epoch = Time.get_epoch(date_str, "dd/MM/yyyy hh:mm:ss a");

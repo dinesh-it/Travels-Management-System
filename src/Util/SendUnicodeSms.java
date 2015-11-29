@@ -2,7 +2,6 @@ package Util;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -19,10 +18,10 @@ import org.apache.commons.codec.binary.Base64;
 
 @SuppressWarnings("deprecation")
 public class SendUnicodeSms {
-	private static HttpClient client;
-	private static String from = "9790340545";
-	private static String sid = "roomteam";
-	private static String auth_key = "f9e27104346b9c7a2eaf80294e5b0cc49612c99d";
+	private HttpClient client;
+	private String from = "9790340545";
+	private String sid = "roomteam";
+	private String auth_key = "f9e27104346b9c7a2eaf80294e5b0cc49612c99d";
 
 	public boolean send_message(String to,String msg) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, ClientProtocolException, IOException {
 		Logger.log.info("...Trying to send an SMS to " + to + " with text '" + msg + "' EOM...");

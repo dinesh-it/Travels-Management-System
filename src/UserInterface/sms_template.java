@@ -1,32 +1,30 @@
 package UserInterface;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
-import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
-
 import DataBaseInterface.*;
-
 import java.awt.Color;
-import java.awt.Window.Type;
 
 public class sms_template extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private Handler dbh = Handler.getInstance();
-	JComboBox cmb_parameter = new JComboBox();
+	JComboBox<String> cmb_parameter = new JComboBox<String>();
 	JTextArea txt_template_value = new JTextArea();
 
 	/**

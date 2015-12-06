@@ -125,7 +125,20 @@ public class MainFrame extends JFrame {
 				sms_template.setVisible(true);
 			}
 		});
+		
+		JButton btn_edit_particulars = new JButton("Edit Particulars");
+		btn_edit_particulars.setBackground(menu_btn_background);
+		btn_edit_particulars.setForeground(menu_btn_foreground);
+		btn_edit_particulars.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int width =  getWidth();
+				int height =  getHeight();
+				pnl_edit_service_particulars obj_ep= new pnl_edit_service_particulars(width, height);
+				setContentPane(obj_ep);
+			}
+		});
 
+		mbr_home.add(btn_edit_particulars);
 		mbr_home.add(btn_sms_template);
 		mbr_home.add(btn_sms_notification);
 		mbr_home.add(btn_home);
@@ -138,7 +151,7 @@ public class MainFrame extends JFrame {
 		setContentPane(pnl_home);
 		pnl_home.setLayout(null);
 
-		// Title Lable
+		// Title Label
 		// TODO have to add icon 
 		JLabel lbl_title = new JLabel("ABHI WHEELS");
 		lbl_title.setForeground(new Color(210, 105, 30));

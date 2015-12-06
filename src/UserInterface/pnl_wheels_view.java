@@ -14,6 +14,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -52,6 +53,7 @@ public class pnl_wheels_view extends JPanel {
 
 	private JTextField txt_search_word,txt_search_text;
 	private JLabel lbl_total;
+	private JButton btn_toggle_total;
 	private DefaultTableModel mdl_service_details;
 	private JComboBox<String> cmb_search_catagory;
 
@@ -130,7 +132,7 @@ public class pnl_wheels_view extends JPanel {
 
 			public Class<?> getColumnClass(int c) {
 
-				if(this.getRowCount() >1) {
+				if(this.getRowCount() >= 1) {
 					return getValueAt(0, c).getClass();
 				} else {
 					return new String().getClass();
@@ -173,7 +175,6 @@ public class pnl_wheels_view extends JPanel {
 
 		Action update_fcd  = new AbstractAction() {
 
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -182,21 +183,44 @@ public class pnl_wheels_view extends JPanel {
 				int row = Integer.valueOf( e.getActionCommand() );
 
 				int epoch = fcd_completed_date.get(row);
-				String name = (String) mdl_service_details.getValueAt(row, 1);
 
 				int due_date = fcd_completed_due_date.get(row); 
 
 				if (due_date > 0 ) {
-
+					String msg="";
 					if (epoch > 0 ) {
-						JOptionPane.showMessageDialog(tbl_service_details, name + " completed his free checkup on " + Time.get_date(epoch) );
+						msg = "<html><Table>"								
+						         + "<tr>"
+						            + "<td><font color='green'> FreeCheckup Status </font></td>"
+						            + "<td> : </td>"
+						            + "<td><font color='green'> Completed </font></td>"
+						         + "</tr>"
+						         + "<tr>"
+						            + "<td><font color='green'> Completed Date </font></td>"
+						            + "<td> : </td>"
+						            + "<td><font color='green'>" + Time.get_date(due_date,"dd/MM/yyyy hh:mm:ss a") + " </font></td>"
+						         + "</tr>"						        
+						      +"</Table></html>";
+						
 					}else if (epoch == 0 ) {
-						JOptionPane.showMessageDialog(tbl_service_details, name + " not yet complete his free checkup his due date is " + Time.get_date(due_date));
+						msg = "<html><Table>"
+						         + "<tr>"
+						            + "<td><font color='red'> FreeCheckup Status </font></td>"
+						            + "<td> : </td>"
+						            + "<td><font color='red'> Not Completed </font></td>"
+						         + "</tr>"
+						         + "<tr>"
+						            + "<td><font color='red'> Due Date </font></td>"
+						            + "<td> : </td>"
+						            + "<td><font color='red'>" + Time.get_date(due_date) + " </font></td>"
+						         + "</tr>"
+						      +"</Table></html>";
+						
 					}
+					JOptionPane.showMessageDialog(tbl_service_details, msg);
 				} else {
 					JOptionPane.showMessageDialog(tbl_service_details, " This bill don't have any service which has Free Checkup");
 				}
-
 
 			}
 		};
@@ -208,7 +232,7 @@ public class pnl_wheels_view extends JPanel {
 		tbl_service_details.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
-
+				
 				int col = tbl_service_details.columnAtPoint(evt.getPoint());
 				int row = tbl_service_details.rowAtPoint(evt.getPoint());
 
@@ -219,21 +243,21 @@ public class pnl_wheels_view extends JPanel {
 				boolean is_fcd_update = (col == 8  && fcd_completed_due_date.get(index) > 0) ? true : false;
 
 				if( col== 0 || is_fcd_update ) {
-
 					String date_str = tbl_service_details.getValueAt(row, 4).toString();
 
 					obj_service_bill = dbh.get_service_bill(vehicle_id.get(index), date_str);
-
+					
 				}
-
+				
 				if((col == 0 || is_fcd_update) &&  obj_service_bill == null) {
 
 					JOptionPane.showMessageDialog(tbl_service_details, "Error while getting service bill object");
 					Logger.log.severe("Error while getting service bill object for service bill id " + index);
+					
 				}else if(col == 0){
 
 					wheel_bill_print obj_wbp = new wheel_bill_print(obj_service_bill.getId());
-
+					
 					obj_wbp.setVisible(true);
 
 				} else if(is_fcd_update) {
@@ -344,7 +368,24 @@ public class pnl_wheels_view extends JPanel {
 		lbl_total.setAlignmentX(Component.CENTER_ALIGNMENT);
 		pnl_total.add(lbl_total);
 		lbl_total.setForeground(Color.BLUE);
+		lbl_total.setVisible(false);
 		lbl_total.setFont(new Font("Bitstream Charter", Font.BOLD | Font.ITALIC, 18));
+		
+		btn_toggle_total = new JButton("Show Total");
+		btn_toggle_total.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String btn_text = btn_toggle_total.getText();
+				
+				if(btn_text.equals("Show Total")) {
+					lbl_total.setVisible(true);
+					btn_toggle_total.setText("Hide Total");
+				} else {
+					lbl_total.setVisible(false);
+					btn_toggle_total.setText("Show Total");
+				}
+			}
+		});
+		pnl_total.add(btn_toggle_total);	
 
 		cmb_search_catagory	 = new JComboBox<String>();
 		cmb_search_catagory.setBounds((window_width /2) - 245, 45, 225, 24);
@@ -627,7 +668,7 @@ return the normal renderer*/
 				table.setRowHeight(row,curr_height);
 			} 
 
-			/* We create the table that will hold the multivalue
+			/* We create the table that will hold the multi value
 			 *fields and that will be embedded in the main table */
 
 			JTable tbl = new JTable(new AbstractTableModel() {

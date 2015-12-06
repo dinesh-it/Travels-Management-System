@@ -272,7 +272,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		tbl_particulars_main.setBounds(82, 176, 804, (table_row_height * mdl_particulars.getRowCount()) + 22);
 		add(tbl_particulars_main);
 
-		JLabel lbl_total = new JLabel("Total (Rs)");
+		JLabel lbl_total = new JLabel("Total: \u20B9 ");
 		lbl_total.setFont(new Font("Dialog", Font.BOLD, 17));
 		lbl_total.setBounds(649, 477, 93, 15);
 		add(lbl_total);
@@ -300,6 +300,20 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 			public void focusLost(FocusEvent e) {
 				String vehicle_no = txt_vehicle_no.getText().toUpperCase().replace(" ", "");
 				populate_fields(vehicle_no);
+			}
+		});
+		
+		txt_customer_name.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				txt_customer_name.setText(Formatter.toCamelCase(txt_customer_name.getText()));
+			}
+		});
+		
+		txt_vehicle_make.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				txt_vehicle_make.setText(Formatter.toCamelCase(txt_vehicle_make.getText()));
 			}
 		});
 
@@ -334,10 +348,11 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 			// Validation
 			if(!this.validate_details()) return;
 
-			String bill_summary;
+			String bill_summary = "<html>";
 
-			bill_summary = "\n      Name: " + c_name + "                              Mobile: " + c_mobile + "\n" ;
-			bill_summary += "      Vehicle: " + v_num + " " + v_make + "       Date Time: " + date + " " + time + "\n\n";
+			bill_summary += "<table><tr><td>Name: " + c_name + "</td><td>Mobile: " + c_mobile + "</td></tr>" ;
+			bill_summary += "<tr><td>Vehicle: " + v_num + " " + v_make + "&nbsp;</td><td>Date Time: " + date + " " + time + "</td></tr></table>";
+			bill_summary += "<br/><center><table>";
 			String table_data[][] = this.getTableData(tbl_particulars);
 			// For each service entered
 			for(String row[] : table_data){
@@ -350,14 +365,16 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 						quantity = Integer.parseInt(row[2]); 
 					}
 					double amount = Double.parseDouble(row[3]);
-					bill_summary += "       " + service_name + "               " + quantity + " x " + amount + "       = " + row[4] + "\n";
+					bill_summary += "<tr><td>" + service_name + "</td><td>" + quantity + " x " + amount + " = " + row[4] + "</td></tr>";
 				}
 			}
 
-			bill_summary += "\n\n " + comment + "\n";
-			bill_summary += "\n\n                        Total = " + total_amount + " Rs\n\n";
+			bill_summary += "</table></center><br/>";
+			bill_summary += "<td width='10'>Comments: " + comment + "</td><br/>";
+			bill_summary += "<center><strong>Total: " + total_amount + " \u20B9</strong></center>";
+			bill_summary += "</html>";
 
-			int save_confirm = JOptionPane.showConfirmDialog(this, bill_summary);
+			int save_confirm = JOptionPane.showConfirmDialog(this,bill_summary, "Is the bill detail correct?", JOptionPane.YES_NO_OPTION);
 
 			// Stop save if user not click the yes option
 			if(save_confirm != JOptionPane.YES_OPTION){
@@ -440,7 +457,8 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 			// Create SMS queue if flag set
 			if(sms_remiander){
 				// 1 day * 20 days
-				service_bill.setFree_checkup_date(date_epoch + (86000 * 20));
+				int morning_time = Time.get_epoch(Time.get_date(date_epoch, "dd/MM/yyyy") + " 00:00:00" , "dd/MM/yyyy HH:mm:ss");
+				service_bill.setFree_checkup_date(morning_time + (86400 * 20));
 				dbh.update(service_bill);
 
 				String message = this.process_template(bill_id, customer_id, vehicle_id);

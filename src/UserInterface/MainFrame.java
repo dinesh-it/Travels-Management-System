@@ -111,9 +111,8 @@ public class MainFrame extends JFrame {
 		btn_sms_notification.setForeground(menu_btn_foreground);
 		btn_sms_notification.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				sms_notifications sms_notify = new sms_notifications();
-				sms_notify.setDefaultCloseOperation(HIDE_ON_CLOSE);
-				sms_notify.setVisible(true);
+				sms_notifications sms_notify = new sms_notifications(getWidth(),getHeight());
+				setContentPane(sms_notify);
 			}
 		});
 

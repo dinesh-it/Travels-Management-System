@@ -13,7 +13,8 @@ import javax.swing.border.Border;
 
 public class ProgressBar extends JPanel {
 
-    JProgressBar jpbar;
+	private static final long serialVersionUID = 1L;
+	JProgressBar jpbar;
     public static int MINIMUM_VALUE = 0;
     public static int MAXIMUM_VALUE = 100;
     public static int CURRENT_VALUE = 0;
@@ -36,7 +37,6 @@ public class ProgressBar extends JPanel {
     }
 
     public static void showProgress(String text,int percent) {
-        int loaded_percent;
         int previous_value = CURRENT_VALUE;
         CURRENT_VALUE = CURRENT_VALUE + percent;
         if ( previous_value == 0 ) {

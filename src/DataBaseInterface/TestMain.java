@@ -23,7 +23,7 @@ public class TestMain {
 		Integer customer_vehicle_id = dbh.add_customer_vehicle(customer_id,"TN 47","TATA",user_id,111);
 		System.out.println("Customer vehicle Created with Id : "+customer_vehicle_id);
 
-		Integer service_particulars_id = dbh.add_service_particulars("service_name",true,true,true,user_id,111);
+		Integer service_particulars_id = dbh.add_service_particulars("service_name",true,true,user_id,111);
 		System.out.println("SP Created with Id : "+ service_particulars_id);
 
 		Integer vehicle_id = dbh.add_vehicle("TN 45","MARUTHI", user_id, 111);

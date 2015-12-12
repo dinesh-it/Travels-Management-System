@@ -140,7 +140,7 @@ public class Handler {
 		return trip_slab_id;
 	}
 
-	public Integer add_service_particulars(String service_name, boolean is_multiple, boolean is_free_service,boolean is_sms_sent, Integer created_user_id, Integer created_epoch) {
+	public Integer add_service_particulars(String service_name, boolean is_multiple, boolean is_free_service, Integer created_user_id, Integer created_epoch) {
 		Session session = factory.openSession();
 		Transaction tx = null;
 		Integer service_particulars_id = null;
@@ -322,7 +322,7 @@ public class Handler {
 			sp_list = (ServiceParticulars)session.createQuery("FROM ServiceParticulars WHERE service_name = 'Rim Tubeless Neck'").uniqueResult();
 			if(sp_list == null){
 				// add this
-				this.add_service_particulars("Rim Tubeless Neck", true, false, false, 1, Time.now());
+				this.add_service_particulars("Rim Tubeless Neck", true, false, 1, Time.now());
 				Logger.log.info("Rim Tubeless Neck service particular added to the table...!");
 			}
 		}catch (HibernateException e) {
@@ -339,7 +339,7 @@ public class Handler {
 		Transaction tx = null;
 		try{
 			tx = session.beginTransaction();
-			sp_list = session.createQuery("FROM ServiceParticulars").list();
+			sp_list = session.createQuery("FROM ServiceParticulars ORDER BY id").list();
 			tx.commit();
 		}catch (HibernateException e) {
 			if (tx!=null) tx.rollback();

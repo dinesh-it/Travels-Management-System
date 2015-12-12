@@ -216,6 +216,7 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 		});
 
 		dbh.update_db();
+		
 		List<?> sp_list = dbh.list_service_particulars();
 
 		particulars_total = new double[sp_list.size() + 1];
@@ -383,8 +384,6 @@ public class pnl_wheels_add extends JPanel implements TableModelListener {
 
 			// DB Operations
 			int date_epoch = Time.get_epoch(date + " " + time, "dd/MM/yyyy hh:mm a");
-			System.out.println(date + " " + time);
-			System.out.println(date_epoch);
 
 			if(vehicle != null){
 				vehicle_id = vehicle.getId();

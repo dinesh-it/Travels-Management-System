@@ -38,6 +38,12 @@ dependencies {
     compile ("antlr:antlr-2.7.7")
     compile ("jandex:jandex-1.1.0.Final");
     compile ("swingx-all:swingx-all-1.6.4");
+
+	// for http requests - send sms
+    compile ("commons-codec:commons-codec-1.9");
+    compile ("commons-logging:commons-logging-1.2");
+    compile ("httpclient:httpclient-4.5.1");
+    compile ("httpcore:httpcore-4.4.3");
 }
 
 task listJars << {

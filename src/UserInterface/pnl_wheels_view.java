@@ -182,13 +182,13 @@ public class pnl_wheels_view extends JPanel {
 
 				int row = Integer.valueOf( e.getActionCommand() );
 
-				int epoch = fcd_completed_date.get(row);
+				int completed_date = fcd_completed_date.get(row);
 
 				int due_date = fcd_completed_due_date.get(row); 
 
 				if (due_date > 0 ) {
 					String msg="";
-					if (epoch > 0 ) {
+					if (completed_date > 0 ) {
 						msg = "<html><Table>"								
 						         + "<tr>"
 						            + "<td><font color='green'> FreeCheckup Status </font></td>"
@@ -198,11 +198,11 @@ public class pnl_wheels_view extends JPanel {
 						         + "<tr>"
 						            + "<td><font color='green'> Completed Date </font></td>"
 						            + "<td> : </td>"
-						            + "<td><font color='green'>" + Time.get_date(due_date,"dd/MM/yyyy hh:mm:ss a") + " </font></td>"
+						            + "<td><font color='green'>" + Time.get_date(completed_date,"dd/MM/yyyy hh:mm:ss a") + " </font></td>"
 						         + "</tr>"						        
 						      +"</Table></html>";
 						
-					}else if (epoch == 0 ) {
+					}else if (completed_date == 0 ) {
 						msg = "<html><Table>"
 						         + "<tr>"
 						            + "<td><font color='red'> FreeCheckup Status </font></td>"
